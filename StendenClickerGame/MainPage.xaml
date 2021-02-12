@@ -6,9 +6,38 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="720" Width="1028">
 
-    <Grid>
-
+    <Grid Background="#2EAAB6">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+            <ColumnDefinition Width="33*" />
+        </Grid.ColumnDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="85*"/>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Fill="#2E7988" Margin="20"/>
+            <Rectangle Grid.Row="1" Fill="#2E7988" Margin="20"/>
+        </Grid>
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="85*"/>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Fill="#2E7988" Margin="20"/>
+        </Grid>
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="65*"/>
+                <RowDefinition Height="20*"/>
+            </Grid.RowDefinitions>
+            <Rectangle Grid.Row="0" Fill="#2E7988" Margin="20"/>
+            <Ellipse Grid.Row="2" Fill="#E1E1E1" Margin="5,20"/>
+        </Grid>
     </Grid>
+    
 </Page>
