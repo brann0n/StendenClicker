@@ -36,7 +36,7 @@ namespace StendenClickerGame.ViewModels
 
         private void MpProxy_OnConnectionStateChanged(StateChange state)
         {
-			//todo: handle state changes, if it cant connect there might be no internet connection
+			//todo: handle state changes, if it cant connect there might not be an internet connection
         }
 
 		public Player getPlayerContext()

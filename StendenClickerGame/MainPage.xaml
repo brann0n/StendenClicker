@@ -111,7 +111,7 @@
 
             <!--Tekst koffiemachine-->
             <Grid Grid.Row="0">
-                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="GFYMichaelW00-Reg" FontSize="36">Waar heeft u vandaag zin in?</TextBlock>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="36">Waar heeft u vandaag zin in?</TextBlock>
             </Grid>
         </Grid>
 

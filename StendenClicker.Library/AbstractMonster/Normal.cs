@@ -6,6 +6,7 @@ namespace StendenClicker.Library.AbstractMonster
 {
 	public class Normal : AbstractMonster
 	{
+        //dictionary mapped with monster name and sprite location
 		private static readonly Dictionary<string, string> monsters;
 
 		private Currency currency;
