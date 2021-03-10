@@ -14,11 +14,10 @@ namespace StendenClickerGame.PlayerControls
 
         private string connectionId;
 
+
         public string getUsername()
         {
             return null;
         }
-
     }
-
 }
