@@ -66,7 +66,7 @@
                     <ColumnDefinition Width="33*" />
                     <ColumnDefinition Width="33*" />
                 </Grid.ColumnDefinitions>
-                <Button Width="100" Command="{Binding Koffie}" HorizontalAlignment="Center">
+                <Button Width="100" Command="{Binding TestCommand}" HorizontalAlignment="Center">
                     <TextBlock Text="{Binding }"/>
                 </Button>
                 <Button Width="100" Grid.Column="1" Command="{Binding Koffie}" HorizontalAlignment="Center">

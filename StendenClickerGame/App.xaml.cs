@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
@@ -31,6 +32,9 @@ namespace StendenClickerGame
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            //PAS OP, DIT IS GLOBAL
+            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
         /// <summary>
