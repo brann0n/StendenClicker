@@ -8,7 +8,7 @@ namespace StendenClickerGame.PlayerControls
 	{
 		private string Name;
 
-		private List<UpgradeAbility> Abilities;
+		private List<HeroUpgrades> Upgrades;
 
 		public Image GetImageSprite()
 		{

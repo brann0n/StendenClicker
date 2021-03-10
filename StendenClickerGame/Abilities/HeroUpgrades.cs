@@ -2,7 +2,7 @@ using StendenClickerGame.PlayerControls;
 
 namespace StendenClickerGame.Abilities
 {
-	public class UpgradeAbility : IAbilityExecutable
+	public class HeroUpgrades : IAbilityExecutable
 	{
 		private string Name;
 

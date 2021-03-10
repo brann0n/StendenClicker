@@ -13,10 +13,8 @@ using System.Windows.Input;
 
 namespace StendenClickerGame.ViewModels
 {
-    public class MainPageViewModel: INotifyPropertyChanged
+    public class MainPageViewModel : ViewModelBase
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
 		private LevelGenerator levelGenerator;
 		private ApiPlayerHandler playerContext;
 		private Multiplayer.MultiplayerHubProxy mpProxy;
@@ -38,7 +36,7 @@ namespace StendenClickerGame.ViewModels
 
         private void MpProxy_OnConnectionStateChanged(StateChange state)
         {
-            //todo: handle state changes, if it cant connect there might be no internet connection
+			//todo: handle state changes, if it cant connect there might be no internet connection
         }
 
 		public Player getPlayerContext()
@@ -46,13 +44,6 @@ namespace StendenClickerGame.ViewModels
 			return playerContext.getPlayer();
 		}
 
-		/// <summary>
-		/// The important notifier method of changed properties. This function should be called whenever you want to inform other classes that some property has changed.
-		/// </summary>
-		/// <param name="propertyName">The name of the updated property. Leaving this blank will fill in the name of the calling property.</param>
-		private void NotifyPropertyChanged([CallerMemberName] String propertyName = "")
-		{
-			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
+		
 	}	
 }
