@@ -9,7 +9,7 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:media="using:Microsoft.UI.Xaml.Media"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="720" Width="1028">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Page.DataContext>
         <viewmodels:MainPageViewModel/>
     </Page.DataContext>
@@ -21,19 +21,23 @@
             <ColumnDefinition Width="33*" />
         </Grid.ColumnDefinitions>
 
-        <Grid Grid.Column="0">
+        <Grid Grid.Column="0" Margin="20,20,10,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="13*"/>
                 <RowDefinition Height="82*"/>
             </Grid.RowDefinitions>
 
             <!--Coins-->
-            <Grid Grid.Row="0" Margin="20,20,10,10">
+            <Grid Grid.Row="0" Margin="0,0,0,10">
                 <Rectangle Fill="#2E7988"/>
+                <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center">test</TextBlock>
             </Grid>
 
             <!--Shop-->
-            <Grid Grid.Row="1" Margin="20,10,10,20">
+            <Grid Grid.Row="1" Margin="0,10,0,0">
+                <Grid.Background>
+                    <SolidColorBrush Color="#2E7988"></SolidColorBrush>
+                </Grid.Background>
                 <ListView>
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -48,24 +52,31 @@
                 </ListView>
             </Grid>
         </Grid>
-        <Grid Grid.Column="1" Margin="10,20,10,20">
-            <!--Koffiemachine voor abilities-->
-            <Rectangle Grid.Row ="0">
-                <Rectangle.Fill>
-                    <media:RadialGradientBrush MappingMode="RelativeToBoundingBox" InterpolationSpace="Auto">
-                        <GradientStop Color="#6A6A6A" Offset="1"/>
-                        <GradientStop Color="#A3A3A3" Offset="0"/>
-                    </media:RadialGradientBrush>
-                </Rectangle.Fill>
-            </Rectangle>
 
+        <!--Koffiemachine-->
+        <Grid Grid.Column="1" Margin="10,20,10,20">
+            <Grid.Background>
+                <media:RadialGradientBrush MappingMode="RelativeToBoundingBox" InterpolationSpace="Auto">
+                    <GradientStop Color="#6A6A6A" Offset="1"/>
+                    <GradientStop Color="#A3A3A3" Offset="0"/>
+                </media:RadialGradientBrush>
+            </Grid.Background>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="13*"/>
+                <RowDefinition Height="82*"/>
+            </Grid.RowDefinitions>
+           
+            
+            
         </Grid>
+        
         <Grid Grid.Column="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="65*"/>
                 <RowDefinition Height="20*"/>
             </Grid.RowDefinitions>
+            
             <!--Level overzicht-->
             <Grid Grid.Row="0" Margin="10,20,20,10">
                 <Grid.ColumnDefinitions>
@@ -73,13 +84,13 @@
                     <ColumnDefinition Width="33*" />
                     <ColumnDefinition Width="33*" />
                 </Grid.ColumnDefinitions>
-                <Button Width="100" Command="{Binding TestCommand}" HorizontalAlignment="Center">
+                <Button Grid.Column="0" Grid.Row="0" Command="{Binding TestCommand}" HorizontalAlignment="Center" Margin="10">
                     <TextBlock Text="{Binding }"/>
                 </Button>
-                <Button Width="100" Grid.Column="1" Command="{Binding Koffie}" HorizontalAlignment="Center">
+                <Button Grid.Column="1" Grid.Row="0" Command="{Binding Koffie}" HorizontalAlignment="Center" Margin="10">
                     <TextBlock Text="{Binding }"/>
                 </Button>
-                <Button Width="100" Grid.Column="2" Command="{Binding Koffie}" HorizontalAlignment="Center">
+                <Button Grid.Column="2" Grid.Row="0" Command="{Binding Koffie}" HorizontalAlignment="Center" Margin="10">
                     <TextBlock Text="{Binding }"/>
                 </Button>
             </Grid>
