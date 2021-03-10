@@ -1,4 +1,5 @@
 using Microsoft.AspNet.SignalR.Client;
+using System;
 using System.Net;
 
 namespace StendenClickerGame.Multiplayer
@@ -6,48 +7,49 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 		private MultiPlayerSession SessionContext;
-
-		//http://localhost:50120/
-
 		private HubConnection hubConnection;
 		private IHubProxy MultiPlayerHub;
 
-		public MultiplayerHubProxy()
-        {
-			
-
-			hubConnection = new HubConnection("http://localhost:50120/signalr");
+		public delegate void SignalRConnectionStateHandler(StateChange state);
+		public delegate void SignalRConnectionError(Exception excteption);
+		public event SignalRConnectionStateHandler OnConnectionStateChanged;
+		public event SignalRConnectionError OnConnectionError;
+		public MultiplayerHubProxy(string serverUrl)
+        {			
+			hubConnection = new HubConnection(serverUrl);
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
+            hubConnection.StateChanged += HubConnection_StateChanged;
 			hubConnection.Start().ContinueWith(task => 
 			{
                 if (task.IsFaulted)
                 {
-
+					OnConnectionError?.Invoke(task.Exception);
                 }
                 else
                 {
 					//connected:
-					MultiPlayerHub.On<string>("doTest", (string1) =>
-					{
-						string dummy1 = string1;
-					});
+					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
+					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 				}
-			}).Wait();
-
-			
+			}).Wait();		
         }
 
-		public void SendTestToServer()
+        public void BroadcastSessionToServer(MultiPlayerSession session)
         {
-			MultiPlayerHub.Invoke<string>("doTestServer","Dit is een test");
+			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession",session);
         }
 
-		public void updateSession(MultiPlayerSession session)
+		public void ProcessBatchOnServer()
+        {
+
+        }
+
+		private void updateSession(MultiPlayerSession session)
 		{
 
 		}
 
-		public void receiveUpdate()
+		private void receiveUpdate()
 		{
 
 		}
@@ -56,7 +58,10 @@ namespace StendenClickerGame.Multiplayer
 		{
 			return null;
 		}
-
+		private void HubConnection_StateChanged(StateChange obj)
+		{
+			OnConnectionStateChanged?.Invoke(obj);
+		}
 	}
 
 }

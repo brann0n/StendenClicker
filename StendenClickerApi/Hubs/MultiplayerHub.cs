@@ -1,29 +1,27 @@
 
 using System;
+using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
 
 namespace StendenClickerApi.Hubs
 {
 	public class MultiplayerHub : Hub
 	{
-		//private Dictionary<string, MultiPlayerSession> Sessions;
+        private Dictionary<string, MultiPlayerSession> Sessions;
 
-		//private MultiplayerHubProxy multiplayerHubProxy;
+        //private MultiplayerHubProxy multiplayerHubProxy;
 
-		//public void broadcastSession(MultiPlayerSession session)
-		//{
-
-		//}
-
-		//public void processBatch(IBatchProcessable _T_ batchItem)
-		//{
-
-		//}
-		public void DoTestServer(string data)
+        public void broadcastSession(MultiPlayerSession session)
         {
-			Clients.Caller.doTest(data);
+
         }
-	}
+
+        public void processBatch<T>(IBatchProcessable<T> batchItem)
+        {
+
+        }
+
+    }
 
 }
 
