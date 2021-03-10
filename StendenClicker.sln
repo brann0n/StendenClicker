@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StendenClickerGame", "Stend
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StendenClickerApi", "StendenClickerApi\StendenClickerApi.csproj", "{195A55A3-B878-41D7-B3CF-E69DC3BFF499}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StendenClicker.Library", "StendenClicker.Library\StendenClicker.Library.csproj", "{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,26 @@ Global
 		{195A55A3-B878-41D7-B3CF-E69DC3BFF499}.Release|x64.Build.0 = Release|Any CPU
 		{195A55A3-B878-41D7-B3CF-E69DC3BFF499}.Release|x86.ActiveCfg = Release|Any CPU
 		{195A55A3-B878-41D7-B3CF-E69DC3BFF499}.Release|x86.Build.0 = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|ARM.Build.0 = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|x64.Build.0 = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Debug|x86.Build.0 = Debug|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|ARM.ActiveCfg = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|ARM.Build.0 = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|ARM64.Build.0 = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|x64.ActiveCfg = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|x64.Build.0 = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|x86.ActiveCfg = Release|Any CPU
+		{8F9F67B8-33B5-4224-8DF1-AB970D206EE3}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

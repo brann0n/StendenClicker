@@ -1,7 +1,8 @@
-
 using System;
 using System.Collections.Generic;
 using Microsoft.AspNet.SignalR;
+using StendenClicker.Library.Batches;
+using StendenClicker.Library.Multiplayer;
 
 namespace StendenClickerApi.Hubs
 {
