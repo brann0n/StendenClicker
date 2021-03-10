@@ -2,23 +2,23 @@ using System;
 
 namespace StendenClickerGame.PlayerControls
 {
-	public class Player
-	{
-		private Guid UserId;
+    public class Player
+    {
+        private Guid UserId;
 
-		private string Username;
+        private string Username;
 
-		private PlayerCurrency Wallet;
+        private PlayerCurrency Wallet;
 
-		private string deviceId;
+        private string deviceId;
 
-		private string connectionId;
+        private string connectionId;
 
-		public string getUsername()
-		{
-			return null;
-		}
+        public string getUsername()
+        {
+            return null;
+        }
 
-	}
+    }
 
 }

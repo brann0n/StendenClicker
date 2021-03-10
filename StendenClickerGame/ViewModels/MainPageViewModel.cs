@@ -1,4 +1,6 @@
-﻿using StendenClickerGame.Factory;
+﻿using Microsoft.AspNet.SignalR.Client;
+using StendenClickerGame.Factory;
+using StendenClickerGame.Multiplayer;
 using StendenClickerGame.PlayerControls;
 
 using System;
@@ -25,15 +27,24 @@ namespace StendenClickerGame.ViewModels
         {
 			levelGenerator = new LevelGenerator();
 			playerContext = new ApiPlayerHandler();
-			mpProxy = new Multiplayer.MultiplayerHubProxy();
-
+			mpProxy = new MultiplayerHubProxy("http://localhost:50120/signalr");
+            mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 
 			TestCommand = new RelayCommand(() => 
 			{
-				mpProxy.SendTestToServer();
+				//mpProxy.SendTestToServer();
 			});
         }
 
+        private void MpProxy_OnConnectionStateChanged(StateChange state)
+        {
+            //todo: handle state changes, if it cant connect there might be no internet connection
+        }
+
+		public Player getPlayerContext()
+		{
+			return playerContext.getPlayer();
+		}
 
 		/// <summary>
 		/// The important notifier method of changed properties. This function should be called whenever you want to inform other classes that some property has changed.
@@ -43,13 +54,5 @@ namespace StendenClickerGame.ViewModels
 		{
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
-
-
-		public Player getPlayerContext()
-        {
-			return null;
-        }
-
-	}
-	
+	}	
 }
