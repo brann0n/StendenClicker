@@ -1,4 +1,4 @@
-using StendenClickerGame.CurrencyObjects;
+using StendenClicker.Library.CurrencyObjects;
 using System.Collections.Generic;
 
 namespace StendenClickerGame.ViewModels

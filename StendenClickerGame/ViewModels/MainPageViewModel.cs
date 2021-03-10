@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
-using StendenClickerGame.Factory;
+using StendenClicker.Library.Factory;
+using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Multiplayer;
-using StendenClickerGame.PlayerControls;
 
 using System;
 using System.ComponentModel;

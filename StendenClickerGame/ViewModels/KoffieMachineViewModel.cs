@@ -1,4 +1,4 @@
-using StendenClickerGame.Abilities;
+using StendenClicker.Library.Abilities;
 using System.Collections.Generic;
 
 namespace StendenClickerGame.ViewModels
