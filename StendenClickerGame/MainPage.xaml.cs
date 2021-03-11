@@ -31,5 +31,10 @@ namespace StendenClickerGame
         {
 
         }
+
+        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }
