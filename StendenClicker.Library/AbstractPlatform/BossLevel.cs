@@ -2,19 +2,22 @@
 
 using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.AbstractScene;
+using StendenClicker.Library.Models;
 
 namespace StendenClicker.Library.AbstractPlatform
 {
-    public class BossLevel : IAbstractPlatform
+    public class BossLevel : AbstractPlatform
     {
-        public IAbstractMonster getMonster()
+        public BossLevel(PlayerState state) : base(state) { }
+
+        public override IAbstractMonster getMonster()
         {
-            throw new System.NotImplementedException();
+            return new Boss(CurrentPlayerState.LevelsDefeated + 1);
         }
 
-        public IAbstractScene getScene()
+        public override IAbstractScene getScene()
         {
-            throw new System.NotImplementedException();
+            return new BossScene();
         }
     }
 

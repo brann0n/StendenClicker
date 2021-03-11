@@ -1,18 +1,27 @@
+using StendenClicker.Library.Models;
 using System;
 
 namespace StendenClicker.Library.PlayerControls
 {
     public class Player
     {
-        private Guid UserId;
+        /// <summary>
+        /// Generated in the database
+        /// </summary>
+        public Guid UserId { get; set; }
 
-        private string Username;
+        public string Username { get; set; }
 
-        private PlayerCurrency Wallet;
+        public PlayerCurrency Wallet { get; set; }
 
-        private string deviceId;
+        /// <summary>
+        /// This is the physical ID of your device (not MAC)
+        /// </summary>
+        public string deviceId { get; set; }
 
-        private string connectionId;
+        public string connectionId { get; set; }
+
+        public PlayerState State { get; set; }
 
 
         public string getUsername()

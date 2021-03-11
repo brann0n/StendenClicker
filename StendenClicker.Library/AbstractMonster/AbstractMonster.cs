@@ -1,17 +1,40 @@
 using StendenClicker.Library.CurrencyObjects;
+using StendenClicker.Library.PlayerControls;
+using System;
+using System.Collections.Generic;
 
 namespace StendenClicker.Library.AbstractMonster
 {
 	public abstract class AbstractMonster : IAbstractMonster
 	{
-		private int health;
+		protected int Health { get; set; }
+        protected int Damage { get; set; }
+        protected double DamageFactor { get; set; } = 1;
+		protected ulong CurrencyAmount { get; set; }
+        protected string Sprite { get; set; }
+        protected string Name { get; set; }
 
-		private int currencyAmount;
+        public virtual void DoDamage(int damage)
+        {
+            Damage += (int)(DamageFactor * damage);
+        }
 
-        public abstract void doDamage(int damage);
-        public abstract int getHealth();
-        public abstract Image getMonsterAsset();
-        public abstract Currency getReward();
+        public virtual int GetHealth()
+        {
+            return Health - Damage;
+        }
+
+        public virtual bool IsDefeated()
+        {
+            return 0 >= GetHealth();
+        }
+
+        public virtual Image GetMonsterAsset()
+        {
+            return new Image(Sprite);
+        }
+
+        public abstract PlayerCurrency GetReward();
     }
 
 }

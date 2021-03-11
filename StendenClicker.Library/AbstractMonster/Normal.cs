@@ -1,6 +1,9 @@
 
 using StendenClicker.Library.CurrencyObjects;
+using StendenClicker.Library.PlayerControls;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StendenClicker.Library.AbstractMonster
 {
@@ -8,27 +11,26 @@ namespace StendenClicker.Library.AbstractMonster
 	{
         //dictionary mapped with monster name and sprite location
 		private static readonly Dictionary<string, string> monsters;
+        private static readonly int InternalMonsterCount = 11;
 
-		private Currency currency;
-
-        public override void doDamage(int damage)
+        public Normal(int levelNr)
         {
-            throw new System.NotImplementedException();
+            int bossNumber = (levelNr / 5) - 1;
+            Random r = new Random();
+            int monsterIndex = r.Next(1, InternalMonsterCount);
+
+            var item = monsters.ToArray()[monsterIndex];
+            Sprite = item.Value; //hack code because this dictionary is going away
+            Name = item.Key;
+
+            //health and currency calculations.
+            Health = 100 * bossNumber;
+            CurrencyAmount = (ulong)Math.Pow(levelNr, 2);
         }
 
-        public override int getHealth()
+        public override PlayerCurrency GetReward()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override Image getMonsterAsset()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Currency getReward()
-        {
-            throw new System.NotImplementedException();
+            return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = CurrencyAmount };
         }
     }
 

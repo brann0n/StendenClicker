@@ -1,18 +1,21 @@
 
 using StendenClicker.Library.CurrencyObjects;
+using StendenClicker.Library.PlayerControls;
+using System.Collections.Generic;
 
 namespace StendenClicker.Library.AbstractMonster
 {
 	public interface IAbstractMonster
 	{
-		int getHealth();
+		int GetHealth();
 
-		void doDamage(int damage);
+		void DoDamage(int damage);
 
-		Currency getReward();
+		PlayerCurrency GetReward();
 
-		Image getMonsterAsset();
+		Image GetMonsterAsset();
 
+		bool IsDefeated();
 	}
 
 }

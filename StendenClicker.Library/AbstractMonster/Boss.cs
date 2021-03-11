@@ -1,34 +1,43 @@
 
 using StendenClicker.Library.CurrencyObjects;
 using System.Collections.Generic;
+using System;
+using System.Linq;
+using StendenClicker.Library.PlayerControls;
 
 namespace StendenClicker.Library.AbstractMonster
 {
-	public class Boss : AbstractMonster
-	{
-		private static readonly Dictionary<string, string> bosses;
+    public class Boss : AbstractMonster
+    {
+        private static readonly Dictionary<string, string> Bosses;
+        private static readonly int InternalBossCount = 7;
 
-		private Currency currency;
-
-
-        public override void doDamage(int damage)
+        public Boss(int levelNr)
         {
-            throw new System.NotImplementedException();
+            //the first 7 bosses need to be in order, then they can be randomized
+            int bossNumber = (levelNr / 5) - 1;
+
+            Random r = new Random();
+            if (bossNumber >= InternalBossCount)
+            {
+                //this means all hero's are unlocked, now you can randomize the boss sprites
+                bossNumber = r.Next(1, InternalBossCount);
+            }
+
+            var item = Bosses.ToArray()[bossNumber];
+            Sprite = item.Value; //hack code because this dictionary is going away
+            Name = item.Key;
+
+            //health of the boss is 200 times its own boss number
+            Health = 200 * bossNumber;
+
+            //currency is 3 ec per boss and a large amount of spark coins
+            CurrencyAmount = (ulong)Math.Pow(levelNr, 3);
         }
 
-        public override int getHealth()
+        public override PlayerCurrency GetReward()
         {
-            throw new System.NotImplementedException();
-        }
-
-        public override Image getMonsterAsset()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override Currency getReward()
-        {
-            throw new System.NotImplementedException();
+            return new PlayerCurrency { EuropeanCredit = 3, SparkCoin = CurrencyAmount};
         }
     }
 

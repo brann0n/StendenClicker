@@ -1,10 +1,12 @@
+using System;
+
 namespace StendenClicker.Library.PlayerControls
 {
 	public struct PlayerCurrency
 	{
-		private double SparkCoin;
+		public ulong SparkCoin { get; set; }
 
-		private double EuropeanCredit;
+		public ulong EuropeanCredit { get; set; }
 
 	}
 

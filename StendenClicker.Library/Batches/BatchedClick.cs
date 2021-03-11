@@ -6,7 +6,7 @@ namespace StendenClicker.Library.Batches
 
 		public void addClick()
 		{
-			processData<BatchedClick>();
+			
 		}
 
         public void processData<T>() where T : BatchedClick

@@ -1,20 +1,21 @@
-
-
 using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.AbstractScene;
+using StendenClicker.Library.Models;
 
 namespace StendenClicker.Library.AbstractPlatform
 {
-    public class NormalLevel : IAbstractPlatform
+    public class NormalLevel : AbstractPlatform
     {
-        public IAbstractMonster getMonster()
+        public NormalLevel(PlayerState state) : base(state) { }
+
+        public override IAbstractMonster getMonster()
         {
-            throw new System.NotImplementedException();
+            return new Normal(CurrentPlayerState.LevelsDefeated);
         }
 
-        public IAbstractScene getScene()
+        public override IAbstractScene getScene()
         {
-            throw new System.NotImplementedException();
+            return new NormalScene();
         }
     }
 
