@@ -21,7 +21,7 @@ namespace StendenClickerGame.ViewModels
 		private ApiPlayerHandler playerContext;
 		private Multiplayer.MultiplayerHubProxy mpProxy;
 		
-		public CurrencyTrayViewModel CurrencyTray { get; private set; }
+		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public ObservableCollection<test> herolist { get; set; }
 	
 		public MainPageViewModel()

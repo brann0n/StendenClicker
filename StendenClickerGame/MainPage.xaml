@@ -156,8 +156,12 @@
             </Grid>
 
             <Grid Grid.Row="1">
-                <Image Source="Assets/nse.png" Tapped="{Binding CurrencyTray.Test}" ></Image>
-            </Grid>
+
+				<Button Command="{Binding CurrencyTray.TappedEvent}">
+					<Image Source="Assets/nse.png">
+					</Image>
+				</Button>
+			</Grid>
 
             <!--Platform-->
             <!--Ellipse Grid.Row="2" Fill="#E1E1E1" Margin="10,10,20,20"/-->

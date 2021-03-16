@@ -11,12 +11,14 @@ namespace StendenClickerGame.ViewModels
 
 		public List<Currency> DisplayableCurrency;
 
+		public ICommand TappedEvent { get; set; }
+
 		public CurrencyTrayViewModel()
 		{
-			
+			TappedEvent = new RelayCommand(Test);
 		}
 
-		public void Test(object sender, TappedRoutedEventArgs args)
+		public void Test()
 		{
 			
 		}
