@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StendenClickerApi.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -9,18 +10,15 @@ namespace StendenClickerApi.Controllers
     [RoutePrefix("api/Assets")]
     public class AssetsController : Controller
     {
+        StendenClickerDatabase db = new StendenClickerDatabase();
         public ActionResult GetMonsters()
-		{
-            //todo: get all regular monster assets from the database
-
-            return Json("");
+		{     
+            return Json(db.Monsters);
 		}
 
-        public ActionResult GetHeros()
+        public ActionResult GetHeroes()
 		{
-            //todo: get all heros and their info from the database
-
-            return Json("");
+            return Json(db.Heroes);
 		}
 
         public ActionResult GetScenes()
