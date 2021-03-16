@@ -20,22 +20,17 @@ namespace StendenClickerGame.ViewModels
 		private LevelGenerator levelGenerator;
 		private ApiPlayerHandler playerContext;
 		private Multiplayer.MultiplayerHubProxy mpProxy;
-
-		public ICommand TestCommand { get; set; }
-
+		
+		public CurrencyTrayViewModel CurrencyTray { get; private set; }
 		public ObservableCollection<test> herolist { get; set; }
-
+	
 		public MainPageViewModel()
         {
 			levelGenerator = new LevelGenerator();
 			playerContext = new ApiPlayerHandler();
 			mpProxy = new MultiplayerHubProxy("http://localhost:50120/signalr");
             mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
-			
-			TestCommand = new RelayCommand(() => 
-			{
-				//mpProxy.SendTestToServer();
-			});
+			CurrencyTray = new CurrencyTrayViewModel();
 
 			//asl test om te kijken of de heros aan de shop worden toegevoegd
 			herolist = new ObservableCollection<test>()
@@ -59,7 +54,5 @@ namespace StendenClickerGame.ViewModels
 		{
 			return playerContext.getPlayer();
 		}
-
-		
 	}	
 }

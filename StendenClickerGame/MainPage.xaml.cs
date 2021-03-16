@@ -36,5 +36,10 @@ namespace StendenClickerGame
         {
 
         }
+
+        private void Grid_LayoutUpdated(object sender, object e)
+        {
+
+        }
     }
 }
