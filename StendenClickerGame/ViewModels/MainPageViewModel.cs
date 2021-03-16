@@ -17,7 +17,7 @@ namespace StendenClickerGame.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-		private LevelGenerator levelGenerator;
+
 		private ApiPlayerHandler playerContext;
 		private Multiplayer.MultiplayerHubProxy mpProxy;
 		
@@ -26,7 +26,7 @@ namespace StendenClickerGame.ViewModels
 	
 		public MainPageViewModel()
         {
-			levelGenerator = new LevelGenerator();
+			
 			playerContext = new ApiPlayerHandler();
 			mpProxy = new MultiplayerHubProxy("http://localhost:50120/signalr");
             mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
