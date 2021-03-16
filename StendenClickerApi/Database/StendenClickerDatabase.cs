@@ -24,9 +24,13 @@ namespace StendenClickerApi.Database
 
 		public virtual DbSet<Monster> Monsters { get; set; }
 		public virtual DbSet<Boss> Bosses { get; set; }
-		public virtual DbSet<Hero> Heros { get; set; }
+		public virtual DbSet<Hero> Heroes { get; set; }
 		public virtual DbSet<ImageAsset> ImageAssets { get; set; }
 		public virtual DbSet<Upgrade> Upgrades { get; set; }
+		public virtual DbSet<Player> Players { get; set; }
+		public virtual DbSet<PlayerHero> PlayerHeroes { get; set; }
+		public virtual DbSet<Friendship> Friendships { get; set; }
+		public virtual DbSet<MultiPlayerSession> Sessions { get; set; }
 	}
 
 	public class Monster
@@ -53,9 +57,14 @@ namespace StendenClickerApi.Database
 		public string HeroName { get; set; }
 		public string HeroInformation { get; set; }
 		public int HeroCost { get; set; }
+		public int HeroAssetRefId { get; set; }
+		public ImageAsset HeroAsset { get; set; }
 
 		[ForeignKey("HeroRefId")]
 		public ICollection<Upgrade> Upgrades { get; set; }
+
+		[ForeignKey("HeroRefId")]
+		public ICollection<PlayerHero> Players { get; set; }
 	}
 
 	public class ImageAsset
@@ -70,6 +79,9 @@ namespace StendenClickerApi.Database
 
 		[ForeignKey("BossAssetRefId")]
 		public ICollection<Boss> Bosses { get; set; }
+
+		[ForeignKey("HeroAssetRefId")]
+		public ICollection<Hero> Heroes { get; set; }
 	}
 
 	public class Upgrade
@@ -81,5 +93,68 @@ namespace StendenClickerApi.Database
 
 		public int HeroRefId { get; set; }
 		public Hero Hero { get; set; }
+	}
+
+	public class Player
+	{
+		public int PlayerId { get; set; }
+		public string PlayerGuid { get; set; }
+		public string PlayerName { get; set; }
+		public string DeviceId { get; set; }
+		public string ConnectionId { get; set; }
+
+		[ForeignKey("PlayerRefId")]
+		public ICollection<PlayerHero> Heroes { get; set; }
+
+		//friendship collections -> there are 2 because you can see who you are friends with, and who are friends with you.
+		[ForeignKey("Player1RefId")]
+		public ICollection<Friendship> Friendships1 { get; set; }
+		[ForeignKey("Player2RefId")]
+		public ICollection<Friendship> Friendships2 { get; set; }
+
+		[ForeignKey("Player1RefId")]
+		public ICollection<MultiPlayerSession> Sessions1 { get; set; }
+		[ForeignKey("Player2RefId")]
+		public ICollection<MultiPlayerSession> Sessions2 { get; set; }
+		[ForeignKey("Player3RefId")]
+		public ICollection<MultiPlayerSession> Sessions3 { get; set; }
+		[ForeignKey("Player4RefId")]
+		public ICollection<MultiPlayerSession> Sessions4 { get; set; }
+	}
+
+	public class PlayerHero
+	{
+		public int PlayerRefId { get; set; }
+		public int HeroRefId { get; set; }
+
+		public string UnlockedTimestamp { get; set; }
+
+		public Player Player { get; set; }
+		public Hero Hero { get; set; }
+	}
+
+	public class Friendship
+	{
+		public int Player1RefId { get; set; }
+		public int Player2RefId { get; set; }
+
+		public Player Player1 { get; set; }
+		public Player Player2 { get; set; }
+	}
+
+	public class MultiPlayerSession
+	{
+		//many-to-many-to-many-to-many?
+		public int SessionId { get; set; }
+
+		public int Player1RefId { get; set; }
+		public int Player2RefId { get; set; }
+		public int Player3RefId { get; set; }
+		public int Player4RefId { get; set; }
+
+		public Player Player1 { get; set; }
+		public Player Player2 { get; set; }
+		public Player Player3 { get; set; }
+		public Player Player4 { get; set; }
 	}
 }
