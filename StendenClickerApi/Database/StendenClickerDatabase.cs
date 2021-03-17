@@ -41,6 +41,7 @@ namespace StendenClickerApi.Database
 		public int MonsterId { get; set; }
 		public string MonsterName { get; set; }
 		public int BaseHealth { get; set; }
+		[ForeignKey("MonsterAsset")]
 		public int MonsterAssetRefId { get; set; }
 		public ImageAsset MonsterAsset { get; set; }
 	}
@@ -51,6 +52,7 @@ namespace StendenClickerApi.Database
 		public int BossId { get; set; }
 		public string BossName { get; set; }
 		public int BaseHealth { get; set; }
+		[ForeignKey("BossAsset")]
 		public int BossAssetRefId { get; set; }
 		public ImageAsset BossAsset { get; set; }
 	}
@@ -62,15 +64,15 @@ namespace StendenClickerApi.Database
 		public string HeroName { get; set; }
 		public string HeroInformation { get; set; }
 		public int HeroCost { get; set; }
+
+		[ForeignKey("HeroAsset")]
 		public int HeroAssetRefId { get; set; }
 		public ImageAsset HeroAsset { get; set; }
 
-		[ForeignKey("HeroRefId")]
 		public ICollection<Upgrade> Upgrades { get; set; }
-
-		[ForeignKey("HeroRefId")]
 		public ICollection<PlayerHero> Players { get; set; }
 	}
+
 
 	public class ImageAsset
 	{
@@ -80,16 +82,9 @@ namespace StendenClickerApi.Database
 		public string Base64Image { get; set; }
 
 		//for every foreignkey you need an ICollection of those items in the code-first model
-		[ForeignKey("MonsterAssetRefId")]
 		public ICollection<Monster> Monsters { get; set; }
-
-		[ForeignKey("BossAssetRefId")]
 		public ICollection<Boss> Bosses { get; set; }
-
-		[ForeignKey("HeroAssetRefId")]
 		public ICollection<Hero> Heroes { get; set; }
-
-		[ForeignKey("SceneAssetRefId")]
 		public ICollection<Scene> Scenes { get; set; }
 	}
 
@@ -101,6 +96,7 @@ namespace StendenClickerApi.Database
 		public int UpgradeCost { get; set; }
 		public bool UpgradeIsAbility { get; set; }
 
+		[ForeignKey("Hero")]
 		public int HeroRefId { get; set; }
 		public Hero Hero { get; set; }
 	}
@@ -114,30 +110,23 @@ namespace StendenClickerApi.Database
 		public string DeviceId { get; set; }
 		public string ConnectionId { get; set; }
 
-		[ForeignKey("PlayerRefId")]
 		public ICollection<PlayerHero> Heroes { get; set; }
 
 		//friendship collections -> there are 2 because you can see who you are friends with, and who are friends with you.
-		[ForeignKey("Player1RefId")]
 		public ICollection<Friendship> Friendships1 { get; set; }
-		[ForeignKey("Player2RefId")]
 		public ICollection<Friendship> Friendships2 { get; set; }
-
-		[ForeignKey("Player1RefId")]
 		public ICollection<MultiPlayerSession> Sessions1 { get; set; }
-		[ForeignKey("Player2RefId")]
 		public ICollection<MultiPlayerSession> Sessions2 { get; set; }
-		[ForeignKey("Player3RefId")]
 		public ICollection<MultiPlayerSession> Sessions3 { get; set; }
-		[ForeignKey("Player4RefId")]
 		public ICollection<MultiPlayerSession> Sessions4 { get; set; }
 	}
 
 	public class PlayerHero
 	{
-		[Key, Column(Order = 0)]
+		[Key, ForeignKey("Player"), Column(Order = 0)]
 		public int PlayerRefId { get; set; }
-		[Key, Column(Order = 1)]
+
+		[Key, ForeignKey("Hero"), Column(Order = 1)]
 		public int HeroRefId { get; set; }
 
 		public string UnlockedTimestamp { get; set; }
@@ -148,9 +137,9 @@ namespace StendenClickerApi.Database
 
 	public class Friendship
 	{
-		[Key, Column(Order = 0)]
+		[Key, ForeignKey("Player1"), Column(Order = 0)]
 		public int Player1RefId { get; set; }
-		[Key, Column(Order = 1)]
+		[Key, ForeignKey("Player2"), Column(Order = 1)]
 		public int Player2RefId { get; set; }
 
 		public Player Player1 { get; set; }
@@ -163,9 +152,13 @@ namespace StendenClickerApi.Database
 		[Key]
 		public int SessionId { get; set; }
 
+		[ForeignKey("Player1")]
 		public int Player1RefId { get; set; }
+		[ForeignKey("Player2")]
 		public int Player2RefId { get; set; }
+		[ForeignKey("Player3")]
 		public int Player3RefId { get; set; }
+		[ForeignKey("Player4")]
 		public int Player4RefId { get; set; }
 
 		public Player Player1 { get; set; }
@@ -180,6 +173,7 @@ namespace StendenClickerApi.Database
 		public int SceneId { get; set; }	
 		public string SceneName { get; set; }
 
+		[ForeignKey("SceneAsset")]
 		public int SceneAssetRefId { get; set; }
 		public ImageAsset SceneAsset { get; set; }
 	}

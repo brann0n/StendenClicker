@@ -1,4 +1,5 @@
-﻿using StendenClickerApi.Database;
+﻿using Newtonsoft.Json;
+using StendenClickerApi.Database;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,17 @@ namespace StendenClickerApi.Controllers
     public class AssetsController : Controller
     {
         StendenClickerDatabase db = new StendenClickerDatabase();
+
+        //GET: api/Assets/GetMonsters
         public ActionResult GetMonsters()
 		{
-            return Json(db.Monsters);
+            return new JsonStringResult(JsonConvert.SerializeObject(db.Monsters));
 		}
 
         public ActionResult GetHeroes()
 		{
-            return Json(db.Heroes);
-		}
+            return new JsonStringResult(JsonConvert.SerializeObject(db.Heroes));
+        }
 
         public ActionResult GetScenes()
 		{
@@ -27,5 +30,14 @@ namespace StendenClickerApi.Controllers
 
             return Json("");
 		}
+    }
+
+    public class JsonStringResult : ContentResult
+    {
+        public JsonStringResult(string json)
+        {
+            Content = json;
+            ContentType = "application/json";
+        }
     }
 }

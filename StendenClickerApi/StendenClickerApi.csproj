@@ -157,9 +157,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\MultiplayerHub.cs" />
-    <Compile Include="Migrations\202103171018525_Full-Database.cs" />
-    <Compile Include="Migrations\202103171018525_Full-Database.Designer.cs">
-      <DependentUpon>202103171018525_Full-Database.cs</DependentUpon>
+    <Compile Include="Migrations\202103171136373_Full.cs" />
+    <Compile Include="Migrations\202103171136373_Full.Designer.cs">
+      <DependentUpon>202103171136373_Full.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -198,8 +198,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202103171018525_Full-Database.resx">
-      <DependentUpon>202103171018525_Full-Database.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103171136373_Full.resx">
+      <DependentUpon>202103171136373_Full.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
