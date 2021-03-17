@@ -16,9 +16,12 @@ namespace StendenClickerApi.Controllers
         //GET: api/Assets/GetMonsters
         public ActionResult GetMonsters()
 		{
-            List<Monster> test = db.Monsters.ToList();
+            return new JsonStringResult(JsonConvert.SerializeObject(db.Monsters));
+		}
 
-            return new JsonStringResult(JsonConvert.SerializeObject(test));
+        public ActionResult GetBosses()
+		{
+            return new JsonStringResult(JsonConvert.SerializeObject(db.Bosses));
 		}
 
         public ActionResult GetHeroes()
@@ -26,18 +29,11 @@ namespace StendenClickerApi.Controllers
             return new JsonStringResult(JsonConvert.SerializeObject(db.Heroes));
         }
 
-        public ActionResult GetPlayers()
-        {
-            List<Player> test = db.Players.ToList();
-            return new JsonStringResult(JsonConvert.SerializeObject(test));
-        }
-
         public ActionResult GetScenes()
 		{
-            //todo: get all scenes from the database
+            return new JsonStringResult(JsonConvert.SerializeObject(db.Scenes));
+        }
 
-            return Json("");
-		}
     }
 
     public class JsonStringResult : ContentResult
