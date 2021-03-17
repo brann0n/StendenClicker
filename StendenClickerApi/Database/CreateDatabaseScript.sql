@@ -69,9 +69,9 @@ BEGIN
     CREATE TABLE [dbo].[MultiPlayerSessions] (
         [SessionId] [int] NOT NULL IDENTITY,
         [Player1RefId] [int] NOT NULL,
-        [Player2RefId] [int] NOT NULL,
-        [Player3RefId] [int] NOT NULL,
-        [Player4RefId] [int] NOT NULL,
+        [Player2RefId] [int],
+        [Player3RefId] [int],
+        [Player4RefId] [int],
         [Player_PlayerId] [int],
         [Player_PlayerId1] [int],
         [Player_PlayerId2] [int],
@@ -115,13 +115,13 @@ BEGIN
     ALTER TABLE [dbo].[PlayerHeroes] ADD CONSTRAINT [FK_dbo.PlayerHeroes_dbo.Heroes_HeroRefId] FOREIGN KEY ([HeroRefId]) REFERENCES [dbo].[Heroes] ([HeroId]) ON DELETE CASCADE
     ALTER TABLE [dbo].[PlayerHeroes] ADD CONSTRAINT [FK_dbo.PlayerHeroes_dbo.Players_PlayerRefId] FOREIGN KEY ([PlayerRefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
     ALTER TABLE [dbo].[Friendships] ADD CONSTRAINT [FK_dbo.Friendships_dbo.Players_Player1RefId] FOREIGN KEY ([Player1RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
-    ALTER TABLE [dbo].[Friendships] ADD CONSTRAINT [FK_dbo.Friendships_dbo.Players_Player2RefId] FOREIGN KEY ([Player2RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
+    ALTER TABLE [dbo].[Friendships] ADD CONSTRAINT [FK_dbo.Friendships_dbo.Players_Player2RefId] FOREIGN KEY ([Player2RefId]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[Friendships] ADD CONSTRAINT [FK_dbo.Friendships_dbo.Players_Player_PlayerId] FOREIGN KEY ([Player_PlayerId]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[Friendships] ADD CONSTRAINT [FK_dbo.Friendships_dbo.Players_Player_PlayerId1] FOREIGN KEY ([Player_PlayerId1]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player1RefId] FOREIGN KEY ([Player1RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
-    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player2RefId] FOREIGN KEY ([Player2RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
-    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player3RefId] FOREIGN KEY ([Player3RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
-    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player4RefId] FOREIGN KEY ([Player4RefId]) REFERENCES [dbo].[Players] ([PlayerId]) ON DELETE CASCADE
+    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player2RefId] FOREIGN KEY ([Player2RefId]) REFERENCES [dbo].[Players] ([PlayerId])
+    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player3RefId] FOREIGN KEY ([Player3RefId]) REFERENCES [dbo].[Players] ([PlayerId])
+    ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player4RefId] FOREIGN KEY ([Player4RefId]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player_PlayerId] FOREIGN KEY ([Player_PlayerId]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player_PlayerId1] FOREIGN KEY ([Player_PlayerId1]) REFERENCES [dbo].[Players] ([PlayerId])
     ALTER TABLE [dbo].[MultiPlayerSessions] ADD CONSTRAINT [FK_dbo.MultiPlayerSessions_dbo.Players_Player_PlayerId2] FOREIGN KEY ([Player_PlayerId2]) REFERENCES [dbo].[Players] ([PlayerId])

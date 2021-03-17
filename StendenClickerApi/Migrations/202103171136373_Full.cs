@@ -81,7 +81,7 @@ namespace StendenClickerApi.Migrations
                     })
                 .PrimaryKey(t => new { t.Player1RefId, t.Player2RefId })
                 .ForeignKey("dbo.Players", t => t.Player1RefId, cascadeDelete: true)
-                .ForeignKey("dbo.Players", t => t.Player2RefId, cascadeDelete: true)
+                .ForeignKey("dbo.Players", t => t.Player2RefId, cascadeDelete: false)
                 .ForeignKey("dbo.Players", t => t.Player_PlayerId)
                 .ForeignKey("dbo.Players", t => t.Player_PlayerId1)
                 .Index(t => t.Player1RefId)
@@ -95,9 +95,9 @@ namespace StendenClickerApi.Migrations
                     {
                         SessionId = c.Int(nullable: false, identity: true),
                         Player1RefId = c.Int(nullable: false),
-                        Player2RefId = c.Int(nullable: false),
-                        Player3RefId = c.Int(nullable: false),
-                        Player4RefId = c.Int(nullable: false),
+                        Player2RefId = c.Int(nullable: true),
+                        Player3RefId = c.Int(nullable: true),
+                        Player4RefId = c.Int(nullable: true),
                         Player_PlayerId = c.Int(),
                         Player_PlayerId1 = c.Int(),
                         Player_PlayerId2 = c.Int(),
@@ -105,9 +105,9 @@ namespace StendenClickerApi.Migrations
                     })
                 .PrimaryKey(t => t.SessionId)
                 .ForeignKey("dbo.Players", t => t.Player1RefId, cascadeDelete: true)
-                .ForeignKey("dbo.Players", t => t.Player2RefId, cascadeDelete: true)
-                .ForeignKey("dbo.Players", t => t.Player3RefId, cascadeDelete: true)
-                .ForeignKey("dbo.Players", t => t.Player4RefId, cascadeDelete: true)
+                .ForeignKey("dbo.Players", t => t.Player2RefId, cascadeDelete: false)
+                .ForeignKey("dbo.Players", t => t.Player3RefId, cascadeDelete: false)
+                .ForeignKey("dbo.Players", t => t.Player4RefId, cascadeDelete: false)
                 .ForeignKey("dbo.Players", t => t.Player_PlayerId)
                 .ForeignKey("dbo.Players", t => t.Player_PlayerId1)
                 .ForeignKey("dbo.Players", t => t.Player_PlayerId2)
