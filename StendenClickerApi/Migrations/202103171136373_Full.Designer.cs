@@ -7,13 +7,13 @@ namespace StendenClickerApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class FullDatabase : IMigrationMetadata
+    public sealed partial class Full : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(FullDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Full));
         
         string IMigrationMetadata.Id
         {
-            get { return "202103171018525_Full-Database"; }
+            get { return "202103171136373_Full"; }
         }
         
         string IMigrationMetadata.Source
