@@ -187,7 +187,7 @@
                             ItemsSource="{Binding AbilitiesList}" Padding="10" Margin="0,15,0,15" ShowsScrollingPlaceholders="False" >
                             <ListView.ItemsPanel>
                                 <ItemsPanelTemplate>
-                                    <StackPanel Orientation="Horizontal"/>
+                                    <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" Orientation="Horizontal"/>
                                 </ItemsPanelTemplate>
                             </ListView.ItemsPanel>
                             <ListView.ItemTemplate>
@@ -246,7 +246,22 @@
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
                 <Grid Grid.Row="0" Margin="0,10,0,10">
-                    <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold">Depresso lvl. 1016</TextBlock>
+                    <Grid HorizontalAlignment="center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="45*"/>
+                            <ColumnDefinition Width="10*"/>
+                            <ColumnDefinition Width="45*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid Grid.Column="0">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">Depresso</TextBlock>
+                        </Grid>
+                        <Grid Grid.Column="1">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">lvl.</TextBlock>
+                        </Grid>
+                        <Grid Grid.Column="2">
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold">1016</TextBlock>
+                        </Grid>
+                    </Grid>
                 </Grid>
                 <Grid Grid.Row="1" Margin="0,10,0,10">
                     <ProgressBar Height="25" Width="300" Value="80" Foreground="Red"/>
