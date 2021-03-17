@@ -3,7 +3,7 @@ using System;
 
 namespace StendenClicker.Library.CurrencyObjects
 {
-    public abstract class Currency
+    public abstract class Currency : IDisposable
     {
         private Image image;
 
@@ -24,8 +24,19 @@ namespace StendenClicker.Library.CurrencyObjects
         {
             return image;
         }
+        protected virtual void Dispose(bool disposing)
+        {
+            image = null;
+        }
 
-    }
+        public void Dispose()
+		{           
+            // Dispose of unmanaged resources.
+            Dispose(true);
+            // Suppress finalization.
+            GC.SuppressFinalize(this);
+        }
+	}
 
 }
 
