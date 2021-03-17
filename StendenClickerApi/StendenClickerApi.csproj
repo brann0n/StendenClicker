@@ -157,10 +157,16 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\MultiplayerHub.cs" />
+    <Compile Include="Migrations\202103171018525_Full-Database.cs" />
+    <Compile Include="Migrations\202103171018525_Full-Database.Designer.cs">
+      <DependentUpon>202103171018525_Full-Database.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\CreateDatabaseScript.sql" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -190,6 +196,11 @@
       <Project>{8f9f67b8-33b5-4224-8df1-ab970d206ee3}</Project>
       <Name>StendenClicker.Library</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202103171018525_Full-Database.resx">
+      <DependentUpon>202103171018525_Full-Database.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

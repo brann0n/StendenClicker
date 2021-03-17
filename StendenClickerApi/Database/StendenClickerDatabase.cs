@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Linq;
@@ -31,10 +32,12 @@ namespace StendenClickerApi.Database
 		public virtual DbSet<PlayerHero> PlayerHeroes { get; set; }
 		public virtual DbSet<Friendship> Friendships { get; set; }
 		public virtual DbSet<MultiPlayerSession> Sessions { get; set; }
+		public virtual DbSet<Scene> Scenes { get; set; }
 	}
 
 	public class Monster
 	{
+		[Key]
 		public int MonsterId { get; set; }
 		public string MonsterName { get; set; }
 		public int BaseHealth { get; set; }
@@ -44,6 +47,7 @@ namespace StendenClickerApi.Database
 
 	public class Boss
 	{
+		[Key]
 		public int BossId { get; set; }
 		public string BossName { get; set; }
 		public int BaseHealth { get; set; }
@@ -53,6 +57,7 @@ namespace StendenClickerApi.Database
 
 	public class Hero
 	{
+		[Key]
 		public int HeroId { get; set; }
 		public string HeroName { get; set; }
 		public string HeroInformation { get; set; }
@@ -69,6 +74,7 @@ namespace StendenClickerApi.Database
 
 	public class ImageAsset
 	{
+		[Key]
 		public int AssetId { get; set; }
 		public string ImageDescription { get; set; }
 		public string Base64Image { get; set; }
@@ -82,10 +88,14 @@ namespace StendenClickerApi.Database
 
 		[ForeignKey("HeroAssetRefId")]
 		public ICollection<Hero> Heroes { get; set; }
+
+		[ForeignKey("SceneAssetRefId")]
+		public ICollection<Scene> Scenes { get; set; }
 	}
 
 	public class Upgrade
 	{
+		[Key]
 		public int UpgradeId { get; set; }
 		public string UpgradeName { get; set; }
 		public int UpgradeCost { get; set; }
@@ -97,6 +107,7 @@ namespace StendenClickerApi.Database
 
 	public class Player
 	{
+		[Key]
 		public int PlayerId { get; set; }
 		public string PlayerGuid { get; set; }
 		public string PlayerName { get; set; }
@@ -124,7 +135,9 @@ namespace StendenClickerApi.Database
 
 	public class PlayerHero
 	{
+		[Key, Column(Order = 0)]
 		public int PlayerRefId { get; set; }
+		[Key, Column(Order = 1)]
 		public int HeroRefId { get; set; }
 
 		public string UnlockedTimestamp { get; set; }
@@ -135,7 +148,9 @@ namespace StendenClickerApi.Database
 
 	public class Friendship
 	{
+		[Key, Column(Order = 0)]
 		public int Player1RefId { get; set; }
+		[Key, Column(Order = 1)]
 		public int Player2RefId { get; set; }
 
 		public Player Player1 { get; set; }
@@ -145,6 +160,7 @@ namespace StendenClickerApi.Database
 	public class MultiPlayerSession
 	{
 		//many-to-many-to-many-to-many?
+		[Key]
 		public int SessionId { get; set; }
 
 		public int Player1RefId { get; set; }
@@ -156,5 +172,15 @@ namespace StendenClickerApi.Database
 		public Player Player2 { get; set; }
 		public Player Player3 { get; set; }
 		public Player Player4 { get; set; }
+	}
+
+	public class Scene
+	{
+		[Key]
+		public int SceneId { get; set; }	
+		public string SceneName { get; set; }
+
+		public int SceneAssetRefId { get; set; }
+		public ImageAsset SceneAsset { get; set; }
 	}
 }
