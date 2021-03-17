@@ -12,7 +12,7 @@ namespace StendenClickerApi.Controllers
     {
         StendenClickerDatabase db = new StendenClickerDatabase();
         public ActionResult GetMonsters()
-		{     
+		{
             return Json(db.Monsters);
 		}
 
