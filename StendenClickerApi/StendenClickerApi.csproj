@@ -167,9 +167,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Hubs\MultiplayerHub.cs" />
-    <Compile Include="Migrations\202103171345293_test1.cs" />
-    <Compile Include="Migrations\202103171345293_test1.Designer.cs">
-      <DependentUpon>202103171345293_test1.cs</DependentUpon>
+    <Compile Include="Migrations\202103171400517_FinalMigration.cs" />
+    <Compile Include="Migrations\202103171400517_FinalMigration.Designer.cs">
+      <DependentUpon>202103171400517_FinalMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -208,8 +208,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202103171345293_test1.resx">
-      <DependentUpon>202103171345293_test1.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202103171400517_FinalMigration.resx">
+      <DependentUpon>202103171400517_FinalMigration.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
