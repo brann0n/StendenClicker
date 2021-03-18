@@ -22,7 +22,7 @@ namespace StendenClicker.Tests
 		{
 			levelGenerator = new LevelGenerator();
 			players = new List<Player>();
-			players.Add(new Player { }) ;
+			players.Add(new Player { });
 		}
 
 

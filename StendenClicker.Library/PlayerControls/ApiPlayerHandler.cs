@@ -14,7 +14,7 @@ namespace StendenClicker.Library.PlayerControls
 		/// </summary>
 		/// <param name="DeviceID"></param>
 		/// <returns></returns>
-		public async Task<Player> GetPlayerState(string DeviceID)
+		public async Task<Player> GetPlayerStateAsync(string DeviceID)
 		{
 			//todo: make webrequest OR signalR code to backup and retrieve this object
 			Player player;

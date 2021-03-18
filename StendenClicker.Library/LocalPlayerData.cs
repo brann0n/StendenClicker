@@ -31,4 +31,5 @@ namespace StendenClicker.Library
             var path = Path.Combine(Environment.CurrentDirectory, filename);
             File.WriteAllText(path, JsonConvert.SerializeObject(data));
         }
+    }
 }
