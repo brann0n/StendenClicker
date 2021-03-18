@@ -9,10 +9,10 @@ namespace StendenClicker.Library
 {
     public class LocalPlayerData
     {
-        public static Player LoadLocalPlayerData() => LoadPlayerData<Player>("player_data.json");
-        public static void SaveLocalPlayerData(Player player) => SavePlayerData("player_data.json", player);
+        public static Player LoadLocalPlayerData() => LoadLocalData<Player>("player_data.json");
+        public static void SaveLocalPlayerData(Player player) => SaveLocalData(player, "player_data.json");     
 
-        private static T LoadPlayerData<T>(string filename) where T : new()
+        public static T LoadLocalData<T>(string filename) where T : new()
         {
             var path = Path.Combine(Environment.CurrentDirectory, filename);
             if (!File.Exists(path))
@@ -26,7 +26,7 @@ namespace StendenClicker.Library
             return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
         }
 
-        private static void SavePlayerData(string filename, Player data)
+        public static void SaveLocalData<T>(T data, string filename)
         {
             var path = Path.Combine(Environment.CurrentDirectory, filename);
             File.WriteAllText(path, JsonConvert.SerializeObject(data));

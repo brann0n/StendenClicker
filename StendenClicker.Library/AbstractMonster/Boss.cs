@@ -9,8 +9,22 @@ namespace StendenClicker.Library.AbstractMonster
 {
     public class Boss : AbstractMonster
     {
-        private static readonly Dictionary<string, string> Bosses;
-        private static readonly int InternalBossCount = 7;
+        private static readonly List<Models.DatabaseModels.Boss> Bosses;
+        private static int InternalBossCount { get { return Bosses.Count; } }
+
+        static Boss()
+		{
+            var response = RestHelper.GetRequestAsync("api/Assets/bosses").GetAwaiter().GetResult();
+            Bosses = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Boss>>(response.Content);
+            if(Bosses != null)
+			{
+                LocalPlayerData.SaveLocalData(Bosses, "bosses-asset-data.json");
+            }
+			else
+			{
+                Bosses = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Boss>>("bosses-asset-data.json");
+			}
+		}
 
         public Boss(int levelNr)
         {
@@ -24,9 +38,10 @@ namespace StendenClicker.Library.AbstractMonster
                 bossNumber = r.Next(1, InternalBossCount);
             }
 
-            var item = Bosses.ToArray()[bossNumber];
-            Sprite = item.Value; //hack code because this dictionary is going away
-            Name = item.Key;
+            var item = Bosses.FirstOrDefault(n => n.BossId == bossNumber);
+            if (item == null) throw new Exception("No bosses were loaded, make sure you have an internet connection.");
+            Sprite = item.BossAsset.Base64Image; 
+            Name = item.BossName;
 
             //health of the boss is 200 times its own boss number
             Health = 200 * bossNumber;

@@ -20,7 +20,7 @@ namespace StendenClickerApi.Controllers
         /// <param name="device_id"></param>
         /// <returns></returns>
         [ApiKeySecurity, HttpGet, Route("Get")]
-        public Player GetPlayer(string device_id)
+        public ActionResult GetPlayer(string device_id)
 		{
             if (string.IsNullOrEmpty(device_id)) throw new Exception("No device_id provided on request.");
 
@@ -29,7 +29,7 @@ namespace StendenClickerApi.Controllers
             {
                 throw new Exception("No player found with this deviceid");
             }
-            return player;
+            return new JsonStringResult(player);
         }
 
         [ApiKeySecurity, HttpPost, Route("Set")]

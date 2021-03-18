@@ -14,7 +14,7 @@ namespace StendenClicker.Library
 
         public static async Task<IRestResponse> GetRequestAsync(string url)
         {
-            return await GetRequestAsync(url, null);
+            return await GetRequestAsync(url, new Dictionary<string, string>());
         }
 
         public static async Task<IRestResponse> GetRequestAsync(string url, Dictionary<string, string> parameters)
@@ -47,6 +47,11 @@ namespace StendenClicker.Library
 
         public static T ConvertJsonToObject<T>(string json)
         {
+            if (json[0] == '<')
+            {             
+                return default;
+            }
+
             return JsonConvert.DeserializeObject<T>(json);
         }
     }

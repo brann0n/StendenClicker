@@ -9,6 +9,7 @@ namespace StendenClicker.Library.Factory
 {
 	public class LevelGenerator
 	{
+		public const int LevelsUntilBoss = 5;
 
 		public IAbstractPlatform BuildLevel(List<Player> players)
 		{
@@ -25,11 +26,17 @@ namespace StendenClicker.Library.Factory
 
 		private bool CalculateIfBoss(PlayerState state)
 		{
-			return (state.LevelsDefeated % 5 == 0) && state.LevelsDefeated != 0;
+			return (state.LevelsDefeated % LevelsUntilBoss == 0) && state.LevelsDefeated != 0;
 		}
 
 		private PlayerState CalculateState(List<Player> players)
 		{
+			if(players.Where(p => Player.IsPlayerObjectEmpty(p)).Count() != 0)
+			{
+				//this means there are empty player objects
+				throw new Exception("Empty player objects passed into CalculateState function.");
+			}
+
 			PlayerState state;
 			if (players.Count == 1)
 			{

@@ -14,21 +14,22 @@ namespace StendenClickerApi.Controllers
         StendenClickerDatabase db = new StendenClickerDatabase();
 
         //GET: api/Assets/GetMonsters
+        [Route("Monsters")]
         public ActionResult GetMonsters()
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Monsters));
 		}
-
+        [Route("Bosses")]
         public ActionResult GetBosses()
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Bosses));
 		}
-
+        [Route("Heroes")]
         public ActionResult GetHeroes()
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Heroes));
         }
-
+        [Route("Scenes")]
         public ActionResult GetScenes()
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Scenes));

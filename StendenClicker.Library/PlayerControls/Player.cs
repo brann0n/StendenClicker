@@ -34,5 +34,18 @@ namespace StendenClicker.Library.PlayerControls
             ManagementObject os = new ManagementObject("Win32_OperatingSystem=@");
             return (string)os["SerialNumber"];
         }
+
+        public static bool IsPlayerObjectEmpty(Player player)
+		{
+            if (player == null) return true;
+
+            if (player.UserId == Guid.Empty) return true;
+
+            if (string.IsNullOrEmpty(player.Username)) return true;
+
+            if (string.IsNullOrEmpty(player.deviceId)) return true;
+
+            return false;
+		}
     }
 }
