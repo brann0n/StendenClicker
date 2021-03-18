@@ -9,12 +9,10 @@ namespace StendenClicker.Library.CurrencyObjects
 	{
 		private static readonly Lazy<ReusableCurrencyPool> instance = new Lazy<ReusableCurrencyPool>(() => new ReusableCurrencyPool());
 		protected static ReusableCurrencyPool Instance { get { return instance.Value; } }
-
 		private readonly List<Currency> Reusables;
-
 		private int PoolSizeSC { get { return Reusables.Where(owo => owo is SparkCoin).Count(); } }
 		private int PoolSizeEC { get { return Reusables.Where(uwu => uwu is EuropeanCredit).Count(); } }
-
+		
 		public const int PoolSizeSC_MAX = 5;
 		public const int PoolSizeEC_MAX = 5;
 
@@ -28,8 +26,11 @@ namespace StendenClicker.Library.CurrencyObjects
 			return instance.Value;
 		}
 
-		// returns a SparkCoin object so it can be dropped on the platform after defeating
-		// a monster
+		/// <summary>
+		/// takes Currency from the Currency pool or creates new Currency objects, to return them for use.
+		/// </summary>
+		/// <param name="isSparkCoin">boolean to indicate the type of currency to acquire</param>
+		/// <returns>Currency object</returns>
 		
 		public Currency AcquireReusable(bool isSparkCoin)
 		{
@@ -72,7 +73,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		}
 
 		/// <summary>
-		/// Adds the picked up spark coin back to the list
+		/// Releases Currency back to the list, or, if the pool is full, disposes of them.
 		/// </summary>
 		/// <param name="currency">Currency object to release</param>
 		public void ReleaseCurrency(Currency currency)
@@ -105,7 +106,6 @@ namespace StendenClicker.Library.CurrencyObjects
 
 		public int GetPoolSizeEC() => PoolSizeEC;
 
-		public int GetPoolSizeSC() => PoolSizeSC;
-		
+		public int GetPoolSizeSC() => PoolSizeSC;	
 	}
 }

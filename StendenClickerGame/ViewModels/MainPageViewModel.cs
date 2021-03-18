@@ -73,9 +73,9 @@ namespace StendenClickerGame.ViewModels
 			//todo: handle state changes, if it cant connect there might not be an internet connection
         }
 
-		public Player getPlayerContext()
+		public async Task<Player> GetPlayerContextAsync()
 		{
-			return playerContext.getPlayer();
+			return await playerContext.GetPlayerStateAsync(Player.GetMachineKey());
 		}
 
 		public void clearCoinlist()

@@ -18,7 +18,7 @@ namespace StendenClicker.Tests
 
 
 		[TestMethod]
-		public void TestAcquire()
+		public void TestRelease()
 		{
 			List<Currency> otherPool = new List<Currency>();
 
@@ -28,7 +28,6 @@ namespace StendenClicker.Tests
 					otherPool.Add(pool.AcquireReusable(true));
 				else
 					otherPool.Add(pool.AcquireReusable(false));
-
 			}
 
 			foreach(Currency c in otherPool)
@@ -38,6 +37,15 @@ namespace StendenClicker.Tests
 
 			Assert.AreEqual(pool.GetPoolSizeEC(), ReusableCurrencyPool.PoolSizeEC_MAX);
 			Assert.AreEqual(pool.GetPoolSizeSC(), ReusableCurrencyPool.PoolSizeSC_MAX);
+		}
+
+		[TestMethod]
+		public void TestAcquire()
+		{
+			Currency sparkcoin = pool.AcquireReusable(true);
+			Currency europeancredit = pool.AcquireReusable(false);
+			Assert.AreEqual(sparkcoin is SparkCoin, true);
+			Assert.AreEqual(europeancredit is EuropeanCredit, true);
 		}
 	}
 }
