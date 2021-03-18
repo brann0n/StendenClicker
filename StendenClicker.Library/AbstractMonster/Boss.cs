@@ -32,7 +32,7 @@ namespace StendenClicker.Library.AbstractMonster
             int bossNumber = (levelNr / 5) - 1;
 
             Random r = new Random();
-            if (bossNumber >= InternalBossCount)
+            if (bossNumber >= InternalBossCount && InternalBossCount != 0)
             {
                 //this means all hero's are unlocked, now you can randomize the boss sprites
                 bossNumber = r.Next(1, InternalBossCount);

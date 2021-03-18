@@ -42,7 +42,7 @@ namespace StendenClickerApi.Database
 		public int BossId { get; set; }
 		public string BossName { get; set; }
 		public int BaseHealth { get; set; }
-		public ImageAsset BossAsset { get; set; }
+		public virtual ImageAsset BossAsset { get; set; }
 	}
 
 	public class Hero
@@ -108,18 +108,18 @@ namespace StendenClickerApi.Database
 	public class Friendship
 	{
 		public int FriendshipId { get; set; }
-		public Player Player1 { get; set; }
-		public Player Player2 { get; set; }
+		public virtual Player Player1 { get; set; }
+		public virtual Player Player2 { get; set; }
 	}
 
 	public class MultiPlayerSession
 	{
 		//many-to-many-to-many-to-many?
 		public int MultiPlayerSessionId { get; set; }
-		public Player Player1 { get; set; }
-		public Player? Player2 { get; set; }
-		public Player? Player3 { get; set; }
-		public Player? Player4 { get; set; }
+		public virtual Player Player1 { get; set; }
+		public virtual Player? Player2 { get; set; }
+		public virtual Player? Player3 { get; set; }
+		public virtual Player? Player4 { get; set; }
 	}
 
 	public class Scene
@@ -127,6 +127,6 @@ namespace StendenClickerApi.Database
 		[Key]
 		public int SceneId { get; set; }
 		public string SceneName { get; set; }
-		public ImageAsset SceneAsset { get; set; }
+		public virtual ImageAsset SceneAsset { get; set; }
 	}
 }
