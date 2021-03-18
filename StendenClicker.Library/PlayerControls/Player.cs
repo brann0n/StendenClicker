@@ -1,5 +1,6 @@
 using StendenClicker.Library.Models;
 using System;
+using System.Management;
 
 namespace StendenClicker.Library.PlayerControls
 {
@@ -23,10 +24,15 @@ namespace StendenClicker.Library.PlayerControls
 
         public PlayerState State { get; set; }
 
-
-        public string getUsername()
+        public string GetUsername()
         {
             return null;
+        }
+
+        public static string GetMachineKey()
+        {
+            ManagementObject os = new ManagementObject("Win32_OperatingSystem=@");
+            return (string)os["SerialNumber"];
         }
     }
 }
