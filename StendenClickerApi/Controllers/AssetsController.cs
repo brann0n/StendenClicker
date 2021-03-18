@@ -43,5 +43,11 @@ namespace StendenClickerApi.Controllers
             Content = json;
             ContentType = "application/json";
         }
+
+        public JsonStringResult(object obj)
+        {
+            Content = JsonConvert.SerializeObject(obj);
+            ContentType = "application/json";
+        }
     }
 }
