@@ -47,5 +47,19 @@ namespace StendenClicker.Library.PlayerControls
 
             return false;
 		}
+
+
+        public static implicit operator Player(Models.DatabaseModels.Player player)
+		{
+			return new Player
+			{
+				connectionId = player.ConnectionId,
+				deviceId = player.DeviceId,
+				Username = player.PlayerName,
+                UserId = Guid.Parse(player.PlayerGuid),
+                State = new PlayerState(),
+                Wallet = new PlayerCurrency()
+			};
+		}
     }
 }
