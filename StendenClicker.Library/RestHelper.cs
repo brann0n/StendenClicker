@@ -21,7 +21,8 @@ namespace StendenClicker.Library
         {
             RestClient client = new RestClient(BaseUrl);
             var request = new RestRequest(url, Method.GET);
-            foreach(var parameter in parameters)
+            request.AddHeader("API_KEY", "1D4AB4D5-2A21-4437-B11D-ED7874A4AB21");
+            foreach (var parameter in parameters)
             {
                 request.AddParameter(parameter.Key, parameter.Value);
             }
@@ -34,6 +35,7 @@ namespace StendenClicker.Library
             RestClient client = new RestClient(BaseUrl);
             var request = new RestRequest(url, Method.POST);
 
+            request.AddHeader("API_KEY", "1D4AB4D5-2A21-4437-B11D-ED7874A4AB21");
             request.AddParameter("application/json", ConvertObjectToJson(obj), ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
 
