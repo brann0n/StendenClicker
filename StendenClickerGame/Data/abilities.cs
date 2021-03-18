@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace StendenClickerGame.Data
 {
-    public class test
+    public class abilities
     {
-        public String HeroCurrencyAmount { get; set; }
-        public String HeroName { get; set; }
-        public String HeroLevel { get; set; }
-
+        public String AbilitieName { get; set; }
+        public int Cooldown { get; set; }
+        public String Image { get; set; }
     }
 }

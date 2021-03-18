@@ -22,28 +22,40 @@ namespace StendenClickerGame.ViewModels
 		private Multiplayer.MultiplayerHubProxy mpProxy;
 		
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
-		public ObservableCollection<test> herolist { get; set; }
-	
+		public ObservableCollection<heroes> HeroList { get; set; }
+        public ObservableCollection<abilities> AbilitiesList { get; set; }
+
 		public MainPageViewModel()
-        {
-			
+		{
+
 			playerContext = new ApiPlayerHandler();
 			mpProxy = new MultiplayerHubProxy("http://localhost:50120/signalr");
-            mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
+			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			CurrencyTray = new CurrencyTrayViewModel();
 
 			//asl test om te kijken of de heros aan de shop worden toegevoegd
-			herolist = new ObservableCollection<test>()
+			HeroList = new ObservableCollection<heroes>()
 			{
-				new test{ HeroName = "De Tester", HeroLevel = "150", HeroCurrencyAmount = "180K"},
-				new test{ HeroName = "De Popper", HeroLevel = "150", HeroCurrencyAmount = "140K"},
-				new test{ HeroName = "De man die alles kan", HeroLevel = "150", HeroCurrencyAmount = "140K"},
-				new test{ HeroName = "Mr. Euh", HeroLevel = "150", HeroCurrencyAmount = "140K"},
-				new test{ HeroName = "Mr. NoGo", HeroLevel = "150", HeroCurrencyAmount = "140K"},
-				new test{ HeroName = "De Cyclist", HeroLevel = "150", HeroCurrencyAmount = "140K"},
-				new test{ HeroName = "Bram Maaghaar", HeroLevel = "150", HeroCurrencyAmount = "140K"}
+				new heroes{ HeroName = "De Tester", HeroLevel = "150", HeroCurrencyAmount = "180K"},
+				new heroes{ HeroName = "De Popper", HeroLevel = "150", HeroCurrencyAmount = "140K"},
+				new heroes{ HeroName = "De man die alles kan", HeroLevel = "150", HeroCurrencyAmount = "140K"},
+				new heroes{ HeroName = "Mr. Euh", HeroLevel = "150", HeroCurrencyAmount = "140K"},
+				new heroes{ HeroName = "Mr. NoGo", HeroLevel = "150", HeroCurrencyAmount = "140K"},
+				new heroes{ HeroName = "De Cyclist", HeroLevel = "150", HeroCurrencyAmount = "140K"},
+				new heroes{ HeroName = "Bram Maaghaar", HeroLevel = "150", HeroCurrencyAmount = "140K"}
 			};
-        }
+
+			AbilitiesList = new ObservableCollection<abilities>()
+			{
+				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" }, 
+				new abilities { AbilitieName = "Water", Cooldown = 100, Image = "Assets/koffie.png" }, 
+				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" }
+			};
+		}
 
         private void MpProxy_OnConnectionStateChanged(StateChange state)
         {
