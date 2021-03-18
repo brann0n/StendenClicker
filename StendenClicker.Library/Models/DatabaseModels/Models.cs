@@ -70,6 +70,17 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public string ConnectionId { get; set; }
 
 		public virtual ICollection<Hero> Heroes { get; set; }
+
+		public static implicit operator Player(PlayerControls.Player player)
+		{
+			return new Player
+			{
+				ConnectionId = player.connectionId,
+				DeviceId = player.deviceId,
+				PlayerGuid = player.UserId.ToString(),
+				PlayerName = player.Username
+			};
+		}
 	}
 
 	public class Friendship
