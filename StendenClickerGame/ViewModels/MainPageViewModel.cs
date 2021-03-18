@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
+using StendenClicker.Library;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
@@ -20,10 +21,11 @@ namespace StendenClickerGame.ViewModels
 
 		private ApiPlayerHandler playerContext;
 		private Multiplayer.MultiplayerHubProxy mpProxy;
-		
+		public ICommand command { get; set; }
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public ObservableCollection<heroes> HeroList { get; set; }
         public ObservableCollection<abilities> AbilitiesList { get; set; }
+        public ObservableCollection<Coins> CoinList { get; set; }
 
 		public MainPageViewModel()
 		{
@@ -55,6 +57,15 @@ namespace StendenClickerGame.ViewModels
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" }
 			};
+
+			CoinList = new ObservableCollection<Coins>()
+			{
+				new Coins { point = new Point{ X = 50, Y=0}, CurrencyName="SparkCoin", Image=""},
+				new Coins { point = new Point{ X = 1, Y=10}, CurrencyName="SparkCoin", Image=""},
+				new Coins { point = new Point{ X = 70, Y=20}, CurrencyName="SparkCoin", Image=""}
+			};
+
+			command = new RelayCommand(clearCoinlist);	
 		}
 
         private void MpProxy_OnConnectionStateChanged(StateChange state)
@@ -65,6 +76,11 @@ namespace StendenClickerGame.ViewModels
 		public Player getPlayerContext()
 		{
 			return playerContext.getPlayer();
+		}
+
+		public void clearCoinlist()
+		{
+			CoinList.Clear();
 		}
 	}	
 }

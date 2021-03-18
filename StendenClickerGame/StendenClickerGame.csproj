@@ -120,6 +120,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="Data\abilities.cs" />
+    <Compile Include="Data\Coins.cs" />
     <Compile Include="Data\heroes.cs" />
     <Compile Include="HubProxy\MultiplayerHubProxy.cs" />
     <Compile Include="RelayCommand.cs" />

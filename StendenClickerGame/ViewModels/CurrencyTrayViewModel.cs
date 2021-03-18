@@ -3,6 +3,7 @@ using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
 using System.Collections.Generic;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 
 namespace StendenClickerGame.ViewModels

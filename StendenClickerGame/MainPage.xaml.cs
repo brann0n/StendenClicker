@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StendenClickerGame.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -25,21 +26,7 @@ namespace StendenClickerGame
         public MainPage()
         {
             this.InitializeComponent();
-        }
-
-        private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void ListView_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
-
-        private void Grid_LayoutUpdated(object sender, object e)
-        {
-
+         
         }
     }
 }
