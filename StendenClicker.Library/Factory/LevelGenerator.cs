@@ -1,6 +1,7 @@
 using StendenClicker.Library.AbstractPlatform;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.PlayerControls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -32,7 +33,7 @@ namespace StendenClicker.Library.Factory
 			PlayerState state;
 			if (players.Count == 1)
 			{
-				//take the only player his state
+				//get the singleplayer state
 				state = players.First().State;
 			}
 			else
@@ -50,10 +51,9 @@ namespace StendenClicker.Library.Factory
 				//create new playerstate from above variables
 				state = new PlayerState { LevelsDefeated = LowestLevelsDefeated, MonstersDefeated = LowestMonstersDefeated };
 			}
-
 			return state;
 		}
-	}
+    }
 
 }
 
