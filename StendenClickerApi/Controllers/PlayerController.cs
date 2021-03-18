@@ -9,6 +9,7 @@ using System.Web.Mvc;
 
 namespace StendenClickerApi.Controllers
 {
+    [RoutePrefix("api/player")]
     public class PlayerController : Controller
     {
         StendenClickerDatabase db = new StendenClickerDatabase();
@@ -18,7 +19,7 @@ namespace StendenClickerApi.Controllers
         /// </summary>
         /// <param name="device_id"></param>
         /// <returns></returns>
-        [ApiKeySecurity, HttpGet]
+        [ApiKeySecurity, HttpGet, Route("Get")]
         public Player GetPlayer(string device_id)
 		{
             if (string.IsNullOrEmpty(device_id)) throw new Exception("No device_id provided on request.");
@@ -31,7 +32,7 @@ namespace StendenClickerApi.Controllers
             return player;
         }
 
-        [ApiKeySecurity, HttpPost]
+        [ApiKeySecurity, HttpPost, Route("Set")]
         public HttpStatusCodeResult SetPlayer(Player player)
 		{
             if (player == null) return new HttpStatusCodeResult(500, "no player");

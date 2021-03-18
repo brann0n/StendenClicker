@@ -23,7 +23,7 @@ namespace StendenClicker.Library.PlayerControls
 				Dictionary<string, string> parameters = new Dictionary<string, string>();
 				parameters.Add("device_id", DeviceID);
 
-				var response = await RestHelper.GetRequestAsync("players", parameters);
+				var response = await RestHelper.GetRequestAsync("api/player/get", parameters);
 				if (response.StatusCode == HttpStatusCode.OK)
 				{
 					player = RestHelper.ConvertJsonToObject<Player>(response.Content);
@@ -48,7 +48,7 @@ namespace StendenClicker.Library.PlayerControls
 		public async void SetPlayerState(Player player)
 		{
 			//todo: make webrequest OR signalR code to backup and retrieve this object
-			var response = await RestHelper.PostRequestAsync("players", player);
+			var response = await RestHelper.PostRequestAsync("api/player/set", player);
 			if(response.StatusCode == HttpStatusCode.OK)
             {
 				LocalPlayerData.SaveLocalPlayerData(player);
@@ -59,5 +59,4 @@ namespace StendenClicker.Library.PlayerControls
             }
 		}
 	}
-
 }
