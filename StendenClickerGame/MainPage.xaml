@@ -218,7 +218,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Name="monster">
-                <Ellipse Name="platform" Fill="#E1E1E1"  Height="100" VerticalAlignment="Bottom"/>
+                <Ellipse Name="platform" Fill="#E1E1E1"  Height="100" VerticalAlignment="Bottom" UseLayoutRounding="True" Stretch="Fill" StrokeDashCap="Round" StrokeLineJoin="Miter" StrokeStartLineCap="Flat"/>
                 <Button Command="{Binding CurrencyTray.TappedEvent}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{Binding ElementName=monster, Path=Height}" Width="{Binding ElementName=monster, Path=Width}" Background="Transparent" >
                     <Button.Resources>
                         <ResourceDictionary>
@@ -274,20 +274,30 @@
                     </GridView.ItemTemplate>
                 </GridView>-->
 
-				<customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.TestCoins}">
-					<customui:CoinGrid.RowDefinitions>
+                <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.TestCoins}" Margin="20,0,20,5" Padding="0">
+                    <customui:CoinGrid.RowDefinitions>
 						<RowDefinition Height="33*"/>
 						<RowDefinition Height="33*"/>
 						<RowDefinition Height="33*"/>
 					</customui:CoinGrid.RowDefinitions>
 					<customui:CoinGrid.ColumnDefinitions>
-						<ColumnDefinition Width="16*"/>
-						<ColumnDefinition Width="16*"/>
-						<ColumnDefinition Width="16*"/>
-						<ColumnDefinition Width="16*"/>
-						<ColumnDefinition Width="16*"/>
-						<ColumnDefinition Width="16*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
+						<ColumnDefinition Width="6*"/>
 					</customui:CoinGrid.ColumnDefinitions>
+                    
 					<Button Grid.Row="0" Grid.Column="1" Background="Transparent" Command="{Binding ElementName=test, Path=Command}">
 						<Button.Resources>
 							<ResourceDictionary>
