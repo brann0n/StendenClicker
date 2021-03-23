@@ -1,16 +1,43 @@
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace StendenClicker.Library.AbstractScene
 {
 	public class NormalScene : AbstractScene
 	{
-		private static List<string> normalScenes;
+		private static List<Models.DatabaseModels.Scene> NormalScenes;
+        private static int InternalSceneCount { get { return BossScenes.Count; } }
+
+        static NormalScene()
+        {
+            var response = RestHelper.GetRequestAsync("api/Assets/scenes").GetAwaiter().GetResult();
+            NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
+            if (NormalScenes != null)
+            {
+                LocalPlayerData.SaveLocalData(NormalScenes, "scenes-asset-data.json");
+            }
+            else
+            {
+                NormalScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json");
+            }
+        }
+
+        public NormalScene(int levelNr)
+        {
+            Random r = new Random();
+            int SceneNumber = r.Next(1, InternalSceneCount);
+
+            var item = NormalScenes.FirstOrDefault(n => n.SceneId == SceneNumber);
+            if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
+            Background = item.SceneAsset.Base64Image;
+            Name = item.SceneName;
+        }
 
         public override Image getBackground()
         {
-           
-            throw new System.NotImplementedException();
+            return new Image(Background);
         }
 
         public override int getCurrentMonster()
@@ -21,6 +48,11 @@ namespace StendenClicker.Library.AbstractScene
         public override int getMonsterCount()
         {
             throw new System.NotImplementedException();
+        }
+
+        public override string getName()
+        {
+            return Name;
         }
     }
 
