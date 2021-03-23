@@ -26,7 +26,7 @@ namespace StendenClicker.Library.PlayerControls
 				var response = await RestHelper.GetRequestAsync("api/player/get", parameters);
 				if (response.StatusCode == HttpStatusCode.OK)
 				{
-					state = RestHelper.ConvertJsonToObject<Player>(response.Content);
+					state = RestHelper.ConvertJsonToObject<Models.DatabaseModels.Player>(response.Content);
 					LocalPlayerData.SaveLocalPlayerData(state);
 				}
 				else
@@ -45,7 +45,8 @@ namespace StendenClicker.Library.PlayerControls
 		public async void SetPlayerState(Player player)
 		{
 			state = player;
-			var response = await RestHelper.PostRequestAsync("api/player/set", state);
+			Models.DatabaseModels.Player dbPlayer = player;
+			var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
 				LocalPlayerData.SaveLocalPlayerData(state);
@@ -66,7 +67,7 @@ namespace StendenClicker.Library.PlayerControls
 				UserId = Guid.NewGuid()
 			};
 
-
+			
 		}
 	}
 }
