@@ -119,6 +119,8 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomUI\CoinGrid.cs" />
+    <Compile Include="CustomUI\CustomCoinList.cs" />
     <Compile Include="Data\abilities.cs" />
     <Compile Include="Data\Coins.cs" />
     <Compile Include="Data\heroes.cs" />
