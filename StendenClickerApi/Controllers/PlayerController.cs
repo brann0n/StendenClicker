@@ -47,5 +47,20 @@ namespace StendenClickerApi.Controllers
 
             return new HttpStatusCodeResult(200, "player updated");
 		}
-    }
+
+        [ApiKeySecurity, HttpPost, Route("Create")]
+        public HttpStatusCodeResult CreatePlayer(Player player)
+        {
+            if (player == null) return new HttpStatusCodeResult(500, "Player object not present");
+            
+            if(Player.IsPlayerObjectEmpty(player))
+            {
+                return new HttpStatusCodeResult(401, "Player object is missing data");
+            }
+
+            db.Players.Add(player);
+            db.SaveChanges();
+
+            return new HttpStatusCodeResult(200, "Created the player");
+        }
 }

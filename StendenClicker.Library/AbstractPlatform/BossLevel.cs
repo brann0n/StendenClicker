@@ -1,5 +1,3 @@
-
-
 using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Models;

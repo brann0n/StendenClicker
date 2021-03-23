@@ -81,6 +81,19 @@ namespace StendenClicker.Library.Models.DatabaseModels
 				PlayerName = player.Username
 			};
 		}
+
+		public static bool IsPlayerObjectEmpty(Player player)
+		{
+			if (player == null) return true;
+
+			if (string.IsNullOrEmpty(player.PlayerGuid)) return true;
+
+			if (string.IsNullOrEmpty(player.PlayerName)) return true;
+			
+			if (string.IsNullOrEmpty(player.DeviceId)) return true;
+
+			return false;
+		}
 	}
 
 	public class Friendship

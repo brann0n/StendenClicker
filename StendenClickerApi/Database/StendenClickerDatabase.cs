@@ -103,6 +103,19 @@ namespace StendenClickerApi.Database
 		protected virtual ICollection<MultiPlayerSession> Sessions2 { get; set; }
 		protected virtual ICollection<MultiPlayerSession> Sessions3 { get; set; }
 		protected virtual ICollection<MultiPlayerSession> Sessions4 { get; set; }
+
+		public static bool IsPlayerObjectEmpty(Player player)
+		{
+			if (player == null) return true;
+
+			if (string.IsNullOrEmpty(player.PlayerGuid)) return true;
+
+			if (string.IsNullOrEmpty(player.PlayerName)) return true;
+
+			if (string.IsNullOrEmpty(player.DeviceId)) return true;
+
+			return false;
+		}
 	}
 
 	public class Friendship
