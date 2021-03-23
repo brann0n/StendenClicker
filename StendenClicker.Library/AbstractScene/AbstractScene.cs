@@ -4,15 +4,18 @@ namespace StendenClicker.Library.AbstractScene
 {
 	public abstract class AbstractScene : IAbstractScene
 	{
-		protected int currentMonster;
+		protected int CurrentMonster;
 
-		protected int monsterCount;
+		protected int MonsterCount;
 
-		protected Image background;
+		protected string Background;
 
-        public abstract Image getBackground();
+		protected string Name;
+
+		public abstract Image getBackground();
         public abstract int getCurrentMonster();
         public abstract int getMonsterCount();
+		public abstract string getName();
     }
 
 }
