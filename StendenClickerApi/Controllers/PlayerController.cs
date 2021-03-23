@@ -21,7 +21,7 @@ namespace StendenClickerApi.Controllers
         /// <returns></returns>
         [ApiKeySecurity, HttpGet, Route("Get")]
         public ActionResult GetPlayer(string device_id)
-		{
+        {
             if (string.IsNullOrEmpty(device_id)) throw new Exception("No device_id provided on request.");
 
             var player = db.Players.FirstOrDefault(n => n.DeviceId == device_id);
@@ -34,7 +34,7 @@ namespace StendenClickerApi.Controllers
 
         [ApiKeySecurity, HttpPost, Route("Set")]
         public HttpStatusCodeResult SetPlayer(Player player)
-		{
+        {
             if (player == null) return new HttpStatusCodeResult(500, "no player");
 
             //check if playerobject is okay
@@ -46,14 +46,14 @@ namespace StendenClickerApi.Controllers
             db.SaveChanges();
 
             return new HttpStatusCodeResult(200, "player updated");
-		}
+        }
 
         [ApiKeySecurity, HttpPost, Route("Create")]
         public HttpStatusCodeResult CreatePlayer(Player player)
         {
             if (player == null) return new HttpStatusCodeResult(500, "Player object not present");
-            
-            if(Player.IsPlayerObjectEmpty(player))
+
+            if (Player.IsPlayerObjectEmpty(player))
             {
                 return new HttpStatusCodeResult(401, "Player object is missing data");
             }
@@ -63,4 +63,5 @@ namespace StendenClickerApi.Controllers
 
             return new HttpStatusCodeResult(200, "Created the player");
         }
+    }
 }

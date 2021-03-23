@@ -23,7 +23,7 @@ namespace StendenClicker.Library.AbstractScene
             }
         }
 
-        public BossScene(int levelNr)
+        public BossScene()
         {
             Random r = new Random();
             int SceneNumber = r.Next(1, InternalSceneCount);

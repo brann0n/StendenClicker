@@ -8,7 +8,7 @@ namespace StendenClicker.Library.AbstractScene
 	public class NormalScene : AbstractScene
 	{
 		private static List<Models.DatabaseModels.Scene> NormalScenes;
-        private static int InternalSceneCount { get { return BossScenes.Count; } }
+        private static int InternalSceneCount { get { return NormalScenes.Count; } }
 
         static NormalScene()
         {
@@ -24,7 +24,7 @@ namespace StendenClicker.Library.AbstractScene
             }
         }
 
-        public NormalScene(int levelNr)
+        public NormalScene()
         {
             Random r = new Random();
             int SceneNumber = r.Next(1, InternalSceneCount);
