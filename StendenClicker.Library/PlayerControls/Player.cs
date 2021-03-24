@@ -29,11 +29,12 @@ namespace StendenClicker.Library.PlayerControls
             return null;
         }
 
-        public static string GetMachineKey()
-        {
-            ManagementObject os = new ManagementObject("Win32_OperatingSystem=@");
-            return (string)os["SerialNumber"];
-        }
+        //public static string GetMachineKey()
+        //{
+            
+        //       ManagementObject os = new ManagementObject("Win32_OperatingSystem=@");
+        //    return (string)os["SerialNumber"];
+        //}
 
         public static bool IsPlayerObjectEmpty(Player player)
 		{

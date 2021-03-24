@@ -19,30 +19,34 @@ namespace StendenClickerGame.ViewModels
 
 	public class CurrencyTrayViewModel : ViewModelBase
 	{
+		//event handlers
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
-		private BatchedClick Clicks;
+		//required modules	
+		private LevelGenerator LevelGenerator;
+		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
-		private LevelGenerator levelGenerator;
-		private ReusableCurrencyPool currencyPool;
-
+		//bindables
 		public CustomCoinList<Currency> CurrencyInView { get; set; }
-
 		public ICommand TappedEvent { get; set; }
 		public int? MonsterHealthPercentage { get { return CurrentLevel?.getMonster()?.GetHealthPercentage(); } }
+
+		//Context variables
 		private IAbstractPlatform CurrentLevel { get { return CurrentSession?.currentLevel; } }
 		private MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
-
 		private IAbstractMonster CurrentMonster { get { return CurrentLevel?.getMonster(); } }
 		private IAbstractScene CurrentScene { get { return CurrentLevel?.getScene(); } }
+
+		
+
+		private BatchedClick Clicks;
 
 		public CurrencyTrayViewModel()
 		{
 			TappedEvent = new RelayCommand(MonsterClicked);
 
-			levelGenerator = new LevelGenerator();
-			currencyPool = ReusableCurrencyPool.GetInstance();
+			LevelGenerator = new LevelGenerator();
 
 			Clicks = new BatchedClick();
 
@@ -66,21 +70,45 @@ namespace StendenClickerGame.ViewModels
 		/// </summary>
 		public void MonsterClicked()
 		{
-			//todo: batch collect the clicks
-			Clicks.addClick();
+			//todo: check if some of this stuff can run async to speed up the game.
+			//check if there is a monster to click on:
+			if(CurrentMonster != null)
+			{
+				//batch collect the clicks
+				Clicks.addClick();
 
-			//todo: damage monster
-			CurrentMonster.DoDamage(1);
+				//damage monster
+				CurrentMonster?.DoDamage(1);
 
-			//todo: is monster dead?
+				if (CurrentMonster.IsDefeated())
+				{
+					//get the rewards for this monster and generate a new level
+					var rewards = CurrentMonster.GetReward();
+					for (ulong i = 0; i < rewards.SparkCoin; i++)
+					{
+						CreateCoin(typeof(SparkCoin));
+					}
+					for (ulong i = 0; i < rewards.EuropeanCredit; i++)
+					{
+						CreateCoin(typeof(EuropeanCredit));
+					}
 
-			//todo: is level completed?
+					//todo: update all the user accounts and the current session that a monster has been defeated.
 
-			//todo: render new level?
+					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
+					CurrentSession.currentLevel = LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
+				}
+
+				//todo: is level completed?
+
+				//todo: render new level?
+			}
 
 
-			//
-			CreateCoin(typeof(EuropeanCredit));
+
+
+			// create a coin for testing
+			//CreateCoin(typeof(EuropeanCredit));
 		}
 
 		/// <summary>
@@ -97,11 +125,11 @@ namespace StendenClickerGame.ViewModels
 			Currency coin;
 			if (type == typeof(SparkCoin))
 			{
-				coin = currencyPool.AcquireReusable(true);
+				coin = CurrencyPool.AcquireReusable(true);
 			}
 			else if (type == typeof(EuropeanCredit))
 			{
-				coin = currencyPool.AcquireReusable(false);
+				coin = CurrencyPool.AcquireReusable(false);
 			}
 			else
 			{
@@ -117,7 +145,7 @@ namespace StendenClickerGame.ViewModels
 
 				//remove the coins from the view and list.
 				CurrencyInView.Remove((Currency)o);
-				currencyPool.ReleaseCurrency((Currency)o);
+				CurrencyPool.ReleaseCurrency((Currency)o);
 			};
 
 			CurrencyInView.Add(coin);

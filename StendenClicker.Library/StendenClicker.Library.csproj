@@ -8,6 +8,12 @@
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="RestSharp" Version="106.11.7" />
     <PackageReference Include="System.Management" Version="5.0.0" />
+	  <Reference Include="System.Runtime.WindowsRuntime">
+		  <HintPath>$(MSBuildProgramFiles32)\Reference Assemblies\Microsoft\Framework\.NETCore\v4.5\System.Runtime.WindowsRuntime.dll</HintPath>
+	  </Reference>
+	  <Reference Include="Windows">
+		  <HintPath>$(MSBuildProgramFiles32)\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd</HintPath>
+	  </Reference>
   </ItemGroup>
 
 </Project>

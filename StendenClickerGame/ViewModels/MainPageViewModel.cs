@@ -17,10 +17,8 @@ using System.Windows.Input;
 namespace StendenClickerGame.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
-    {
-
-		private ApiPlayerHandler playerContext;
-		private Multiplayer.MultiplayerHubProxy mpProxy;
+    {		
+		private MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
 		public ICommand command { get; set; }
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public ObservableCollection<heroes> HeroList { get; set; }
@@ -29,14 +27,12 @@ namespace StendenClickerGame.ViewModels
 
 		public MainPageViewModel()
 		{
-
-			playerContext = new ApiPlayerHandler();
-			mpProxy = MultiplayerHubProxy.Instance;
+			//multiplayer connection
 			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
-			CurrencyTray = new CurrencyTrayViewModel();
 
-			
+			//sub viewmodels
+			CurrencyTray = new CurrencyTrayViewModel();			
 
 			//asl test om te kijken of de heros aan de shop worden toegevoegd
 			HeroList = new ObservableCollection<heroes>()
@@ -83,7 +79,7 @@ namespace StendenClickerGame.ViewModels
 
 		public async Task<Player> GetPlayerContextAsync()
 		{
-			return await playerContext.GetPlayerStateAsync(Player.GetMachineKey());
+			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
 		}
 
 		public void clearCoinlist()
