@@ -72,11 +72,8 @@ namespace StendenClickerGame.CustomUI
 			{
 				coin.Hovered();
 			};
-			
-			Viewbox coinViewbox = new Viewbox {
-				Visibility = Visibility
-			};
 
+			Viewbox coinViewbox = new Viewbox();
 
 			if (coin is SparkCoin)
 			{
@@ -85,8 +82,8 @@ namespace StendenClickerGame.CustomUI
 			else if (coin is EuropeanCredit)
 			{
 				coinViewbox = (Viewbox)XamlReader.Load(EuropeanCredit.ImageContent);
-
 			}
+
 			//coinViewbox.Child = coinCanvas;
 			NewCoinButton.Content = coinViewbox;
 			Coins.Add(coin, NewCoinButton);
