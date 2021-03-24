@@ -72,6 +72,15 @@ namespace StendenClicker.Library.PlayerControls
 				UserId = Guid.NewGuid()
 			};
 
+			var response = await RestHelper.PostRequestAsync("api/player/create", player);
+			if (response.StatusCode == HttpStatusCode.OK)
+			{
+				LocalPlayerData.SaveLocalPlayerData(player);
+			}
+			else
+			{
+				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
+			}
 
 		}
 	}
