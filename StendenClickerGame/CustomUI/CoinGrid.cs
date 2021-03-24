@@ -76,34 +76,45 @@ namespace StendenClickerGame.CustomUI
 			Viewbox coinViewbox = new Viewbox {
 				Visibility = Visibility
 			};
-			
-			Canvas coinCanvas = new Canvas {
-				Height = 100,
-				Width = 100
-			};
 
-			Path pathRedCircle = new Path();
-			Path pathSpark = new Path();
+			Canvas coinCanvas = new Canvas();
 
-			var dataRedCircle = "M50 100C22.35 100 0 77.65 0 50C0 22.35 22.35 0 50 0C77.65 0 100 22.35 100 50C100 77.65 77.65 100 50 100Z";
-			var dataSpark = "M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z";
+			if (coin is SparkCoin)
+			{
+				coinCanvas.Height = 100;
+				coinCanvas.Width = 100;
 
-			var geometryRedCircle = (Geometry)XamlReader.Load(
+				Path pathRedCircle = new Path();
+				Path pathSpark = new Path();
+
+				var dataRedCircle = "M50 100C22.35 100 0 77.65 0 50C0 22.35 22.35 0 50 0C77.65 0 100 22.35 100 50C100 77.65 77.65 100 50 100Z";
+				var dataSpark = "M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z";
+
+				var geometryRedCircle = (Geometry)XamlReader.Load(
 				"<Geometry xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
 				+ dataRedCircle + "</Geometry>");
 
-			var geometrySpark = (Geometry)XamlReader.Load(
-				"<Geometry xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
-				+ dataSpark + "</Geometry>");		
+				var geometrySpark = (Geometry)XamlReader.Load(
+					"<Geometry xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
+					+ dataSpark + "</Geometry>");
 
-			pathRedCircle.Data = geometryRedCircle;
-			pathSpark.Data = geometrySpark;
+				pathRedCircle.Data = geometryRedCircle;
+				pathSpark.Data = geometrySpark;
 
-			pathRedCircle.Fill = new SolidColorBrush(Colors.Red);
-			pathSpark.Fill = new SolidColorBrush(Colors.White);
+				pathRedCircle.Fill = new SolidColorBrush(Colors.Red);
+				pathSpark.Fill = new SolidColorBrush(Colors.White);
 
-			coinCanvas.Children.Add(pathRedCircle);
-			coinCanvas.Children.Add(pathSpark);
+				coinCanvas.Children.Add(pathRedCircle);
+				coinCanvas.Children.Add(pathSpark);
+			}
+			else if (coin is EuropeanCredit)
+			{
+				coinCanvas.Height = 618;
+				coinCanvas.Width = 618;
+
+				
+			}
+            else{ };
 
 			coinViewbox.Child = coinCanvas;
 			NewCoinButton.Content = coinViewbox;
