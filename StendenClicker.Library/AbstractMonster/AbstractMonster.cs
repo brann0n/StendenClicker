@@ -7,7 +7,14 @@ namespace StendenClicker.Library.AbstractMonster
 {
 	public abstract class AbstractMonster : IAbstractMonster
 	{
+        /// <summary>
+        /// Total health of the monster.
+        /// </summary>
 		protected int Health { get; set; }
+
+        /// <summary>
+        /// Total damage done to health of monster.
+        /// </summary>
         protected int Damage { get; set; }
         protected double DamageFactor { get; set; } = 1;
 		protected ulong CurrencyAmount { get; set; }
@@ -35,7 +42,12 @@ namespace StendenClicker.Library.AbstractMonster
         }
 
         public abstract PlayerCurrency GetReward();
-    }
+
+		public virtual int GetHealthPercentage()
+		{
+            return (GetHealth() / Health) * 100;
+		}
+	}
 
 }
 

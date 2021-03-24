@@ -16,6 +16,8 @@ namespace StendenClicker.Library.AbstractMonster
 		Image GetMonsterAsset();
 
 		bool IsDefeated();
+
+		int GetHealthPercentage();
 	}
 
 }

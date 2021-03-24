@@ -8,6 +8,16 @@ namespace StendenClickerGame.Multiplayer
 {
 	public class MultiplayerHubProxy
 	{
+
+#if DEBUG
+		private const string ServerURL = "http://localhost:50120/signalr";
+#else
+		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
+#endif
+
+		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() => new MultiplayerHubProxy(ServerURL));
+		public static MultiplayerHubProxy Instance { get { return instance.Value; } }
+
 		private MultiPlayerSession SessionContext;
 		private HubConnection hubConnection;
 		private IHubProxy MultiPlayerHub;
@@ -23,30 +33,31 @@ namespace StendenClickerGame.Multiplayer
 		public event SignalRConnectionError OnConnectionError;
 
 		public MultiplayerHubProxy(string serverUrl)
-        {			
+		{
 			hubConnection = new HubConnection(serverUrl);
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
-            hubConnection.StateChanged += HubConnection_StateChanged;
-			hubConnection.Start().ContinueWith(task => 
+			hubConnection.StateChanged += HubConnection_StateChanged;
+			hubConnection.Start().ContinueWith(task =>
 			{
-                if (task.IsFaulted)
-                {
+				if (task.IsFaulted)
+				{
 					OnConnectionError?.Invoke(task.Exception);
-                }
-                else
-                {
+				}
+				else
+				{
 					//connected:
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
 					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 				}
-			}).Wait();		
-        }
+			}).Wait();
+		}
 
 		#region ServerInvokableMethods
 		private void updateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. TODO -> decide if the current session should be overwritten
+			SessionContext = session;
 		}
 
 		private void receiveUpdate()
@@ -56,7 +67,7 @@ namespace StendenClickerGame.Multiplayer
 
 		private void requestClickBatches()
 		{
-			BatchedClick clicks = OnRequireBatches.Invoke();
+			BatchedClick clicks = OnRequireBatches?.Invoke();
 
 			//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
 			MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
@@ -64,14 +75,14 @@ namespace StendenClickerGame.Multiplayer
 		#endregion
 
 		public void BroadcastSessionToServer(MultiPlayerSession session)
-        {
-			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession",session);
-        }
+		{
+			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession", session);
+		}
 
 		public void ProcessBatchOnServer()
-        {
-
-        }	
+		{
+			requestClickBatches();
+		}
 
 		public MultiPlayerSession getContext()
 		{
