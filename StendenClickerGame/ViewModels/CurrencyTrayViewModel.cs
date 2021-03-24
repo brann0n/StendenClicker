@@ -1,8 +1,13 @@
+using StendenClicker.Library.AbstractMonster;
+using StendenClicker.Library.AbstractPlatform;
+using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;
+using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.CustomUI;
+using StendenClickerGame.Multiplayer;
 using System;
 using System.Collections.Generic;
 using System.Windows.Input;
@@ -25,7 +30,12 @@ namespace StendenClickerGame.ViewModels
 		public CustomCoinList<Currency> CurrencyInView { get; set; }
 
 		public ICommand TappedEvent { get; set; }
-		public int MonsterHealthPercentage { get; set; } = 90;
+		public int? MonsterHealthPercentage { get { return CurrentLevel?.getMonster()?.GetHealthPercentage(); } }
+		private IAbstractPlatform CurrentLevel { get { return CurrentSession?.currentLevel; } }
+		private MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
+
+		private IAbstractMonster CurrentMonster { get { return CurrentLevel?.getMonster(); } }
+		private IAbstractScene CurrentScene { get { return CurrentLevel?.getScene(); } }
 
 		public CurrencyTrayViewModel()
 		{
@@ -58,6 +68,18 @@ namespace StendenClickerGame.ViewModels
 		{
 			//todo: batch collect the clicks
 			Clicks.addClick();
+
+			//todo: damage monster
+			CurrentMonster.DoDamage(1);
+
+			//todo: is monster dead?
+
+			//todo: is level completed?
+
+			//todo: render new level?
+
+
+			//
 			CreateCoin(typeof(EuropeanCredit));
 		}
 

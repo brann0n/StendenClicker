@@ -31,9 +31,12 @@ namespace StendenClickerGame.ViewModels
 		{
 
 			playerContext = new ApiPlayerHandler();
-			mpProxy = new MultiplayerHubProxy("http://localhost:50120/signalr");
+			mpProxy = MultiplayerHubProxy.Instance;
 			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
+			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
 			CurrencyTray = new CurrencyTrayViewModel();
+
+			
 
 			//asl test om te kijken of de heros aan de shop worden toegevoegd
 			HeroList = new ObservableCollection<heroes>()
@@ -68,7 +71,12 @@ namespace StendenClickerGame.ViewModels
 			command = new RelayCommand(clearCoinlist);	
 		}
 
-        private void MpProxy_OnConnectionStateChanged(StateChange state)
+		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()
+		{
+			return CurrencyTray.GetBatchedClick();
+		}
+
+		private void MpProxy_OnConnectionStateChanged(StateChange state)
         {
 			//todo: handle state changes, if it cant connect there might not be an internet connection
         }
