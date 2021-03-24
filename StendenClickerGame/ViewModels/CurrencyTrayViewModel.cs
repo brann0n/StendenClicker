@@ -25,7 +25,7 @@ namespace StendenClickerGame.ViewModels
 		public CustomCoinList<Currency> CurrencyInView { get; set; }
 
 		public ICommand TappedEvent { get; set; }
-		public int MonsterHealthPercentage { get; set; } = 100;
+		public int MonsterHealthPercentage { get; set; } = 90;
 
 		public CurrencyTrayViewModel()
 		{
@@ -58,7 +58,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			//todo: batch collect the clicks
 			Clicks.addClick();
-			CreateCoin(typeof(SparkCoin));
+			CreateCoin(typeof(EuropeanCredit));
 		}
 
 		/// <summary>
