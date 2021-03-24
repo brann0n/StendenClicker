@@ -1,3 +1,4 @@
+using StendenClicker.Library.Batches;
 using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
@@ -16,12 +17,15 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
+		private BatchedClick Clicks;
+
 		private LevelGenerator levelGenerator;
 		private ReusableCurrencyPool currencyPool;
 
 		public CustomCoinList<Currency> CurrencyInView { get; set; }
 
 		public ICommand TappedEvent { get; set; }
+		public int MonsterHealthPercentage { get; set; } = 100;
 
 		public CurrencyTrayViewModel()
 		{
@@ -29,6 +33,8 @@ namespace StendenClickerGame.ViewModels
 
 			levelGenerator = new LevelGenerator();
 			currencyPool = ReusableCurrencyPool.GetInstance();
+
+			Clicks = new BatchedClick();
 
 			CurrencyInView = new CustomCoinList<Currency>();
 			CurrencyInView.OnCoinAdded += CurrencyInView_OnCoinAdded;
@@ -51,7 +57,7 @@ namespace StendenClickerGame.ViewModels
 		public void MonsterClicked()
 		{
 			//todo: batch collect the clicks
-
+			Clicks.addClick();
 			CreateCoin(typeof(SparkCoin));
 		}
 
@@ -93,6 +99,13 @@ namespace StendenClickerGame.ViewModels
 			};
 
 			CurrencyInView.Add(coin);
+		}
+
+		public BatchedClick GetBatchedClick()
+		{
+			BatchedClick oldClicks = Clicks;
+			Clicks = new BatchedClick();
+			return oldClicks;
 		}
 	}
 
