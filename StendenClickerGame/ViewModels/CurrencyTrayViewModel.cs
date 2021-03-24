@@ -31,16 +31,16 @@ namespace StendenClickerGame.ViewModels
 			currencyPool = ReusableCurrencyPool.GetInstance();
 
 			CurrencyInView = new CustomCoinList<Currency>();
-			CurrencyInView.OnCoinAdded += TestCoins_OnCoinAdded;
-			CurrencyInView.OnCoinRemoved += TestCoins_OnCoinRemoved;
+			CurrencyInView.OnCoinAdded += CurrencyInView_OnCoinAdded;
+			CurrencyInView.OnCoinRemoved += CurrencyInView_OnCoinRemoved;
 		}
 
-		private void TestCoins_OnCoinRemoved(object sender, EventArgs e)
+		private void CurrencyInView_OnCoinRemoved(object sender, EventArgs e)
 		{
 			CurrencyRemoved?.Invoke(sender, e);
 		}
 
-		private void TestCoins_OnCoinAdded(object sender, System.EventArgs e)
+		private void CurrencyInView_OnCoinAdded(object sender, System.EventArgs e)
 		{
 			CurrencyAdded?.Invoke(sender, e);
 		}
@@ -50,11 +50,15 @@ namespace StendenClickerGame.ViewModels
 		/// </summary>
 		public void MonsterClicked()
 		{
-
+			//todo: batch collect the clicks
 
 			CreateCoin(typeof(SparkCoin));
 		}
 
+		/// <summary>
+		/// Handles coin creation through the CurrencyPool
+		/// </summary>
+		/// <param name="type">The type of coin to create</param>
 		public void CreateCoin(Type type)
 		{
 			if (type.BaseType != typeof(Currency))
@@ -63,8 +67,6 @@ namespace StendenClickerGame.ViewModels
 			}
 
 			Currency coin;
-
-			//TODO: these instance creating should happen in the object pool and not here
 			if (type == typeof(SparkCoin))
 			{
 				coin = currencyPool.AcquireReusable(true);
@@ -80,8 +82,13 @@ namespace StendenClickerGame.ViewModels
 
 			coin.OnCoinHover += (o, e) =>
 			{
-				CurrencyInView.Remove((Currency)o);
+				//todo: add new value to wallet (possible lagswitch)
+
+				//remove all hover events, this is needed to prevent double event firing after the coin is reused.
 				((Currency)o).RemoveHoverEvents();
+
+				//remove the coins from the view and list.
+				CurrencyInView.Remove((Currency)o);
 				currencyPool.ReleaseCurrency((Currency)o);
 			};
 
