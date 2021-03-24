@@ -6,8 +6,13 @@ namespace StendenClicker.Library.CurrencyObjects
     public abstract class Currency : IDisposable
     {
         private Image image;
-
+        public event EventHandler OnCoinHover;
+        public string CoinId { get; set; }
         public abstract double getValue(int multiplier);
+        public Currency()
+		{
+            CoinId = Guid.NewGuid().ToString();
+        }
 
         /// <summary>
         /// Function that decides where to place a coin inside a specified grid size
@@ -36,7 +41,25 @@ namespace StendenClicker.Library.CurrencyObjects
             // Suppress finalization.
             GC.SuppressFinalize(this);
         }
-	}
+
+        public void Hovered()
+		{
+            OnCoinHover?.Invoke(this, null);
+		}
+
+		public override string ToString()
+		{
+			return CoinId.ToString();
+		}
+
+        public void RemoveHoverEvents()
+        {
+            foreach (Delegate d in OnCoinHover.GetInvocationList())
+            {
+                OnCoinHover -= (EventHandler)d;
+            }
+        }
+    }
 
 }
 

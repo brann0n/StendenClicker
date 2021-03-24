@@ -1,4 +1,5 @@
 using Microsoft.AspNet.SignalR.Client;
+using StendenClicker.Library.Batches;
 using StendenClicker.Library.Multiplayer;
 using System;
 using System.Net;
@@ -13,6 +14,10 @@ namespace StendenClickerGame.Multiplayer
 
 		public delegate void SignalRConnectionStateHandler(StateChange state);
 		public delegate void SignalRConnectionError(Exception excteption);
+
+		public delegate BatchedClick BatchClickRetrieveHandler();
+
+		public event BatchClickRetrieveHandler OnRequireBatches;
 
 		public event SignalRConnectionStateHandler OnConnectionStateChanged;
 		public event SignalRConnectionError OnConnectionError;
@@ -33,20 +38,12 @@ namespace StendenClickerGame.Multiplayer
 					//connected:
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
 					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
+					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 				}
 			}).Wait();		
         }
 
-        public void BroadcastSessionToServer(MultiPlayerSession session)
-        {
-			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession",session);
-        }
-
-		public void ProcessBatchOnServer()
-        {
-
-        }
-
+		#region ServerInvokableMethods
 		private void updateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. TODO -> decide if the current session should be overwritten
@@ -56,6 +53,25 @@ namespace StendenClickerGame.Multiplayer
 		{
 			//received a game update from the server, decide what to do with this information.
 		}
+
+		private void requestClickBatches()
+		{
+			BatchedClick clicks = OnRequireBatches.Invoke();
+
+			//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
+			MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
+		}
+		#endregion
+
+		public void BroadcastSessionToServer(MultiPlayerSession session)
+        {
+			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession",session);
+        }
+
+		public void ProcessBatchOnServer()
+        {
+
+        }	
 
 		public MultiPlayerSession getContext()
 		{

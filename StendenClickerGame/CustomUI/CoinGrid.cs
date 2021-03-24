@@ -16,7 +16,7 @@ namespace StendenClickerGame.CustomUI
 {
 	public class CoinGrid : Grid
 	{
-		public static readonly DependencyProperty CurrenciesProperty =
+		public readonly DependencyProperty CurrenciesProperty =
 			DependencyProperty.RegisterAttached("Currencies", typeof(CustomCoinList<Currency>), typeof(CoinGrid), new PropertyMetadata(default(CustomCoinList<Currency>), OnTypeChanged));
 
 		public CustomCoinList<Currency> Currencies
@@ -67,6 +67,11 @@ namespace StendenClickerGame.CustomUI
 				Margin = new Thickness(0),
 				Padding = new Thickness(0)
 			};
+
+			NewCoinButton.PointerEntered += (o,e) => 
+			{
+				coin.Hovered();
+			};
 			
 			Viewbox coinViewbox = new Viewbox {
 				Visibility = Visibility
@@ -89,7 +94,7 @@ namespace StendenClickerGame.CustomUI
 
 			var geometrySpark = (Geometry)XamlReader.Load(
 				"<Geometry xmlns='http://schemas.microsoft.com/winfx/2006/xaml/presentation'>"
-				+ dataSpark + "</Geometry>");
+				+ dataSpark + "</Geometry>");		
 
 			pathRedCircle.Data = geometryRedCircle;
 			pathSpark.Data = geometrySpark;
