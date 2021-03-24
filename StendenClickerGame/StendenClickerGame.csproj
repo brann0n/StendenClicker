@@ -125,6 +125,9 @@
     <Compile Include="Data\Coins.cs" />
     <Compile Include="Data\heroes.cs" />
     <Compile Include="HubProxy\MultiplayerHubProxy.cs" />
+    <Compile Include="RegisterPage.xaml.cs">
+      <DependentUpon>RegisterPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="RelayCommand.cs" />
     <Compile Include="ViewModels\CurrencyTrayViewModel.cs" />
     <Compile Include="MainPage.xaml.cs">
@@ -141,6 +144,7 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\bg-page.png" />
     <Content Include="Assets\Progress_Button.png" />
     <Content Include="Assets\NHLStenden_startscherm.png" />
     <Content Include="Assets\LargeTile.scale-100.png" />
@@ -215,6 +219,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="RegisterPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
