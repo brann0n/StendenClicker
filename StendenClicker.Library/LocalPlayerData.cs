@@ -25,7 +25,7 @@ namespace StendenClicker.Library
                 await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(new T()));                      
             }
 
-            file = installedLocation.GetFileAsync(filename).GetResults();
+            file = await installedLocation.GetFileAsync(filename);
             return JsonConvert.DeserializeObject<T>(await FileIO.ReadTextAsync(file));
         }
 
