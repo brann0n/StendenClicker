@@ -46,11 +46,17 @@ namespace StendenClickerGame.ViewModels
 
 		public void Test()
 		{
-			TestCoins.Add(new SparkCoin() { });
+			var coin = new SparkCoin() { };
 
-			//var level = levelGenerator.BuildLevel(new List<Player>() { new Player() });
-			//NotifyPropertyChanged("DisplayableCurrency");
+			coin.OnCoinHover += (o, e) => 
+			{
+				TestCoins.Remove((Currency)o);
+			};
+
+			TestCoins.Add(coin);
 		}
+
+		
 	}
 
 }

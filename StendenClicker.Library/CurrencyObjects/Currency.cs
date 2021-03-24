@@ -6,7 +6,7 @@ namespace StendenClicker.Library.CurrencyObjects
     public abstract class Currency : IDisposable
     {
         private Image image;
-
+        public event EventHandler OnCoinHover;
         public abstract double getValue(int multiplier);
 
         /// <summary>
@@ -36,6 +36,11 @@ namespace StendenClicker.Library.CurrencyObjects
             // Suppress finalization.
             GC.SuppressFinalize(this);
         }
+
+        public void Hovered()
+		{
+            OnCoinHover?.Invoke(this, null);
+		}
 	}
 
 }
