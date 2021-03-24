@@ -16,7 +16,7 @@ namespace StendenClickerGame.CustomUI
 {
 	public class CoinGrid : Grid
 	{
-		public static readonly DependencyProperty CurrenciesProperty =
+		public readonly DependencyProperty CurrenciesProperty =
 			DependencyProperty.RegisterAttached("Currencies", typeof(CustomCoinList<Currency>), typeof(CoinGrid), new PropertyMetadata(default(CustomCoinList<Currency>), OnTypeChanged));
 
 		public CustomCoinList<Currency> Currencies

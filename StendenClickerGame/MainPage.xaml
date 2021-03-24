@@ -274,7 +274,7 @@
                     </GridView.ItemTemplate>
                 </GridView>-->
 
-                <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.TestCoins}" Margin="20,0,20,5" Padding="0">
+                <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
                     <customui:CoinGrid.RowDefinitions>
 						<RowDefinition Height="33*"/>
 						<RowDefinition Height="33*"/>

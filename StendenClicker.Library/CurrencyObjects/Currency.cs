@@ -7,7 +7,12 @@ namespace StendenClicker.Library.CurrencyObjects
     {
         private Image image;
         public event EventHandler OnCoinHover;
+        public string CoinId { get; set; }
         public abstract double getValue(int multiplier);
+        public Currency()
+		{
+            CoinId = Guid.NewGuid().ToString();
+        }
 
         /// <summary>
         /// Function that decides where to place a coin inside a specified grid size
@@ -41,7 +46,20 @@ namespace StendenClicker.Library.CurrencyObjects
 		{
             OnCoinHover?.Invoke(this, null);
 		}
-	}
+
+		public override string ToString()
+		{
+			return CoinId.ToString();
+		}
+
+        public void RemoveHoverEvents()
+        {
+            foreach (Delegate d in OnCoinHover.GetInvocationList())
+            {
+                OnCoinHover -= (EventHandler)d;
+            }
+        }
+    }
 
 }
 

@@ -17,21 +17,22 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyRemoved;
 
 		private LevelGenerator levelGenerator;
-		public List<Currency> DisplayableCurrency;
+		private ReusableCurrencyPool currencyPool;
 
-		public CustomCoinList<Currency> TestCoins { get; set; }
+		public CustomCoinList<Currency> CurrencyInView { get; set; }
 
 		public ICommand TappedEvent { get; set; }
-		
+
 		public CurrencyTrayViewModel()
 		{
-			TappedEvent = new RelayCommand(Test);
+			TappedEvent = new RelayCommand(MonsterClicked);
 
 			levelGenerator = new LevelGenerator();
+			currencyPool = ReusableCurrencyPool.GetInstance();
 
-			TestCoins = new CustomCoinList<Currency>();
-			TestCoins.OnCoinAdded += TestCoins_OnCoinAdded;
-			TestCoins.OnCoinRemoved += TestCoins_OnCoinRemoved;
+			CurrencyInView = new CustomCoinList<Currency>();
+			CurrencyInView.OnCoinAdded += TestCoins_OnCoinAdded;
+			CurrencyInView.OnCoinRemoved += TestCoins_OnCoinRemoved;
 		}
 
 		private void TestCoins_OnCoinRemoved(object sender, EventArgs e)
@@ -44,19 +45,48 @@ namespace StendenClickerGame.ViewModels
 			CurrencyAdded?.Invoke(sender, e);
 		}
 
-		public void Test()
+		/// <summary>
+		/// Most important function that handles all the game clicks
+		/// </summary>
+		public void MonsterClicked()
 		{
-			var coin = new SparkCoin() { };
 
-			coin.OnCoinHover += (o, e) => 
-			{
-				TestCoins.Remove((Currency)o);
-			};
 
-			TestCoins.Add(coin);
+			CreateCoin(typeof(SparkCoin));
 		}
 
-		
+		public void CreateCoin(Type type)
+		{
+			if (type.BaseType != typeof(Currency))
+			{
+				throw new Exception("No coin type was passed into the create coin function.");
+			}
+
+			Currency coin;
+
+			//TODO: these instance creating should happen in the object pool and not here
+			if (type == typeof(SparkCoin))
+			{
+				coin = currencyPool.AcquireReusable(true);
+			}
+			else if (type == typeof(EuropeanCredit))
+			{
+				coin = currencyPool.AcquireReusable(false);
+			}
+			else
+			{
+				throw new Exception("Unkown coin type was passed into this create coin function.");
+			}
+
+			coin.OnCoinHover += (o, e) =>
+			{
+				CurrencyInView.Remove((Currency)o);
+				((Currency)o).RemoveHoverEvents();
+				currencyPool.ReleaseCurrency((Currency)o);
+			};
+
+			CurrencyInView.Add(coin);
+		}
 	}
 
 }
