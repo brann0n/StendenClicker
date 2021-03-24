@@ -22,7 +22,7 @@ namespace StendenClicker.Library.AbstractMonster
             }
 			else
 			{
-                Bosses = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Boss>>("bosses-asset-data.json");
+                Bosses = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Boss>>("bosses-asset-data.json").GetAwaiter().GetResult();
 			}
 		}
 

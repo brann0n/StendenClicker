@@ -23,7 +23,7 @@ namespace StendenClicker.Library.AbstractMonster
             }
             else
             {
-                Monsters = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Monster>>("monsters-asset-data.json");
+                Monsters = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Monster>>("monsters-asset-data.json").GetAwaiter().GetResult();
             }
         }
         public Normal(int levelNr)

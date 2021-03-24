@@ -31,7 +31,7 @@ namespace StendenClicker.Library.PlayerControls
 				}
 				else
 				{
-					state = LocalPlayerData.LoadLocalPlayerData();
+					state = LocalPlayerData.LoadLocalPlayerDataAsync();
 				}
 			}
 
