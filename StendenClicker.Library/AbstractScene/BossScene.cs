@@ -19,7 +19,7 @@ namespace StendenClicker.Library.AbstractScene
             }
             else
             {
-                BossScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json");
+                BossScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json").GetAwaiter().GetResult();
             }
         }
 

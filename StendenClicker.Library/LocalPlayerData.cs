@@ -4,32 +4,59 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.Storage;
 
 namespace StendenClicker.Library
 {
     public class LocalPlayerData
     {
-        public static Player LoadLocalPlayerData() => LoadLocalData<Player>("player_data.json");
+        public static Player LoadLocalPlayerDataAsync() => LoadLocalData<Player>("player_data.json").GetAwaiter().GetResult();
         public static void SaveLocalPlayerData(Player player) => SaveLocalData(player, "player_data.json");     
 
-        public static T LoadLocalData<T>(string filename) where T : new()
+        public static async Task<T> LoadLocalData<T>(string filename) where T : new()
         {
-            var path = Path.Combine(Environment.CurrentDirectory, filename);
-            if (!File.Exists(path))
-            {
-                using (var fs = File.Create(path))
-                using (StreamWriter sw = new StreamWriter(fs))
-                {
-                    sw.Write(JsonConvert.SerializeObject(new T()));
-                }
+            StorageFolder installedLocation = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile file;
+            if (!await FileExists(filename))
+			{
+                file = await installedLocation.CreateFileAsync(filename);
+                await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(new T()));                      
             }
-            return JsonConvert.DeserializeObject<T>(File.ReadAllText(path));
+
+            file = await installedLocation.GetFileAsync(filename);
+            return JsonConvert.DeserializeObject<T>(await FileIO.ReadTextAsync(file));
         }
 
-        public static void SaveLocalData<T>(T data, string filename)
+        private static async Task<bool> FileExists(string filename)
+		{
+            StorageFolder installedLocation = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile item = await installedLocation.TryGetItemAsync(filename) as StorageFile;
+            if (item == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static async void SaveLocalData<T>(T data, string filename)
         {
-            var path = Path.Combine(Environment.CurrentDirectory, filename);
-            File.WriteAllText(path, JsonConvert.SerializeObject(data));
+            StorageFolder installedLocation = Windows.Storage.ApplicationData.Current.LocalFolder;
+            StorageFile file;
+            if (await FileExists(filename))
+            {
+                file = await installedLocation.GetFileAsync(filename);
+            }
+            else
+            {
+                file = await installedLocation.CreateFileAsync(filename);
+            }
+
+            await FileIO .WriteTextAsync(file, JsonConvert.SerializeObject(data));
         }
     }
 }

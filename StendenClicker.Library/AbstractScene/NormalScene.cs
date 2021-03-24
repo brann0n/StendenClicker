@@ -20,7 +20,7 @@ namespace StendenClicker.Library.AbstractScene
             }
             else
             {
-                NormalScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json");
+                NormalScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json").GetAwaiter().GetResult();
             }
         }
 

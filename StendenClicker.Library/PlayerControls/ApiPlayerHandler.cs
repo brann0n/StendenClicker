@@ -31,11 +31,16 @@ namespace StendenClicker.Library.PlayerControls
 				}
 				else
 				{
-					state = LocalPlayerData.LoadLocalPlayerData();
+					state = LocalPlayerData.LoadLocalPlayerDataAsync();
 				}
 			}
 
 			return state;
+		}
+
+		public Player GetPlayer(string DeviceId)
+		{
+			return GetPlayerStateAsync(DeviceId).GetAwaiter().GetResult();
 		}
 
 		/// <summary>
@@ -53,6 +58,8 @@ namespace StendenClicker.Library.PlayerControls
 			}
 			else
 			{
+				//save the current player state, and then throw an exception
+				LocalPlayerData.SaveLocalPlayerData(state);
 				throw new Exception($"Couldn't set the player state... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 		}
@@ -62,12 +69,12 @@ namespace StendenClicker.Library.PlayerControls
 		/// </summary>
 		/// <param name="username"></param>
 		/// <param name="connectionId"></param>
-		public async void CreateUser(string username, string connectionId)
+		public async void CreateUser(string username, string connectionId, string DeviceId)
 		{
 			Player player = new Player
 			{
 				connectionId = connectionId,
-				deviceId = Player.GetMachineKey(),
+				deviceId = DeviceId,
 				Username = username,
 				UserId = Guid.NewGuid()
 			};
@@ -75,10 +82,12 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.PostRequestAsync("api/player/create", player);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
+				//after creating a new user, also store that new player
 				LocalPlayerData.SaveLocalPlayerData(player);
 			}
 			else
 			{
+				LocalPlayerData.SaveLocalPlayerData(player);
 				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 
