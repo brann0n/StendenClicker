@@ -92,21 +92,21 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border BorderBrush="#2EAAB6" BorderThickness="0,0,0,1"  Margin="0,10,0,0">
-                                    <StackPanel Width="{Binding ElementName=shop, Path=Width}" Orientation="Horizontal">
+                                    <StackPanel Name="hero" Width="{Binding ElementName=shop, Path=Width}" Orientation="Horizontal">
                                         <Grid Width="{Binding ElementName=shop, Path=Width}">
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="22*" />
-                                                <ColumnDefinition Width="30*" />
-                                                <ColumnDefinition Width="30*" />
+                                                <ColumnDefinition Width="20*" />
+                                                <ColumnDefinition Width="39*" />
+                                                <ColumnDefinition Width="28*" />
                                                 <ColumnDefinition Width="13*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0" >
-                                                <Button Padding="25,10,25,10" BorderThickness="0">
+                                                <Button Padding="25,10,25,10" BorderThickness="0" Margin="0,0,0,5">
                                                     <Button.Background>
                                                         <ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
                                                     </Button.Background>
                                                     <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                                        <TextBlock x:Name="Koopdan" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma"  FontWeight="Bold">Koop dan</TextBlock>
+                                                        <TextBlock x:Name="Koopdan" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">Koop dan</TextBlock>
                                                         <Grid HorizontalAlignment="Center"  RelativePanel.AlignHorizontalCenterWith="Koopdan"  RelativePanel.Below="Koopdan">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="50*" />
@@ -122,8 +122,128 @@
                                                         </Grid>
                                                     </RelativePanel>
                                                 </Button>
-
                                             </Grid>
+
+                                            <Grid Grid.Column="1">
+                                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5">
+                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                        <Button.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.ThemeDictionaries>
+                                                                    <ResourceDictionary x:Key="Dark">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                    <ResourceDictionary x:Key="Light">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                </ResourceDictionary.ThemeDictionaries>
+                                                            </ResourceDictionary>
+                                                        </Button.Resources>
+                                                        <Image Source="Assets/nse.png"/>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="Dikke abilitie"/>
+                                                        </ToolTipService.ToolTip>
+                                                    </Button>
+                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                        <Button.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.ThemeDictionaries>
+                                                                    <ResourceDictionary x:Key="Dark">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                    <ResourceDictionary x:Key="Light">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                </ResourceDictionary.ThemeDictionaries>
+                                                            </ResourceDictionary>
+                                                        </Button.Resources>
+                                                        <Image Source="Assets/nse.png"/>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="Dikke abilitie"/>
+                                                        </ToolTipService.ToolTip>
+                                                    </Button>
+                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                        <Button.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.ThemeDictionaries>
+                                                                    <ResourceDictionary x:Key="Dark">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                    <ResourceDictionary x:Key="Light">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                </ResourceDictionary.ThemeDictionaries>
+                                                            </ResourceDictionary>
+                                                        </Button.Resources>
+                                                        <Image Source="Assets/nse.png"/>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="Dikke abilitie" />
+                                                        </ToolTipService.ToolTip>
+                                                    </Button>
+                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                        <Button.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.ThemeDictionaries>
+                                                                    <ResourceDictionary x:Key="Dark">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                    <ResourceDictionary x:Key="Light">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                </ResourceDictionary.ThemeDictionaries>
+                                                            </ResourceDictionary>
+                                                        </Button.Resources>
+                                                        <Image Source="Assets/nse.png"/>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="Dikke abilitie" />
+                                                        </ToolTipService.ToolTip>
+                                                    </Button>
+                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                        <Button.Resources>
+                                                            <ResourceDictionary>
+                                                                <ResourceDictionary.ThemeDictionaries>
+                                                                    <ResourceDictionary x:Key="Dark">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                    <ResourceDictionary x:Key="Light">
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                    </ResourceDictionary>
+                                                                </ResourceDictionary.ThemeDictionaries>
+                                                            </ResourceDictionary>
+                                                        </Button.Resources>
+                                                        <Image Source="Assets/nse.png"/>
+                                                        <ToolTipService.ToolTip>
+                                                            <ToolTip Content="Dikke abilitie" />
+                                                        </ToolTipService.ToolTip>
+                                                    </Button>
+                                                </StackPanel>
+                                            </Grid>
+
                                             <Grid Grid.Column="2" HorizontalAlignment="Right">
                                                 <RelativePanel HorizontalAlignment="Right" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding HeroName}" Name="HeroName" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">De Tester</TextBlock>
@@ -155,7 +275,7 @@
                 </Grid>
             </Border>
         </Grid>
-        
+
         <!--Koffiemachine-->
         <Border Grid.Column="1" CornerRadius="5" Margin="10,20,10,20">
             <Grid Grid.Column="1" >
@@ -179,12 +299,12 @@
                     <ListView Name="koffie" ItemsSource="{Binding AbilitiesList}"  Width="{Binding ActualWidth, ElementName=KoffieGrid}" Padding="0" UseLayoutRounding="False" Margin="0,10,0,0" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Button Background="#424242"  BorderThickness="0"  Margin="20,0,20,5" CornerRadius="5">
-                                    <StackPanel Width="{Binding ElementName=koffie, Path=Width}" Orientation="Horizontal">
+                                <Button Background="#424242"  BorderThickness="0" Margin="20,0,20,5" CornerRadius="5">
+                                    <StackPanel Width="{Binding ElementName=koffie, Path=Width}" Orientation="Horizontal" Height="68">
                                         <Grid Width="{Binding ElementName=koffie, Path=Width}" >
                                             <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="20*" />
-                                                <ColumnDefinition Width="80*" />
+                                                <ColumnDefinition Width="12*" />
+                                                <ColumnDefinition Width="88*" />
                                             </Grid.ColumnDefinitions>
                                             <Grid Grid.Column="0" >
                                                 <Image Source="{Binding Image}"/>
@@ -215,7 +335,7 @@
                 <RowDefinition Height="15*"/>
             </Grid.RowDefinitions>
 
-            
+
             <!--Level overzicht-->
             <Grid Grid.Row="0" >
                 <Grid.RowDefinitions>
@@ -288,7 +408,7 @@
                     <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
                 <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
-				<!--<GridView VerticalAlignment="Bottom" ItemsSource="{Binding CoinList}" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}">
+                <!--<GridView VerticalAlignment="Bottom" ItemsSource="{Binding CoinList}" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}">
 					<GridView.ItemTemplate>
                         <DataTemplate>
                             <Button Background="Transparent" Command="{Binding ElementName=test, Path=Command}">
@@ -324,10 +444,10 @@
 
                 <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
                     <customui:CoinGrid.RowDefinitions>
-						<RowDefinition Height="33*"/>
-						<RowDefinition Height="33*"/>
-						<RowDefinition Height="33*"/>
-					</customui:CoinGrid.RowDefinitions>
+                        <RowDefinition Height="33*"/>
+                        <RowDefinition Height="33*"/>
+                        <RowDefinition Height="33*"/>
+                    </customui:CoinGrid.RowDefinitions>
                     <customui:CoinGrid.ColumnDefinitions>
                         <ColumnDefinition Width="6*"/>
                         <ColumnDefinition Width="6*"/>
