@@ -36,13 +36,13 @@ namespace StendenClickerApi.Controllers
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Scenes));
         }
-        public void Base64ToImage(string Base64)
+        public Image Base64ToImage(string Base64)
         {
             byte[] bytes = Convert.FromBase64String(Base64);
 
             using (MemoryStream ms = new MemoryStream(bytes))
             {
-                Image.FromStream(ms);
+                return Image.FromStream(ms);
             }
         }
 
