@@ -2,6 +2,8 @@
 using StendenClickerApi.Database;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -33,6 +35,15 @@ namespace StendenClickerApi.Controllers
         public ActionResult GetScenes()
 		{
             return new JsonStringResult(JsonConvert.SerializeObject(db.Scenes));
+        }
+        public void Base64ToImage(string Base64)
+        {
+            byte[] bytes = Convert.FromBase64String(Base64);
+
+            using (MemoryStream ms = new MemoryStream(bytes))
+            {
+                Image.FromStream(ms);
+            }
         }
 
     }
