@@ -7,8 +7,8 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:Windows10version1809="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsApiContractPresent(Windows.Foundation.UniversalApiContract, 7)"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:media="using:Microsoft.UI.Xaml.Media" xmlns:customui="using:StendenClickerGame.CustomUI"
-	mc:Ignorable="d"
+    xmlns:media="using:Microsoft.UI.Xaml.Media" xmlns:customui="using:StendenClickerGame.CustomUI" d:DataContext="{d:DesignInstance Type=viewmodels:MainPageViewModel}"
+    mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <!--<Page.DataContext>
         <viewmodels:MainPageViewModel/>
@@ -451,39 +451,6 @@
                     <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
                 <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
-                <!--<GridView VerticalAlignment="Bottom" ItemsSource="{Binding CoinList}" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}">
-					<GridView.ItemTemplate>
-                        <DataTemplate>
-                            <Button Background="Transparent" Command="{Binding ElementName=test, Path=Command}">
-                                <Button.Resources>
-                                    <ResourceDictionary>
-                                        <ResourceDictionary.ThemeDictionaries>
-                                            <ResourceDictionary x:Key="Dark">
-                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-                                            </ResourceDictionary>
-                                            <ResourceDictionary x:Key="Light">
-                                                <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="ButtonForegroundPressed" Color="Transparent"/>
-                                                <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-                                            </ResourceDictionary>
-                                        </ResourceDictionary.ThemeDictionaries>
-                                    </ResourceDictionary>
-                                </Button.Resources>
-                                <Button.RenderTransform>
-                                    <CompositeTransform TranslateX="{Binding point.X}" TranslateY="{Binding point.Y}" ScaleX="1" ScaleY="1"/>
-                                </Button.RenderTransform>
-                                <Viewbox  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="40" Width="40" Visibility="Visible">
-                                    <Canvas Height="100" Width="100">
-                                        <Path Fill=" #ff0000 " Data="M50 100C22.35 100 0 77.65 0 50C0 22.35 22.35 0 50 0C77.65 0 100 22.35 100 50C100 77.65 77.65 100 50 100Z" />
-                                        <Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
-                                    </Canvas>
-                                </Viewbox>
-                            </Button>
-                        </DataTemplate>
-                    </GridView.ItemTemplate>
-                </GridView>-->
 
                 <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
                     <customui:CoinGrid.RowDefinitions>
@@ -549,17 +516,50 @@
                     </TransitionCollection>
                 </Popup.ChildTransitions>
 
+                <Border CornerRadius="5,0,0,5">
+                    <Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popup, Path=Width}" Height="{Binding ElementName=popup, Path=Height}">
+                        <Grid Name="friendGrid" Width="400" HorizontalAlignment="Center">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50*"/>
+                                <RowDefinition Height="50*"/>
+                            </Grid.RowDefinitions>
+                            
+                            <StackPanel Grid.Row="1" Margin="0,40,0,0">
+                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
+                                <TextBox Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
+                                <Button Margin="0,0,0,10" HorizontalAlignment="left">Search</Button>
 
-                <Grid>
+                                <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=searchFriend, Path=Width}">
+                                                <Grid Margin="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="50*"/>
+                                                        <ColumnDefinition Width="50*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0">
+                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1">
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Uitnodiging sturen</Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </ListView>
 
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
 
-                    <Border CornerRadius="5,0,0,5">
-                        <StackPanel Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popup, Path=Width}" Height="{Binding ElementName=popup, Path=Height}">
-                           
-                        </StackPanel>
-                    </Border>
-
-                </Grid>
             </Popup>
         </RelativePanel>
     </Grid>
