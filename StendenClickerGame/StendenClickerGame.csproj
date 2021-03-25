@@ -119,6 +119,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="CustomUI\Base64ImageConverter.cs" />
     <Compile Include="CustomUI\CoinGrid.cs" />
     <Compile Include="CustomUI\CustomCoinList.cs" />
     <Compile Include="Data\abilities.cs" />

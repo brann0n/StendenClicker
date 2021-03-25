@@ -44,7 +44,7 @@ namespace StendenClicker.Library.AbstractMonster
             Name = item.BossName;
 
             //health of the boss is 200 times its own boss number
-            Health = 200 * bossNumber;
+            Health = item.BaseHealth * bossNumber;
 
             //currency is 3 ec per boss and a large amount of spark coins
             CurrencyAmount = (ulong)Math.Pow(levelNr, 3);
