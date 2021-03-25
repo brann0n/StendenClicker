@@ -25,6 +25,8 @@ namespace StendenClicker.Library.PlayerControls
 
 		public string Name { get; set; }
 		public string Base64Image { get; set; }
+		public int HeroLevel { get; set; }
+		public int Price { get; set; }
 
 		public List<HeroUpgrades> Upgrades { get; set; }
 
@@ -39,6 +41,8 @@ namespace StendenClicker.Library.PlayerControls
 			{
 				Base64Image = hero.HeroAsset.Base64Image,
 				Name = hero.HeroName,
+				HeroLevel = 0,
+				Price = hero.HeroCost,
 				Upgrades = new List<HeroUpgrades>()
 			};
 		}

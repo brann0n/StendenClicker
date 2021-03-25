@@ -118,7 +118,7 @@
                                                                     <Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
                                                                 </Canvas>
                                                             </Viewbox>
-                                                            <TextBlock Text="{Binding HeroCurrencyAmount}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal">108K</TextBlock>
+                                                            <TextBlock Text="{Binding Price}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal">108K</TextBlock>
                                                         </Grid>
                                                     </RelativePanel>
                                                 </Button>
@@ -246,7 +246,7 @@
 
                                             <Grid Grid.Column="2" HorizontalAlignment="Right">
                                                 <RelativePanel HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding HeroName}" Name="HeroName" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">De Tester</TextBlock>
+                                                    <TextBlock Text="{Binding Name}" Name="HeroName" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">De Tester</TextBlock>
                                                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RelativePanel.AlignRightWith="HeroName"  RelativePanel.Below="HeroName">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="50*" />
@@ -259,7 +259,7 @@
                                                 </RelativePanel>
                                             </Grid>
                                             <Grid Grid.Column="3" Margin="0,0,10,0">
-                                                <Image Source="Assets/jan.png" HorizontalAlignment="Left"></Image>
+												<Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" HorizontalAlignment="Left"></Image>
                                             </Grid>
                                         </Grid>
                                     </StackPanel>

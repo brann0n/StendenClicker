@@ -23,8 +23,6 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
-		//required modules	
-		private LevelGenerator LevelGenerator;
 		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
 		//bindables
@@ -45,8 +43,6 @@ namespace StendenClickerGame.ViewModels
 		public CurrencyTrayViewModel()
 		{
 			TappedEvent = new RelayCommand(MonsterClicked);
-
-			LevelGenerator = new LevelGenerator();
 
 			Clicks = new BatchedClick();
 
@@ -96,7 +92,7 @@ namespace StendenClickerGame.ViewModels
 					//todo: update all the user accounts and the current session that a monster has been defeated.
 
 					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-					CurrentSession.currentLevel = LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
+					CurrentSession.currentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
 				}
 
 				//todo: is level completed?

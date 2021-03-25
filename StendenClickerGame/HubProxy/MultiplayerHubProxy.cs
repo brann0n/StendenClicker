@@ -1,5 +1,6 @@
 using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library.Batches;
+using StendenClicker.Library.Factory;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using System;
@@ -34,6 +35,7 @@ namespace StendenClickerGame.Multiplayer
 		public event SignalRConnectionError OnConnectionError;
 
 		public ApiPlayerHandler PlayerContext;
+		public LevelGenerator LevelGenerator;
 
 		public Player CurrentPlayer { get { return PlayerContext.GetPlayer(DeviceInfo.Instance.Id); } }
 
@@ -41,6 +43,7 @@ namespace StendenClickerGame.Multiplayer
 		public MultiplayerHubProxy(string serverUrl)
 		{
 			PlayerContext = new ApiPlayerHandler();
+			LevelGenerator = new LevelGenerator();
 
 			hubConnection = new HubConnection(serverUrl);
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
@@ -62,6 +65,7 @@ namespace StendenClickerGame.Multiplayer
 
 				//for now render a new level anyways.
 				SessionContext = new MultiPlayerSession { currentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
+				//SessionContext.currentLevel = LevelGenerator.BuildLevel(SessionContext.currentPlayerList);
 			}).Wait();
 		}
 

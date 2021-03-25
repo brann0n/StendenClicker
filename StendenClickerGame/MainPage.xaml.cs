@@ -30,9 +30,10 @@ namespace StendenClickerGame
         }
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
+            //this code-behind is needed to perform delayed loading of elements without stutter
             var ViewModelContext = e.Parameter as MainPageViewModel;
-
             this.DataContext = ViewModelContext;
+            ViewModelContext.LoadHeroes();
         }
     }
 }
