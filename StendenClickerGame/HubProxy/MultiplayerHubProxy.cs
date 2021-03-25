@@ -65,7 +65,7 @@ namespace StendenClickerGame.Multiplayer
 
 				//for now render a new level anyways.
 				SessionContext = new MultiPlayerSession { currentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
-				//SessionContext.currentLevel = LevelGenerator.BuildLevel(SessionContext.currentPlayerList);
+				SessionContext.currentLevel = LevelGenerator.BuildLevel(SessionContext.currentPlayerList);
 			}).Wait();
 		}
 
@@ -105,6 +105,10 @@ namespace StendenClickerGame.Multiplayer
 			return SessionContext;
 		}
 
+		public string GetConnectionId()
+		{
+			return hubConnection.ConnectionId;
+		}
 		private void HubConnection_StateChanged(StateChange obj)
 		{
 			OnConnectionStateChanged?.Invoke(obj);

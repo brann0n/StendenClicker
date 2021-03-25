@@ -18,7 +18,7 @@ namespace StendenClickerGame.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
     {
-		private MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
+		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
 
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public ObservableCollection<Hero> HeroList { get; set; }

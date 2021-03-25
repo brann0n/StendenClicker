@@ -447,10 +447,10 @@
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Button.Resources>
-					<Image DataContext="{Binding dingetje,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+					<Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
                     <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
-                <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
+                <!--<Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>-->
                 <!--<GridView VerticalAlignment="Bottom" ItemsSource="{Binding CoinList}" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}">
 					<GridView.ItemTemplate>
                         <DataTemplate>
@@ -524,14 +524,14 @@
                             <ColumnDefinition Width="45*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">Depresso</TextBlock>
-                        </Grid>
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0" Text="{Binding CurrencyTray.CurrentMonster.Name}"/>
+						</Grid>
                         <Grid Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">lvl.</TextBlock>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold">1016</TextBlock>
-                        </Grid>
+							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentMonster.MonsterLevel}" />
+						</Grid>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1" Margin="0,10,0,10">

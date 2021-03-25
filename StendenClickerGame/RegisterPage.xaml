@@ -14,7 +14,7 @@
         </Grid.Background>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Vul hier uw naam in:</TextBlock>
-            <TextBox Background="Transparent" Margin="0,0,0,10">
+            <TextBox Name="UsernameTextBox" Background="Transparent" Margin="0,0,0,10">
                 <TextBox.Resources>
                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="white" Opacity="0.2"/>
                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>

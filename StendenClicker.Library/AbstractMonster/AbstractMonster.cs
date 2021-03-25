@@ -10,16 +10,17 @@ namespace StendenClicker.Library.AbstractMonster
         /// <summary>
         /// Total health of the monster.
         /// </summary>
-		protected int Health { get; set; }
+		public int Health { get; set; }
 
         /// <summary>
         /// Total damage done to health of monster.
         /// </summary>
-        protected int Damage { get; set; }
-        protected double DamageFactor { get; set; } = 1;
-		protected ulong CurrencyAmount { get; set; }
-        protected string Sprite { get; set; }
-        protected string Name { get; set; }
+        public int Damage { get; set; }
+        public double DamageFactor { get; set; } = 1;
+		public ulong CurrencyAmount { get; set; }
+        public string Sprite { get; set; }
+        public string Name { get; set; }
+        public int MonsterLevel { get; set; } = 10; //todo: create a dynamic thing for this.
 
         public virtual void DoDamage(int damage)
         {
