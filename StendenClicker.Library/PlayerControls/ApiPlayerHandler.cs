@@ -38,6 +38,11 @@ namespace StendenClicker.Library.PlayerControls
 			return state;
 		}
 
+		/// <summary>
+		/// May not work in UWP because of the awaiters
+		/// </summary>
+		/// <param name="DeviceId"></param>
+		/// <returns></returns>
 		public Player GetPlayer(string DeviceId)
 		{
 			return GetPlayerStateAsync(DeviceId).GetAwaiter().GetResult();
@@ -69,14 +74,14 @@ namespace StendenClicker.Library.PlayerControls
 		/// </summary>
 		/// <param name="username"></param>
 		/// <param name="connectionId"></param>
-		public async void CreateUser(string username, string connectionId, string DeviceId)
+		public async Task CreateUser(string username, string connectionId, string DeviceId)
 		{
-			Player player = new Player
+			Models.DatabaseModels.Player player = new Models.DatabaseModels.Player
 			{
-				connectionId = connectionId,
-				deviceId = DeviceId,
-				Username = username,
-				UserId = Guid.NewGuid()
+				ConnectionId = connectionId,
+				DeviceId = DeviceId,
+				PlayerName = username,
+				PlayerGuid = Guid.NewGuid().ToString()
 			};
 
 			var response = await RestHelper.PostRequestAsync("api/player/create", player);

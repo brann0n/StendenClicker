@@ -23,8 +23,6 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
-		//required modules	
-		private LevelGenerator LevelGenerator;
 		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
 		//bindables
@@ -33,10 +31,10 @@ namespace StendenClickerGame.ViewModels
 		public int? MonsterHealthPercentage { get { return CurrentLevel?.getMonster()?.GetHealthPercentage(); } }
 
 		//Context variables
-		private IAbstractPlatform CurrentLevel { get { return CurrentSession?.currentLevel; } }
-		private MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
-		private IAbstractMonster CurrentMonster { get { return CurrentLevel?.getMonster(); } }
-		private IAbstractScene CurrentScene { get { return CurrentLevel?.getScene(); } }
+		public IAbstractPlatform CurrentLevel { get { return CurrentSession?.currentLevel; } }
+		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
+		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel?.getMonster(); } }
+		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel?.getScene(); } }
 
 		
 
@@ -45,8 +43,6 @@ namespace StendenClickerGame.ViewModels
 		public CurrencyTrayViewModel()
 		{
 			TappedEvent = new RelayCommand(MonsterClicked);
-
-			LevelGenerator = new LevelGenerator();
 
 			Clicks = new BatchedClick();
 
@@ -72,43 +68,44 @@ namespace StendenClickerGame.ViewModels
 		{
 			//todo: check if some of this stuff can run async to speed up the game.
 			//check if there is a monster to click on:
-			if(CurrentMonster != null)
-			{
-				//batch collect the clicks
-				Clicks.addClick();
+			//if(CurrentMonster != null)
+			//{
+			//	//batch collect the clicks
+			//	Clicks.addClick();
 
-				//damage monster
-				CurrentMonster?.DoDamage(1);
+			//	//damage monster
+			//	CurrentMonster?.DoDamage(1);
 
-				if (CurrentMonster.IsDefeated())
-				{
-					//get the rewards for this monster and generate a new level
-					var rewards = CurrentMonster.GetReward();
-					for (ulong i = 0; i < rewards.SparkCoin; i++)
-					{
-						CreateCoin(typeof(SparkCoin));
-					}
-					for (ulong i = 0; i < rewards.EuropeanCredit; i++)
-					{
-						CreateCoin(typeof(EuropeanCredit));
-					}
+			//	if (CurrentMonster.IsDefeated())
+			//	{
+			//		//get the rewards for this monster and generate a new level
+			//		var rewards = CurrentMonster.GetReward();
+			//		for (ulong i = 0; i < rewards.SparkCoin; i++)
+			//		{
+			//			CreateCoin(typeof(SparkCoin));
+			//		}
+			//		for (ulong i = 0; i < rewards.EuropeanCredit; i++)
+			//		{
+			//			CreateCoin(typeof(EuropeanCredit));
+			//		}
 
-					//todo: update all the user accounts and the current session that a monster has been defeated.
+			//		//todo: update all the user accounts and the current session that a monster has been defeated.
 
-					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-					CurrentSession.currentLevel = LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
-				}
+			//		//build a new level from the current player list, in singleplayer mode that list contains 1 player.
+			//		CurrentSession.currentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
+			//	}
 
-				//todo: is level completed?
+			//	//todo: is level completed?
 
-				//todo: render new level?
-			}
+			//	//todo: render new level?
+			//}
 
-
-
+			CurrentSession.currentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
+			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
+			NotifyPropertyChanged("CurrencyTray");
 
 			// create a coin for testing
-			//CreateCoin(typeof(EuropeanCredit));
+			CreateCoin(typeof(EuropeanCredit));
 		}
 
 		/// <summary>

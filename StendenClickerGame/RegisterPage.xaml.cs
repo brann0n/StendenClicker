@@ -37,16 +37,44 @@ namespace StendenClickerGame
 
 		private async void RegisterPage_Loaded(object sender, RoutedEventArgs e)
 		{
+            //initialize all required resources.
             await Hero.Initialize();
             await Boss.Initialize();
             await Normal.Initialize();
             await NormalScene.Initialize();
             await BossScene.Initialize();
+
+            // check if this player has played before
+            MainPageViewModel context = (MainPageViewModel)this.DataContext;
+            Player player = await context.mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
+			if (!Player.IsPlayerObjectEmpty(player))
+			{
+                //continue with the app -> do not show signin page.
+                this.Frame.Navigate(typeof(MainPage), this.DataContext);
+            }
+
 		}
 
-		private void GoToMainPage_Click(object sender, RoutedEventArgs e)
+		private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPage), this.DataContext);
+			if (!string.IsNullOrEmpty(UsernameTextBox.Text))
+			{
+                //todo: check if the username has already been taken (although it doenst require to be unique, for searching friends it might be usefull)
+                MainPageViewModel context = (MainPageViewModel)this.DataContext;
+				try
+				{
+                    await context.mpProxy.PlayerContext.CreateUser(UsernameTextBox.Text, context.mpProxy.GetConnectionId(), DeviceInfo.Instance.Id);
+                }
+                catch (Exception)
+				{
+                    //show this error to the user.
+				}
+
+                this.Frame.Navigate(typeof(MainPage), this.DataContext);
+            }
+            //show a red label with the message that they need to enter a username.
+
+            
         }
     }
 }
