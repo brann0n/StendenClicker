@@ -68,51 +68,53 @@ namespace StendenClickerGame.ViewModels
 		{
 			//todo: check if some of this stuff can run async to speed up the game.
 			//check if there is a monster to click on:
-			//if(CurrentMonster != null)
-			//{
-			//	//batch collect the clicks
-			//	Clicks.addClick();
+			if (CurrentMonster != null)
+			{
+				//batch collect the clicks
+				Clicks.addClick();
 
-			//	//damage monster
-			//	CurrentMonster?.DoDamage(1);
+				//damage monster
+				CurrentMonster?.DoDamage(1);
 
-			//	if (CurrentMonster.IsDefeated())
-			//	{
-			//		//get the rewards for this monster and generate a new level
-			//		var rewards = CurrentMonster.GetReward();
-			//		for (ulong i = 0; i < rewards.SparkCoin; i++)
-			//		{
-			//			CreateCoin(typeof(SparkCoin));
-			//		}
-			//		for (ulong i = 0; i < rewards.EuropeanCredit; i++)
-			//		{
-			//			CreateCoin(typeof(EuropeanCredit));
-			//		}
+				if (CurrentMonster.IsDefeated())
+				{
+					//get the rewards for this monster and generate a new level
+					var rewards = CurrentMonster.GetReward();
+					for (ulong i = 0; i < rewards.SparkCoin; i++)
+					{
+						CreateCoin(typeof(SparkCoin));
+					}
+					for (ulong i = 0; i < rewards.EuropeanCredit; i++)
+					{
+						CreateCoin(typeof(EuropeanCredit));
+					}
 
-			//		//todo: update all the user accounts and the current session that a monster has been defeated.
+					//todo: update all the user accounts and the current session that a monster has been defeated.
 
-			//		//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-			//		CurrentSession.currentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
-			//	}
+					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
+					
+				}
 
-			//	//todo: is level completed?
+				//todo: is level completed?
 
-			//	//todo: render new level?
-			//}
+				//todo: render new level?
+			}
 			RenderLevel();
 
 
-			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
-			NotifyPropertyChanged("CurrencyTray");
+
+
 
 			// create a coin for testing
-			CreateCoin(typeof(EuropeanCredit));
+			//CreateCoin(typeof(EuropeanCredit));
 		}
 
 		private void RenderLevel()
 		{
 			CurrentSession.CurrentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.CurrentPlayerList);
 			NotifyPropertyChanged("CurrentMonster");
+			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
+			NotifyPropertyChanged("CurrencyTray");
 		}
 
 		/// <summary>

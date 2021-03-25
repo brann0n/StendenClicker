@@ -447,7 +447,7 @@
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Button.Resources>
-					<Image DataContext="{Binding dingetje,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+					<Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
                     <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
                 <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
