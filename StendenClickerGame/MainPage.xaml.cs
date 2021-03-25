@@ -35,5 +35,12 @@ namespace StendenClickerGame
             this.DataContext = ViewModelContext;
             ViewModelContext.LoadHeroes();
         }
+
+        private void ButtonFriend_OnClick(object sender, RoutedEventArgs e)
+        {
+            popup.Width = panel.ActualWidth;
+            popup.Height = Window.Current.Bounds.Height;
+            popup.IsOpen = true;
+        }
     }
 }
