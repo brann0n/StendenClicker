@@ -19,17 +19,15 @@ namespace StendenClickerGame.ViewModels
     public class MainPageViewModel : ViewModelBase
     {
 		private MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
-		public ICommand command { get; set; }
+
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public ObservableCollection<heroes> HeroList { get; set; }
         public ObservableCollection<abilities> AbilitiesList { get; set; }
         public ObservableCollection<Coins> CoinList { get; set; }
 
-
+		public string dingetje { get { return ((Hero)Hero.Heroes.FirstOrDefault()).Base64Image; } }
 		public MainPageViewModel()
 		{
-			command = new RelayCommand(clearCoinlist);
-
 			//sub viewmodels
 			CurrencyTray = new CurrencyTrayViewModel();
 
@@ -86,11 +84,6 @@ namespace StendenClickerGame.ViewModels
 		public async Task<Player> GetPlayerContextAsync()
 		{
 			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
-		}
-
-		public void clearCoinlist()
-		{
-			CoinList.Clear();
 		}
 	}	
 }

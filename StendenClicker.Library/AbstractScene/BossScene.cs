@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StendenClicker.Library.AbstractScene
 {
@@ -9,20 +10,19 @@ namespace StendenClicker.Library.AbstractScene
 		private static List<Models.DatabaseModels.Scene> BossScenes;
         private static int InternalSceneCount { get { return BossScenes.Count; } }
 
-        static BossScene()
-        {
-            var response = RestHelper.GetRequestAsync("api/Assets/scenes").GetAwaiter().GetResult();
+        public static async Task Initialize()
+		{
+            var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
             BossScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
             if (BossScenes != null)
             {
-                LocalPlayerData.SaveLocalData(BossScenes, "scenes-asset-data.json");
+                await LocalPlayerData.SaveLocalData(BossScenes, "boss-scenes-asset-data.json");
             }
             else
             {
-                BossScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json").GetAwaiter().GetResult();
+                BossScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("boss-scenes-asset-data.json");
             }
         }
-
         public BossScene()
         {
             Random r = new Random();

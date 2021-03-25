@@ -13,9 +13,11 @@
     <!--<Page.DataContext>
         <viewmodels:MainPageViewModel/>
     </Page.DataContext>-->
+	<Page.Resources>
+		<customui:Base64ImageConverter x:Key="Base64ImageConverter"/>
+	</Page.Resources>
 
-
-    <Grid Background="#2EAAB6">
+	<Grid Background="#2EAAB6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="33*" />
             <ColumnDefinition Width="33*" />
@@ -445,7 +447,8 @@
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Button.Resources>
-                    <Image Source="Assets/nse.png"/>
+					<Image DataContext="{Binding dingetje,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+                    <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
                 <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
                 <!--<GridView VerticalAlignment="Bottom" ItemsSource="{Binding CoinList}" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}">

@@ -4,27 +4,33 @@ using System.Collections.Generic;
 using System;
 using System.Linq;
 using StendenClicker.Library.PlayerControls;
+using System.Threading.Tasks;
 
 namespace StendenClicker.Library.AbstractMonster
 {
     public class Boss : AbstractMonster
     {
-        private static readonly List<Models.DatabaseModels.Boss> Bosses;
+        private static List<Models.DatabaseModels.Boss> Bosses;
         private static int InternalBossCount { get { return Bosses.Count; } }
 
         static Boss()
 		{
-            var response = RestHelper.GetRequestAsync("api/Assets/bosses").GetAwaiter().GetResult();
-            Bosses = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Boss>>(response.Content);
-            if(Bosses != null)
-			{
-                LocalPlayerData.SaveLocalData(Bosses, "bosses-asset-data.json");
-            }
-			else
-			{
-                Bosses = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Boss>>("bosses-asset-data.json").GetAwaiter().GetResult();
-			}
+            
 		}
+
+        public static async Task Initialize()
+		{
+            var response = await RestHelper.GetRequestAsync("api/Assets/bosses");
+            Bosses = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Boss>>(response.Content);
+            if (Bosses != null)
+            {
+                await LocalPlayerData.SaveLocalData(Bosses, "bosses-asset-data.json");
+            }
+            else
+            {
+                Bosses = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Boss>>("bosses-asset-data.json");
+            }
+        }
 
         public Boss(int levelNr)
         {
@@ -44,7 +50,7 @@ namespace StendenClicker.Library.AbstractMonster
             Name = item.BossName;
 
             //health of the boss is 200 times its own boss number
-            Health = 200 * bossNumber;
+            Health = item.BaseHealth * bossNumber;
 
             //currency is 3 ec per boss and a large amount of spark coins
             CurrencyAmount = (ulong)Math.Pow(levelNr, 3);
