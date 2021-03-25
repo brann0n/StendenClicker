@@ -11,17 +11,26 @@ namespace StendenClicker.Library.Factory
 	{
 		public const int LevelsUntilBoss = 5;
 
-		public IAbstractPlatform BuildLevel(List<Player> players)
+		public GamePlatform BuildLevel(List<Player> players)
 		{
 			PlayerState state = CalculateState(players);
+
+			IAbstractPlatform pl;
+
 			if (CalculateIfBoss(state))
 			{
-				return new BossLevel(state);
+				pl = new BossLevel(state);
 			}
 			else
 			{
-				return new NormalLevel(state);
+				pl = new NormalLevel(state);				
 			}
+
+			return new GamePlatform()
+			{
+				Monster = (AbstractMonster.AbstractMonster)pl.getMonster(),
+				//Scene = (AbstractScene.AbstractScene)pl.getScene()
+			};
 		}
 
 		private bool CalculateIfBoss(PlayerState state)

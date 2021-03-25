@@ -30,7 +30,7 @@ namespace StendenClickerGame
         public RegisterPage()
         {
             this.InitializeComponent();
-            this.DataContext = new MainPageViewModel();
+            
             this.GoToMainPage.Click += GoToMainPage_Click;
 			this.Loaded += RegisterPage_Loaded;
         }
@@ -43,6 +43,9 @@ namespace StendenClickerGame
             await Normal.Initialize();
             await NormalScene.Initialize();
             await BossScene.Initialize();
+
+            //load datacontext after resources have been initiated, otherwise you get errors.
+            this.DataContext = new MainPageViewModel();
 
             // check if this player has played before
             MainPageViewModel context = (MainPageViewModel)this.DataContext;

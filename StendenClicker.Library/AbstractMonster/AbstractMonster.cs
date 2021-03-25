@@ -2,11 +2,13 @@ using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace StendenClicker.Library.AbstractMonster
 {
 	public abstract class AbstractMonster : IAbstractMonster
-	{
+    {
         /// <summary>
         /// Total health of the monster.
         /// </summary>
@@ -22,7 +24,7 @@ namespace StendenClicker.Library.AbstractMonster
         public string Name { get; set; }
         public int MonsterLevel { get; set; } = 10; //todo: create a dynamic thing for this.
 
-        public virtual void DoDamage(int damage)
+		public virtual void DoDamage(int damage)
         {
             Damage += (int)(DamageFactor * damage);
         }
@@ -48,7 +50,8 @@ namespace StendenClicker.Library.AbstractMonster
 		{
             return (GetHealth() / Health) * 100;
 		}
-	}
+
+    }
 
 }
 

@@ -28,13 +28,13 @@ namespace StendenClickerGame.ViewModels
 		//bindables
 		public CustomCoinList<Currency> CurrencyInView { get; set; }
 		public ICommand TappedEvent { get; set; }
-		public int? MonsterHealthPercentage { get { return CurrentLevel?.getMonster()?.GetHealthPercentage(); } }
+		public int? MonsterHealthPercentage { get { return CurrentLevel?.Monster?.GetHealthPercentage(); } }
 
 		//Context variables
-		public IAbstractPlatform CurrentLevel { get { return CurrentSession?.currentLevel; } }
+		public GamePlatform CurrentLevel { get { return CurrentSession?.CurrentLevel; } }
 		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
-		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel?.getMonster(); } }
-		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel?.getScene(); } }
+		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel.Monster; } }
+		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel.Scene; } }
 
 		
 
@@ -99,13 +99,20 @@ namespace StendenClickerGame.ViewModels
 
 			//	//todo: render new level?
 			//}
+			RenderLevel();
 
-			CurrentSession.currentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.currentPlayerList);
+
 			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
 			NotifyPropertyChanged("CurrencyTray");
 
 			// create a coin for testing
 			CreateCoin(typeof(EuropeanCredit));
+		}
+
+		private void RenderLevel()
+		{
+			CurrentSession.CurrentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.CurrentPlayerList);
+			NotifyPropertyChanged("CurrentMonster");
 		}
 
 		/// <summary>

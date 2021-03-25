@@ -9,7 +9,7 @@ namespace StendenClicker.Library.AbstractPlatform
 {
     public abstract class AbstractPlatform : IAbstractPlatform
     {
-        protected PlayerState CurrentPlayerState { get; set; }
+        public PlayerState CurrentPlayerState { get; set; }
 
         public AbstractPlatform(PlayerState state)
         {

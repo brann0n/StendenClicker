@@ -43,22 +43,22 @@ namespace StendenClicker.Tests
 				});
 			}
 
-			IAbstractPlatform platform = levelGenerator.BuildLevel(players);
+			GamePlatform platform = levelGenerator.BuildLevel(players);
 			if(stateNumber % LevelGenerator.LevelsUntilBoss == 0)
 			{
 				Assert.IsTrue(platform is BossLevel);
 
-				Assert.IsTrue(platform.getScene() is BossScene);
+				Assert.IsTrue(platform.Monster is BossScene);
 
-				Assert.IsTrue(platform.getMonster() is Boss);
+				Assert.IsTrue(platform.Scene is Boss);
 			}
 			else
 			{
 				Assert.IsTrue(platform is NormalLevel);
 
-				Assert.IsTrue(platform.getScene() is NormalScene);
+				Assert.IsTrue(platform.Scene is NormalScene);
 
-				Assert.IsTrue(platform.getMonster() is Normal);
+				Assert.IsTrue(platform.Monster is Normal);
 			}
 		}			
 	}
