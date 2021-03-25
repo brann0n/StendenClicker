@@ -1,4 +1,7 @@
-﻿using StendenClickerGame.ViewModels;
+﻿using StendenClicker.Library.AbstractMonster;
+using StendenClicker.Library.AbstractScene;
+using StendenClicker.Library.PlayerControls;
+using StendenClickerGame.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -29,9 +32,19 @@ namespace StendenClickerGame
             this.InitializeComponent();
             this.DataContext = new MainPageViewModel();
             this.GoToMainPage.Click += GoToMainPage_Click;
+			this.Loaded += RegisterPage_Loaded;
         }
 
-        private void GoToMainPage_Click(object sender, RoutedEventArgs e)
+		private async void RegisterPage_Loaded(object sender, RoutedEventArgs e)
+		{
+            await Hero.Initialize();
+            await Boss.Initialize();
+            await Normal.Initialize();
+            await NormalScene.Initialize();
+            await BossScene.Initialize();
+		}
+
+		private void GoToMainPage_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage), this.DataContext);
         }

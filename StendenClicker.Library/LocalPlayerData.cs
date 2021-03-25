@@ -43,7 +43,7 @@ namespace StendenClicker.Library
             }
         }
 
-        public static async void SaveLocalData<T>(T data, string filename)
+        public static async Task SaveLocalData<T>(T data, string filename)
         {
             StorageFolder installedLocation = Windows.Storage.ApplicationData.Current.LocalFolder;
             StorageFile file;

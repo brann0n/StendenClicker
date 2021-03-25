@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace StendenClicker.Library.AbstractScene
 {
@@ -10,17 +11,17 @@ namespace StendenClicker.Library.AbstractScene
 		private static List<Models.DatabaseModels.Scene> NormalScenes;
         private static int InternalSceneCount { get { return NormalScenes.Count; } }
 
-        static NormalScene()
-        {
-            var response = RestHelper.GetRequestAsync("api/Assets/scenes").GetAwaiter().GetResult();
+        public static async Task Initialize()
+		{
+            var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
             NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
             if (NormalScenes != null)
             {
-                LocalPlayerData.SaveLocalData(NormalScenes, "scenes-asset-data.json");
+                await LocalPlayerData.SaveLocalData(NormalScenes, "normal-scenes-asset-data.json");
             }
             else
             {
-                NormalScenes = LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("scenes-asset-data.json").GetAwaiter().GetResult();
+                NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
             }
         }
 
