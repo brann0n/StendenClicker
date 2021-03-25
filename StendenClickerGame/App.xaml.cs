@@ -32,9 +32,6 @@ namespace StendenClickerGame
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-
-            //PAS OP, DIT IS GLOBAL
-            ServicePointManager.ServerCertificateValidationCallback += (sender, certificate, chain, sslPolicyErrors) => true;
         }
 
         /// <summary>
