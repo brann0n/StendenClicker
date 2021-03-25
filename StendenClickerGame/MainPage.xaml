@@ -10,9 +10,9 @@
     xmlns:media="using:Microsoft.UI.Xaml.Media" xmlns:customui="using:StendenClickerGame.CustomUI"
 	mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-    <Page.DataContext>
+    <!--<Page.DataContext>
         <viewmodels:MainPageViewModel/>
-    </Page.DataContext>
+    </Page.DataContext>-->
 
 
     <Grid Background="#2EAAB6">

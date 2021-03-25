@@ -22,17 +22,17 @@ namespace StendenClickerGame
     /// An empty page that can be used on its own or navigated to within a Frame.
     /// </summary>
     public sealed partial class MainPage : Page
-    {
+    {    
         public MainPage()
         {
-            this.InitializeComponent();
-
-            this.switchscreen.Click += Switchscreen_Click;
+            this.InitializeComponent();   
+            
         }
-
-        private void Switchscreen_Click(object sender, RoutedEventArgs e)
+        protected override void OnNavigatedTo(NavigationEventArgs e)
         {
-            this.Frame.Navigate(typeof(RegisterPage));
+            var ViewModelContext = e.Parameter as MainPageViewModel;
+
+            this.DataContext = ViewModelContext;
         }
     }
 }

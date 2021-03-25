@@ -17,7 +17,7 @@ using System.Windows.Input;
 namespace StendenClickerGame.ViewModels
 {
     public class MainPageViewModel : ViewModelBase
-    {		
+    {
 		private MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
 		public ICommand command { get; set; }
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
@@ -25,14 +25,13 @@ namespace StendenClickerGame.ViewModels
         public ObservableCollection<abilities> AbilitiesList { get; set; }
         public ObservableCollection<Coins> CoinList { get; set; }
 
+
 		public MainPageViewModel()
 		{
-			//multiplayer connection
-			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
-			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
+			command = new RelayCommand(clearCoinlist);
 
 			//sub viewmodels
-			CurrencyTray = new CurrencyTrayViewModel();			
+			CurrencyTray = new CurrencyTrayViewModel();
 
 			//asl test om te kijken of de heros aan de shop worden toegevoegd
 			HeroList = new ObservableCollection<heroes>()
@@ -48,8 +47,8 @@ namespace StendenClickerGame.ViewModels
 
 			AbilitiesList = new ObservableCollection<abilities>()
 			{
-				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" }, 
-				new abilities { AbilitieName = "Water", Cooldown = 100, Image = "Assets/koffie.png" }, 
+				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Water", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
@@ -64,7 +63,14 @@ namespace StendenClickerGame.ViewModels
 				new Coins { point = new Point{ X = 70, Y=20}, CurrencyName="SparkCoin", Image=""}
 			};
 
-			command = new RelayCommand(clearCoinlist);	
+			CheckContextVariables();
+		}
+
+		public void CheckContextVariables()
+		{
+			//multiplayer connection
+			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
+			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()
