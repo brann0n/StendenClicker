@@ -429,30 +429,29 @@
 
             <Grid Grid.Row="1" Name="monster">
                 <Ellipse Name="platform" Fill="#E1E1E1"  Height="100" VerticalAlignment="Bottom" UseLayoutRounding="True" Stretch="Fill" StrokeDashCap="Round" StrokeLineJoin="Miter" StrokeStartLineCap="Flat"/>
-                <Button Command="{Binding CurrencyTray.TappedEvent}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{Binding ElementName=monster, Path=Height}" Width="{Binding ElementName=monster, Path=Width}" Background="Transparent" >
-                    <Button.Resources>
-                        <ResourceDictionary>
-                            <ResourceDictionary.ThemeDictionaries>
-                                <ResourceDictionary x:Key="Dark">
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-                                </ResourceDictionary>
-                                <ResourceDictionary x:Key="Light">
-                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
-                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-                                </ResourceDictionary>
-                            </ResourceDictionary.ThemeDictionaries>
-                        </ResourceDictionary>
-                    </Button.Resources>
-                    <Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
-                    <!--<Image Source="Assets/nse.png"/>-->
-                </Button>
-                <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
+				<Button Command="{Binding CurrencyTray.TappedEvent}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{Binding ElementName=monster, Path=Height}" Width="{Binding ElementName=monster, Path=Width}" Background="Transparent" >
+					<Button.Resources>
+						<ResourceDictionary>
+							<ResourceDictionary.ThemeDictionaries>
+								<ResourceDictionary x:Key="Dark">
+									<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+									<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+									<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+									<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+								</ResourceDictionary>
+								<ResourceDictionary x:Key="Light">
+									<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent"/>
+									<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+									<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+								</ResourceDictionary>
+							</ResourceDictionary.ThemeDictionaries>
+						</ResourceDictionary>
+					</Button.Resources>
+					<Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+					<!--<Image Source="Assets/nse.png"/>-->
+				</Button>
 
-                <customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
+				<customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
                     <customui:CoinGrid.RowDefinitions>
                         <RowDefinition Height="33*"/>
                         <RowDefinition Height="33*"/>

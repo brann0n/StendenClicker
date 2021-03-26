@@ -15,6 +15,9 @@ namespace StendenClicker.Library.AbstractMonster
         private static List<Models.DatabaseModels.Monster> Monsters;
         private static int InternalMonsterCount { get { return Monsters.Count; } }
 
+        private static int previousId { get; set; } = 0;
+
+
         public static async Task Initialize()
 		{
             var response = await RestHelper.GetRequestAsync("api/Assets/monsters");
@@ -33,6 +36,13 @@ namespace StendenClicker.Library.AbstractMonster
         {
             Random r = new Random();
             int monsterIndex = r.Next(1, InternalMonsterCount + 1);
+
+            while(monsterIndex == previousId)
+			{
+                monsterIndex = r.Next(1, InternalMonsterCount + 1);
+            }
+
+            previousId = monsterIndex;
 
             var item = Monsters.FirstOrDefault(n => n.MonsterId == monsterIndex);
 

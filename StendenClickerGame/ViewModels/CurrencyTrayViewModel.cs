@@ -95,7 +95,10 @@ namespace StendenClickerGame.ViewModels
 
 					//todo: update all the user accounts and the current session that a monster has been defeated.
 					UpdatePlayerStatsAfterMonsterDefeat(true, false);
-
+					if(CurrentScene.MonsterCount == CurrentScene.CurrentMonster)
+					{
+						UpdatePlayerStatsAfterMonsterDefeat(false, true);
+					}
 
 					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
 					RenderLevel();
