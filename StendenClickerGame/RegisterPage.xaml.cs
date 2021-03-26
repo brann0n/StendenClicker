@@ -27,16 +27,19 @@ namespace StendenClickerGame
     /// </summary>
     public sealed partial class RegisterPage : Page
     {
+        ApiPlayerHandler beforeContextPlayerHandler;
         public RegisterPage()
         {
             this.InitializeComponent();
-            
+
+            beforeContextPlayerHandler = new ApiPlayerHandler();
+
             this.GoToMainPage.Click += GoToMainPage_Click;
-			this.Loaded += RegisterPage_Loaded;
+            this.Loaded += RegisterPage_Loaded;
         }
 
-		private async void RegisterPage_Loaded(object sender, RoutedEventArgs e)
-		{
+        private async void RegisterPage_Loaded(object sender, RoutedEventArgs e)
+        {
             //initialize all required resources.
             await Hero.Initialize();
             await Boss.Initialize();
@@ -44,40 +47,38 @@ namespace StendenClickerGame
             await NormalScene.Initialize();
             await BossScene.Initialize();
 
-            //load datacontext after resources have been initiated, otherwise you get errors.
-            this.DataContext = new MainPageViewModel();
 
             // check if this player has played before
-            MainPageViewModel context = (MainPageViewModel)this.DataContext;
-            Player player = await context.mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
-			if (!Player.IsPlayerObjectEmpty(player))
-			{
+            Player player = await beforeContextPlayerHandler.GetPlayerStateAsync(DeviceInfo.Instance.Id);
+            if (!Player.IsPlayerObjectEmpty(player))
+            {            
+                //load datacontext after resources have been initiated, otherwise you get errors.
+                this.DataContext = new MainPageViewModel();
+
                 //continue with the app -> do not show signin page.
                 this.Frame.Navigate(typeof(MainPage), this.DataContext);
             }
+        }
 
-		}
-
-		private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
+        private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
         {
-			if (!string.IsNullOrEmpty(UsernameTextBox.Text))
-			{
+            if (!string.IsNullOrEmpty(UsernameTextBox.Text))
+            {
                 //todo: check if the username has already been taken (although it doenst require to be unique, for searching friends it might be usefull)
-                MainPageViewModel context = (MainPageViewModel)this.DataContext;
-				try
-				{
-                    await context.mpProxy.PlayerContext.CreateUser(UsernameTextBox.Text, context.mpProxy.GetConnectionId(), DeviceInfo.Instance.Id);
+               // MainPageViewModel context = (MainPageViewModel)this.DataContext;
+                try
+                {
+                    await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, null, DeviceInfo.Instance.Id);
+                    this.DataContext = new MainPageViewModel();
+                    this.Frame.Navigate(typeof(MainPage), this.DataContext);
                 }
                 catch (Exception)
-				{
+                {
                     //show this error to the user.
-				}
-
-                this.Frame.Navigate(typeof(MainPage), this.DataContext);
+                }              
             }
-            //show a red label with the message that they need to enter a username.
 
-            
+            //show a red label with the message that they need to enter a username.
         }
     }
 }
