@@ -12,8 +12,8 @@ namespace StendenClicker.Library
 {
     public class LocalPlayerData
     {
-        public static Player LoadLocalPlayerDataAsync() => LoadLocalData<Player>("player_data.json").GetAwaiter().GetResult();
-        public static void SaveLocalPlayerData(Player player) => SaveLocalData(player, "player_data.json");     
+        public static async Task<Player> LoadLocalPlayerDataAsync() => await LoadLocalData<Player>("player_data.json");
+        public static async Task SaveLocalPlayerData(Player player) => await SaveLocalData(player, "player_data.json");     
 
         public static async Task<T> LoadLocalData<T>(string filename) where T : new()
         {

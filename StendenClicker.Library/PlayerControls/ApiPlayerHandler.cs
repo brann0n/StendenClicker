@@ -27,11 +27,11 @@ namespace StendenClicker.Library.PlayerControls
 				if (response.StatusCode == HttpStatusCode.OK)
 				{
 					state = RestHelper.ConvertJsonToObject<Models.DatabaseModels.Player>(response.Content);
-					LocalPlayerData.SaveLocalPlayerData(state);
+					await LocalPlayerData.SaveLocalPlayerData(state);
 				}
 				else
 				{
-					state = LocalPlayerData.LoadLocalPlayerDataAsync();
+					state = await LocalPlayerData.LoadLocalPlayerDataAsync();
 				}
 			}
 
@@ -59,12 +59,12 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				LocalPlayerData.SaveLocalPlayerData(state);
+				await LocalPlayerData .SaveLocalPlayerData(state);
 			}
 			else
 			{
 				//save the current player state, and then throw an exception
-				LocalPlayerData.SaveLocalPlayerData(state);
+				await LocalPlayerData.SaveLocalPlayerData(state);
 				throw new Exception($"Couldn't set the player state... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 		}
@@ -88,11 +88,11 @@ namespace StendenClicker.Library.PlayerControls
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
 				//after creating a new user, also store that new player
-				LocalPlayerData.SaveLocalPlayerData(player);
+				await LocalPlayerData.SaveLocalPlayerData(player);
 			}
 			else
 			{
-				LocalPlayerData.SaveLocalPlayerData(player);
+				await LocalPlayerData .SaveLocalPlayerData(player);
 				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 
