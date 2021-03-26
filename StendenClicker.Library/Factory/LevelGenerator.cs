@@ -1,4 +1,5 @@
 using StendenClicker.Library.AbstractPlatform;
+using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.PlayerControls;
 using System;
@@ -29,6 +30,7 @@ namespace StendenClicker.Library.Factory
 			return new GamePlatform()
 			{
 				Monster = (AbstractMonster.AbstractMonster)pl.getMonster(),
+				Scene = new NormalScene(true)
 				//Scene = (AbstractScene.AbstractScene)pl.getScene()
 			};
 		}

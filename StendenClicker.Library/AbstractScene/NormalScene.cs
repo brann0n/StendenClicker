@@ -36,6 +36,11 @@ namespace StendenClicker.Library.AbstractScene
             Name = item.SceneName;
         }
 
+        public NormalScene(bool emptyConstructor)
+        {
+          
+        }
+
         public override Image getBackground()
         {
             return new Image(Background);

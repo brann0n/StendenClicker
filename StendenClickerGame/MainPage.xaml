@@ -423,7 +423,7 @@
                     </Grid>
                 </Border>
                 <Grid Grid.Row="1" HorizontalAlignment="Center"  >
-                    <TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold">8/10</TextBlock>
+                    <TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.LevelProgressString}"/>
                 </Grid>
             </Grid>
 
