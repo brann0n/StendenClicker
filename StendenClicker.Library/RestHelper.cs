@@ -49,6 +49,7 @@ namespace StendenClicker.Library
 
         public static T ConvertJsonToObject<T>(string json)
         {
+            if (string.IsNullOrEmpty(json)) return default;
             if (json[0] == '<')
             {             
                 return default;

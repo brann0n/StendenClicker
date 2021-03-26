@@ -58,6 +58,12 @@ namespace StendenClickerGame
                 //continue with the app -> do not show signin page.
                 this.Frame.Navigate(typeof(MainPage), this.DataContext);
             }
+            else
+            {
+                //if there is no account available, show the loginbox.
+                LoadingBox.Visibility = Visibility.Collapsed;
+                LoginBox.Visibility = Visibility.Visible;
+            }
         }
 
         private async void GoToMainPage_Click(object sender, RoutedEventArgs e)

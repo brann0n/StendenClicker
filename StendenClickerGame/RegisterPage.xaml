@@ -12,7 +12,11 @@
         <Grid.Background>
             <ImageBrush ImageSource="Assets/bg-page.png"/>
         </Grid.Background>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel Name="LoadingBox" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Account conrole...</TextBlock>
+            <ProgressRing IsActive="True" Foreground="White" Width="80" Height="80"/>
+        </StackPanel>
+        <StackPanel Name="LoginBox" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10">Vul hier uw naam in:</TextBlock>
             <TextBox Name="UsernameTextBox" Background="Transparent" Margin="0,0,0,10">
                 <TextBox.Resources>
