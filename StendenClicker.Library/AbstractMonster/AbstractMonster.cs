@@ -22,7 +22,7 @@ namespace StendenClicker.Library.AbstractMonster
 		public ulong CurrencyAmount { get; set; }
         public string Sprite { get; set; }
         public string Name { get; set; }
-        public int MonsterLevel { get; set; } = 10; //todo: create a dynamic thing for this.
+        public int MonsterLevel { get; set; }
 
 		public virtual void DoDamage(int damage)
         {
@@ -48,7 +48,7 @@ namespace StendenClicker.Library.AbstractMonster
 
 		public virtual int GetHealthPercentage()
 		{
-            return (GetHealth() / Health) * 100;
+            return (int)(((double)GetHealth() / (double)Health) * (double)100);
 		}
 
     }

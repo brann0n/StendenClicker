@@ -5,6 +5,7 @@ using System;
 using System.Linq;
 using StendenClicker.Library.PlayerControls;
 using System.Threading.Tasks;
+using StendenClicker.Library.Models;
 
 namespace StendenClicker.Library.AbstractMonster
 {
@@ -32,16 +33,16 @@ namespace StendenClicker.Library.AbstractMonster
             }
         }
 
-        public Boss(int levelNr)
+        public Boss(PlayerState state)
         {
             //the first 7 bosses need to be in order, then they can be randomized
-            int bossNumber = (levelNr / 5) - 1;
+            int bossNumber = (state.LevelsDefeated / 5) - 1;
 
             Random r = new Random();
             if (bossNumber >= InternalBossCount && InternalBossCount != 0)
             {
                 //this means all hero's are unlocked, now you can randomize the boss sprites
-                bossNumber = r.Next(1, InternalBossCount);
+                bossNumber = r.Next(1, InternalBossCount + 1);
             }
 
             var item = Bosses.FirstOrDefault(n => n.BossId == bossNumber);
@@ -49,11 +50,13 @@ namespace StendenClicker.Library.AbstractMonster
             Sprite = item.BossAsset.Base64Image; 
             Name = item.BossName;
 
+            MonsterLevel = state.MonstersDefeated + 1;
+
             //health of the boss is 200 times its own boss number
-            Health = item.BaseHealth * bossNumber;
+            Health = item.BaseHealth * this.MonsterLevel;
 
             //currency is 3 ec per boss and a large amount of spark coins
-            CurrencyAmount = (ulong)Math.Pow(levelNr, 3);
+            CurrencyAmount = (ulong)Math.Pow(state.LevelsDefeated, 3);           
         }
 
         public override PlayerCurrency GetReward()

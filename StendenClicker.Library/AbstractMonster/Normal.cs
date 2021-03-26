@@ -1,5 +1,6 @@
 
 using StendenClicker.Library.CurrencyObjects;
+using StendenClicker.Library.Models;
 using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
@@ -28,11 +29,10 @@ namespace StendenClicker.Library.AbstractMonster
             }
         }
 
-        public Normal(int levelNr)
+        public Normal(PlayerState state)
         {
-            int bossNumber = (levelNr / 5) - 1;
             Random r = new Random();
-            int monsterIndex = r.Next(1, InternalMonsterCount);
+            int monsterIndex = r.Next(1, InternalMonsterCount + 1);
 
             var item = Monsters.FirstOrDefault(n => n.MonsterId == monsterIndex);
 
@@ -40,10 +40,11 @@ namespace StendenClicker.Library.AbstractMonster
             Sprite = item.MonsterAsset.Base64Image; 
             Name = item.MonsterName;
 
-
+            MonsterLevel = state.MonstersDefeated + 1;
             //health and currency calculations.
-            Health = 100 * bossNumber;
-            CurrencyAmount = (ulong)Math.Pow(levelNr, 2);
+            Health = item.BaseHealth * this.MonsterLevel;
+            CurrencyAmount = (ulong)Math.Pow(state.LevelsDefeated, 2);
+           
         }
 
         public override PlayerCurrency GetReward()

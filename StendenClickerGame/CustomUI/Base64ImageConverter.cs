@@ -15,16 +15,16 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace StendenClickerGame.CustomUI
 {
-	public class Base64ImageConverter : IValueConverter
-	{
-		public async Task<BitmapImage> Convert(object value)
-		{
-			byte[] bytes = System.Convert.FromBase64String((string)value);
+    public class Base64ImageConverter : IValueConverter
+    {
+        public async Task<BitmapImage> Convert(object value)
+        {
+            byte[] bytes = System.Convert.FromBase64String((string)value);
             BitmapImage image = null;
             var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
-			try
-			{
-                await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () => 
+            try
+            {
+                await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
                 {
                     image = new BitmapImage();
                     InMemoryRandomAccessStream stream = new InMemoryRandomAccessStream();
@@ -33,26 +33,26 @@ namespace StendenClickerGame.CustomUI
 
                     await image.SetSourceAsync(stream);
                 });
-			}
-			catch (Exception)
-			{
+            }
+            catch (Exception)
+            {
 
-				throw;
-			}
-			return image;
-		}
+                throw;
+            }
+            return image;
+        }
 
-		public object ConvertBack(object value, Type targetType, object parameter, string language)
-		{
-			return null;
-		}
+        public object ConvertBack(object value, Type targetType, object parameter, string language)
+        {
+            return null;
+        }
 
-		public object Convert(object value, Type targetType, object parameter, string language)
-		{
-			var task = Task.Run(() => Convert((string)value));
-			return new TaskCompletionNotifier<BitmapImage>(task);
-		}
-	}
+        public object Convert(object value, Type targetType, object parameter, string language)
+        {
+            var task = Task.Run(() => Convert((string)value));
+            return new TaskCompletionNotifier<BitmapImage>(task);
+        }
+    }
 
     public sealed class TaskCompletionNotifier<TResult> : INotifyPropertyChanged
     {

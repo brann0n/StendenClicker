@@ -10,7 +10,7 @@ namespace StendenClicker.Library.AbstractPlatform
 
         public override IAbstractMonster getMonster()
         {
-            return new Normal(CurrentPlayerState.LevelsDefeated);
+            return new Normal(CurrentPlayerState);
         }
 
         public override IAbstractScene getScene()

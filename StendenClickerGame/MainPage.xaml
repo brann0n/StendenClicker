@@ -13,11 +13,11 @@
     <!--<Page.DataContext>
         <viewmodels:MainPageViewModel/>
     </Page.DataContext>-->
-	<Page.Resources>
-		<customui:Base64ImageConverter x:Key="Base64ImageConverter"/>
-	</Page.Resources>
+    <Page.Resources>
+        <customui:Base64ImageConverter x:Key="Base64ImageConverter"/>
+    </Page.Resources>
 
-	<Grid Background="#2EAAB6">
+    <Grid Background="#2EAAB6">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="33*" />
             <ColumnDefinition Width="33*" />
@@ -263,7 +263,7 @@
                                                 </RelativePanel>
                                             </Grid>
                                             <Grid Grid.Column="3" Margin="0,0,10,0">
-												<Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" HorizontalAlignment="Left"></Image>
+                                                <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" HorizontalAlignment="Left"></Image>
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
@@ -301,13 +301,13 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="1" Background="#FF2E7988" Margin="0,10,0,0" CornerRadius="0,5,5,0">
                         <Grid>
-                        <StackPanel Orientation="Horizontal" VerticalAlignment="center">
-                            <Button Margin="0,0,10,0" Click="ButtonFriend_OnClick">+</Button>
-                            <Button Margin="0,0,10,0">+</Button>
-                            <Button Margin="0,0,10,0">+</Button>
-                            <Button>+</Button>
-                        </StackPanel>
-                    </Grid>
+                            <StackPanel Orientation="Horizontal" VerticalAlignment="center">
+                                <Button Margin="0,0,10,0" Click="ButtonFriend_OnClick">+</Button>
+                                <Button Margin="0,0,10,0">+</Button>
+                                <Button Margin="0,0,10,0">+</Button>
+                                <Button>+</Button>
+                            </StackPanel>
+                        </Grid>
                     </Border>
                 </Grid>
             </Grid>
@@ -447,7 +447,7 @@
                             </ResourceDictionary.ThemeDictionaries>
                         </ResourceDictionary>
                     </Button.Resources>
-					<Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+                    <Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
                     <!--<Image Source="Assets/nse.png"/>-->
                 </Button>
                 <Button Name="test" Visibility="Collapsed" Command="{Binding command}"></Button>
@@ -459,21 +459,21 @@
                         <RowDefinition Height="33*"/>
                     </customui:CoinGrid.RowDefinitions>
                     <customui:CoinGrid.ColumnDefinitions>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
-                        <ColumnDefinition Width="6*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="28"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="29*"/>
+                        <ColumnDefinition Width="28*"/>
                     </customui:CoinGrid.ColumnDefinitions>
                 </customui:CoinGrid>
             </Grid>
@@ -491,14 +491,14 @@
                             <ColumnDefinition Width="45*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0" Text="{Binding CurrencyTray.CurrentMonster.Name}"/>
-						</Grid>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0" Text="{Binding CurrencyTray.CurrentMonster.Name}"/>
+                        </Grid>
                         <Grid Grid.Column="1">
                             <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">lvl.</TextBlock>
                         </Grid>
                         <Grid Grid.Column="2">
-							<TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentMonster.MonsterLevel}" />
-						</Grid>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentMonster.MonsterLevel}" />
+                        </Grid>
                     </Grid>
                 </Grid>
                 <Grid Grid.Row="1" Margin="0,10,0,10">
@@ -523,7 +523,7 @@
                                 <RowDefinition Height="50*"/>
                                 <RowDefinition Height="50*"/>
                             </Grid.RowDefinitions>
-                            
+
                             <StackPanel Grid.Row="1" Margin="0,40,0,0">
                                 <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
                                 <TextBox Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>

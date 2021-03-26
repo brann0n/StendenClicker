@@ -35,7 +35,7 @@ namespace StendenClickerGame.ViewModels
 		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
 		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel.Monster; } }
 		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel.Scene; } }
-
+		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 		
 
 		private BatchedClick Clicks;
@@ -73,8 +73,10 @@ namespace StendenClickerGame.ViewModels
 				//batch collect the clicks
 				Clicks.addClick();
 
-				//damage monster
-				CurrentMonster?.DoDamage(1);
+				//damage monster and set its damage multiplier
+				CurrentMonster.DamageFactor = 1;// CurrentPlayer.GetDamageFactor();
+				CurrentMonster?.DoDamage(100); //todo: change this back to 10  * (int)Math.Ceiling(((double)CurrentMonster.MonsterLevel / (double)2))
+				NotifyPropertyChanged("MonsterHealthPercentage");
 
 				if (CurrentMonster.IsDefeated())
 				{
@@ -90,24 +92,26 @@ namespace StendenClickerGame.ViewModels
 					}
 
 					//todo: update all the user accounts and the current session that a monster has been defeated.
+					UpdatePlayerStatsAfterMonsterDefeat(true, false);
+
 
 					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-					
+					RenderLevel();
 				}
-
-				//todo: is level completed?
-
-				//todo: render new level?
 			}
-			RenderLevel();
-
-
-
-
-
-			// create a coin for testing
-			//CreateCoin(typeof(EuropeanCredit));
 		}
+
+		private void UpdatePlayerStatsAfterMonsterDefeat(bool MonsterDefeated, bool SceneDefeated)
+        {
+			foreach(Player player in CurrentSession.CurrentPlayerList)
+            {
+				if(MonsterDefeated)
+					player.State.MonstersDefeated++;
+
+				if (SceneDefeated)
+					player.State.LevelsDefeated++;
+            }
+        }
 
 		private void RenderLevel()
 		{
@@ -115,6 +119,7 @@ namespace StendenClickerGame.ViewModels
 			NotifyPropertyChanged("CurrentMonster");
 			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
 			NotifyPropertyChanged("CurrencyTray");
+			NotifyPropertyChanged("MonsterHealthPercentage");
 		}
 
 		/// <summary>

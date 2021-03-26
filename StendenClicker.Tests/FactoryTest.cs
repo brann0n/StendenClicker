@@ -61,5 +61,25 @@ namespace StendenClicker.Tests
 				Assert.IsTrue(platform.Monster is Normal);
 			}
 		}			
+
+		[TestMethod]
+		public void TestRandomizer()
+        {
+			Random r = new Random();
+			bool gotWielklem = false;
+			int count = 0;
+            while (!gotWielklem)
+            {
+				int random = r.Next(1, 13);
+				if(random == 12)
+                {
+					gotWielklem = true;
+					continue;
+                }
+				count++;
+            }
+			Console.Write(count);
+			Assert.IsTrue(count < 50);
+        }
 	}
 }

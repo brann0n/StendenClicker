@@ -2,7 +2,7 @@ using System;
 
 namespace StendenClicker.Library.PlayerControls
 {
-	public struct PlayerCurrency
+	public class PlayerCurrency
 	{
 		public ulong SparkCoin { get; set; }
 
