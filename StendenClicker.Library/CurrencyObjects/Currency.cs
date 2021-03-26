@@ -8,7 +8,7 @@ namespace StendenClicker.Library.CurrencyObjects
         private Image image;
         public event EventHandler OnCoinHover;
         public string CoinId { get; set; }
-        public abstract double getValue(int multiplier);
+        public abstract ulong getValue(int multiplier);
         public Currency()
 		{
             CoinId = Guid.NewGuid().ToString();

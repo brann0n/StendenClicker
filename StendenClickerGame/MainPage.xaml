@@ -52,8 +52,8 @@
                                 <Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
                             </Canvas>
                         </Viewbox>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30">3,017Q</TextBlock>
-                    </Grid>
+						<TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.SparkCoin}"/>
+					</Grid>
                     <Grid  Grid.Column="1" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="50*" />
@@ -79,8 +79,8 @@
 
                             </Canvas>
                         </Viewbox>
-                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30">3,017Q</TextBlock>
-                    </Grid>
+						<TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.EuropeanCredit}" />
+					</Grid>
                 </Grid>
             </Border>
 
@@ -291,8 +291,8 @@
                             <SolidColorBrush Color="#FF2E7988"/>
                         </Grid.Background>
                         <Image Source="Assets/nse.png" HorizontalAlignment="left" Margin="20,10,0,10"></Image>
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30">Jarno</TextBlock>
-                    </Grid>
+						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{Binding CurrencyTray.CurrentPlayer.Username}"/>
+					</Grid>
                 </Border>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>

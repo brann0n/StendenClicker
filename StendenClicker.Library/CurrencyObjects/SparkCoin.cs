@@ -9,9 +9,9 @@ namespace StendenClicker.Library.CurrencyObjects
         private static readonly Lazy<string> instance = new Lazy<string>(() => GetContent());
         public static string ImageContent { get { return instance.Value; } }
 
-        public override double getValue(int multiplier)
+        public override ulong getValue(int multiplier)
         {
-            return 1 * multiplier;
+            return 1 * (ulong)multiplier;
         }
 
         private static string GetContent()

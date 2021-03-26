@@ -37,8 +37,8 @@ namespace StendenClickerGame.ViewModels
 		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
 		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel.Monster; } }
 		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel.Scene; } }
-		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
-		
+		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }		
+		public PlayerCurrency Wallet { get { return CurrentPlayer.Wallet; } }
 
 		private BatchedClick Clicks;
 
@@ -155,6 +155,18 @@ namespace StendenClickerGame.ViewModels
 			coin.OnCoinHover += (o, e) =>
 			{
 				//todo: add new value to wallet (possible lagswitch)
+
+				if(o is SparkCoin)
+				{
+					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(CurrentPlayer.State.MonstersDefeated);
+				}
+				else if (o is EuropeanCredit)
+				{
+					CurrentPlayer.Wallet.EuropeanCredit += ((Currency)o).getValue(-1);
+				}
+
+				//notify the UI that currency amounts have changed:
+				NotifyPropertyChanged("Wallet");
 
 				//remove all hover events, this is needed to prevent double event firing after the coin is reused.
 				((Currency)o).RemoveHoverEvents();
