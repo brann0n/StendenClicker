@@ -52,14 +52,14 @@ namespace StendenClicker.Library.PlayerControls
 		/// uploads the current player state to the server
 		/// </summary>
 		/// <param name="player"></param>
-		public async void SetPlayerState(Player player)
+		public async void SetPlayerStateAsync(Player player)
 		{
 			state = player;
 			Models.DatabaseModels.Player dbPlayer = player;
 			var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				await LocalPlayerData .SaveLocalPlayerData(state);
+				await LocalPlayerData.SaveLocalPlayerData(state);
 			}
 			else
 			{
@@ -74,11 +74,10 @@ namespace StendenClicker.Library.PlayerControls
 		/// </summary>
 		/// <param name="username"></param>
 		/// <param name="connectionId"></param>
-		public async Task CreateUser(string username, string connectionId, string DeviceId)
+		public async Task CreateUser(string username, string DeviceId)
 		{
 			Models.DatabaseModels.Player player = new Models.DatabaseModels.Player
 			{
-				ConnectionId = connectionId,
 				DeviceId = DeviceId,
 				PlayerName = username,
 				PlayerGuid = Guid.NewGuid().ToString()
@@ -92,10 +91,9 @@ namespace StendenClicker.Library.PlayerControls
 			}
 			else
 			{
-				await LocalPlayerData .SaveLocalPlayerData(player);
+				await LocalPlayerData.SaveLocalPlayerData(player);
 				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
-
 		}
 	}
 }

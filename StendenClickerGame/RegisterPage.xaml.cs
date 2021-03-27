@@ -47,7 +47,6 @@ namespace StendenClickerGame
             await NormalScene.Initialize();
             await BossScene.Initialize();
 
-
             // check if this player has played before
             Player player = await beforeContextPlayerHandler.GetPlayerStateAsync(DeviceInfo.Instance.Id);
             if (!Player.IsPlayerObjectEmpty(player))
@@ -74,7 +73,7 @@ namespace StendenClickerGame
                // MainPageViewModel context = (MainPageViewModel)this.DataContext;
                 try
                 {
-                    await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, null, DeviceInfo.Instance.Id);
+                    await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.Id);
                     this.DataContext = new MainPageViewModel();
                     this.Frame.Navigate(typeof(MainPage), this.DataContext);
                 }
