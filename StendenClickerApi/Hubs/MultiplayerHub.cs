@@ -31,6 +31,7 @@ namespace StendenClickerApi.Hubs
 			else
 			{
 				//player exists, create a new multiplayer session with current player as host, if the host wants to join another player, this session will be abandoned.
+				//tell the client that it can subscribe to the batched click function so the server can periodically receive its clicks.
 			}
 
 			return base.OnConnected();
@@ -52,8 +53,18 @@ namespace StendenClickerApi.Hubs
 
 		public void broadcastSession(MultiPlayerSession session)
         {
+			//verify the given session against the server's copy
+			bool SessionIsValid = Sessions.ContainsKey(session.hostPlayerId);
 
-        }
+			if (SessionIsValid)
+			{
+				//find all players connectionid's in this session
+				List<string> PlayersInSession = session.CurrentPlayerList.Where(n => string.IsNullOrEmpty(n.connectionId)).Select(n => n.connectionId).ToList();
+
+
+				Clients.Clients(PlayersInSession).updateSession(session);
+			}
+		}
 
 
 		public void processBatch<T>(IBatchProcessable<T> batchItem)
