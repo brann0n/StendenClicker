@@ -68,6 +68,12 @@ namespace StendenClickerGame.ViewModels
 			//multiplayer connection
 			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
+			mpProxy.InitializeComplete += MpProxy_InitializeComplete;
+		}
+
+		private void MpProxy_InitializeComplete(object sender, EventArgs e)
+		{
+			NotifyPropertyChanged("CurrencyTray");
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()

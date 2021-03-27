@@ -30,15 +30,15 @@ namespace StendenClickerGame.ViewModels
 		public ICommand TappedEvent { get; set; }
 		public int? MonsterHealthPercentage { get { return CurrentLevel?.Monster?.GetHealthPercentage(); } }
 
-		public string LevelProgressString { get { return $"{CurrentScene.CurrentMonster}/{CurrentScene.MonsterCount}"; } }
+		public string LevelProgressString { get { return $"{CurrentScene?.CurrentMonster}/{CurrentScene?.MonsterCount}"; } }
 
 		//Context variables
 		public GamePlatform CurrentLevel { get { return CurrentSession?.CurrentLevel; } }
 		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
-		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel.Monster; } }
-		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel.Scene; } }
+		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel?.Monster; } }
+		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel?.Scene; } }
 		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }		
-		public PlayerCurrency Wallet { get { return CurrentPlayer.Wallet; } }
+		public PlayerCurrency Wallet { get { return CurrentPlayer?.Wallet; } }
 
 		private BatchedClick Clicks;
 

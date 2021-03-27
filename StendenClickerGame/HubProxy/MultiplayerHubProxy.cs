@@ -1,10 +1,12 @@
 using Microsoft.AspNet.SignalR.Client;
+using StendenClicker.Library;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using System;
 using System.Net;
+using System.Threading.Tasks;
 
 namespace StendenClickerGame.Multiplayer
 {
@@ -17,7 +19,12 @@ namespace StendenClickerGame.Multiplayer
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
 #endif
 		//Singleton Variables
-		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() => new MultiplayerHubProxy(ServerURL));
+		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() => 
+		{
+			MultiplayerHubProxy proxy = new MultiplayerHubProxy();
+			proxy.InitProxyAsync(ServerURL);
+			return proxy; 
+		});
 		public static MultiplayerHubProxy Instance { get { return instance.Value; } }
 
 		//signalR required objects
@@ -30,6 +37,8 @@ namespace StendenClickerGame.Multiplayer
 		public event SignalRConnectionStateHandler OnConnectionStateChanged;
 		public event SignalRConnectionError OnConnectionError;
 
+		public event EventHandler InitializeComplete;
+
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
 		public event BatchClickRetrieveHandler OnRequireBatches;
@@ -41,19 +50,26 @@ namespace StendenClickerGame.Multiplayer
 		//internal session
 		private MultiPlayerSession SessionContext;
 
-		public Player CurrentPlayer { get { return PlayerContext.GetPlayer(DeviceInfo.Instance.Id); } }
+		public Player CurrentPlayer { get; private set; }
 
 
-		public MultiplayerHubProxy(string serverUrl)
+		public MultiplayerHubProxy()
 		{
 			PlayerContext = new ApiPlayerHandler();
-			LevelGenerator = new LevelGenerator();
+			LevelGenerator = new LevelGenerator();		
+		}
+
+		private async void InitProxyAsync(string serverUrl)
+		{
+			//MultiplayerHubProxy p = new MultiplayerHubProxy(serverUrl);
+			//perform async initiating operations.
+			CurrentPlayer = await PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
 
 			hubConnection = new HubConnection(serverUrl);
-			hubConnection.Headers.Add("UserGuid", PlayerContext.GetPlayer(DeviceInfo.Instance.Id).UserId.ToString());
+			hubConnection.Headers.Add("UserGuid", CurrentPlayer.UserId.ToString());
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
 			hubConnection.StateChanged += HubConnection_StateChanged;
-			hubConnection.Start().ContinueWith(task =>
+			await hubConnection.Start().ContinueWith(task =>
 			{
 				if (task.IsFaulted)
 				{
@@ -71,7 +87,9 @@ namespace StendenClickerGame.Multiplayer
 				//for now render a new level anyways.
 				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
-			}).Wait();
+			});
+
+			InitializeComplete?.Invoke(null, null);
 		}
 
 		#region ServerInvokableMethods
