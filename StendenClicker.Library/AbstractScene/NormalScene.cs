@@ -13,16 +13,20 @@ namespace StendenClicker.Library.AbstractScene
         public static int InternalSceneCount { get { return NormalScenes.Count; } }
 
         public static async Task Initialize()
-		{
-            var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
-            NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
-            if (NormalScenes != null)
-            {
-                await LocalPlayerData.SaveLocalData(NormalScenes, "normal-scenes-asset-data.json");
-            }
-            else
-            {
-                NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
+		{           
+            NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
+            if(NormalScenes == null)
+			{
+                var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
+                NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
+                if (NormalScenes != null)
+                {
+                    await LocalPlayerData.SaveLocalData(NormalScenes, "normal-scenes-asset-data.json");
+                }
+                else
+                {
+                    NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
+                }
             }
         }
 
