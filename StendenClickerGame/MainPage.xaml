@@ -417,6 +417,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Name="monster">
+                <Image  DataContext="{Binding CurrencyTray.CurrentScene.Background,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" Stretch="Fill"/>
                 <Ellipse Name="platform" Fill="#E1E1E1"  Height="100" VerticalAlignment="Bottom" UseLayoutRounding="True" Stretch="Fill" StrokeDashCap="Round" StrokeLineJoin="Miter" StrokeStartLineCap="Flat"/>
 				<Button Command="{Binding CurrencyTray.TappedEvent}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{Binding ElementName=monster, Path=Height}" Width="{Binding ElementName=monster, Path=Width}" Background="Transparent" >
 					<Button.Resources>
