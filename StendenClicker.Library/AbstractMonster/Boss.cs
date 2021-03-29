@@ -56,7 +56,7 @@ namespace StendenClicker.Library.AbstractMonster
             Health = item.BaseHealth * this.MonsterLevel;
 
             //currency is 3 ec per boss and a large amount of spark coins
-            CurrencyAmount = (ulong)Math.Pow(state.LevelsDefeated, 3);           
+            CurrencyAmount = (ulong)Math.Pow(state.LevelsDefeated, 2);           
         }
 
         public override PlayerCurrency GetReward()

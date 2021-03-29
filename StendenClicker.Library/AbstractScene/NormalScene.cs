@@ -1,4 +1,5 @@
 
+using StendenClicker.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +26,7 @@ namespace StendenClicker.Library.AbstractScene
             }
         }
 
-        public NormalScene()
+        public NormalScene(PlayerState state) : base(state)
         {
             Random r = new Random();
             int SceneNumber = r.Next(1, InternalSceneCount);
@@ -35,31 +36,5 @@ namespace StendenClicker.Library.AbstractScene
             Background = item.SceneAsset.Base64Image;
             Name = item.SceneName;
         }
-
-        public NormalScene(bool emptyConstructor)
-        {
-          
-        }
-
-        public override Image getBackground()
-        {
-            return new Image(Background);
-        }
-
-        public override int getCurrentMonster()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int getMonsterCount()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override string getName()
-        {
-            return Name;
-        }
     }
-
 }

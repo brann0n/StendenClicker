@@ -70,6 +70,13 @@ namespace StendenClickerApi.Hubs
 			return base.OnReconnected();
 		}
 
+		public void joinFriend(string FriendId)
+		{
+			//todo: check if they are friends.
+
+
+			bool SessionExists = Sessions.ContainsKey(FriendId);
+		}
 
 		public void broadcastSession(MultiPlayerSession session)
         {

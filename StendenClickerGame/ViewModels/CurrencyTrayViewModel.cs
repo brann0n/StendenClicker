@@ -152,13 +152,15 @@ namespace StendenClickerGame.ViewModels
 				throw new Exception("Unkown coin type was passed into this create coin function.");
 			}
 
+			int monsterDefeatedCoinValue = CurrentPlayer.State.MonstersDefeated;
+
 			coin.OnCoinHover += (o, e) =>
 			{
 				//todo: add new value to wallet (possible lagswitch)
 
 				if(o is SparkCoin)
 				{
-					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(CurrentPlayer.State.MonstersDefeated);
+					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(monsterDefeatedCoinValue);
 				}
 				else if (o is EuropeanCredit)
 				{

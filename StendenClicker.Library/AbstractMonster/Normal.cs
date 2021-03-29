@@ -53,7 +53,7 @@ namespace StendenClicker.Library.AbstractMonster
             MonsterLevel = state.MonstersDefeated + 1;
             //health and currency calculations.
             Health = item.BaseHealth * this.MonsterLevel;
-            CurrencyAmount = (ulong)Math.Pow(state.LevelsDefeated, 2);
+            CurrencyAmount = (ulong)state.LevelsDefeated;
            
         }
 

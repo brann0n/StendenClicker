@@ -4,10 +4,12 @@ namespace StendenClicker.Library.AbstractScene
 {
 	public interface IAbstractScene
 	{
-		Image getBackground();
+		public int CurrentMonster { get; set; }
 
-		int getMonsterCount();
+		public int MonsterCount { get; set; }
 
-		int getCurrentMonster();
+		public string Background { get; set; }
+
+		public string Name { get; set; }
 	}
 }

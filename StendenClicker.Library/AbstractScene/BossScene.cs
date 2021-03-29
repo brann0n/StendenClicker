@@ -1,3 +1,4 @@
+using StendenClicker.Library.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,7 +24,7 @@ namespace StendenClicker.Library.AbstractScene
                 BossScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("boss-scenes-asset-data.json");
             }
         }
-        public BossScene()
+        public BossScene(PlayerState state) : base(state)
         {
             Random r = new Random();
             int SceneNumber = r.Next(1, InternalSceneCount);
@@ -32,26 +33,6 @@ namespace StendenClicker.Library.AbstractScene
             if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
             Background = item.SceneAsset.Base64Image;
             Name = item.SceneName;
-        }
-
-        public override Image getBackground()
-        {
-            return new Image(Background);
-        }
-
-        public override int getCurrentMonster()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override int getMonsterCount()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override string getName()
-        {
-            return Name;
         }
     }
 
