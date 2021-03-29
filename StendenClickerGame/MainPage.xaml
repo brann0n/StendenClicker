@@ -297,16 +297,26 @@
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="50*"/>
-                        <RowDefinition Height="50*"/>
+                        <RowDefinition Height="25*"/>
+                        <RowDefinition Height="40*"/>
                     </Grid.RowDefinitions>
-                    <Border Grid.Row="1" Background="#FF2E7988" Margin="0,10,0,0" CornerRadius="0,5,5,0">
+                    <Border Grid.Row="1" Background="#FF2E7988" Margin="0,0,0,0" CornerRadius="0,5,0,0">
                         <Grid>
-                            <StackPanel Orientation="Horizontal" VerticalAlignment="center">
-                                <Button Margin="0,0,10,0" Click="ButtonFriend_OnClick">+</Button>
-                                <Button Margin="0,0,10,0">+</Button>
-                                <Button Margin="0,0,10,0">+</Button>
-                                <Button>+</Button>
-                            </StackPanel>
+                            <Button Margin="0,0,0,0" Padding="1" Click="ButtonFriend_OnClick" Background="Transparent">Invite Players +
+                                <Button.Resources>
+                                    <ResourceDictionary>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#2EAAB6"/>
+                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                    </ResourceDictionary>
+                                </Button.Resources>
+                            </Button>
+                        </Grid>
+                    </Border>
+                    <Border Grid.Row="2" Background="#FF2E7988" Margin="0,0,0,0" CornerRadius="0,0,5,0">
+                        <Grid>
+                                 
                         </Grid>
                     </Border>
                 </Grid>
@@ -386,39 +396,18 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
                 <Border Grid.Row="0" CornerRadius="5" >
-                    <Grid Grid.Row="0" Background="#2E7988">
+                    <Grid Grid.Row="0" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="65*"/>
                             <ColumnDefinition Width="35*"/>
                         </Grid.ColumnDefinitions>
-                        <Grid Grid.Column="0">
-                            <ListView ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
-                                    ScrollViewer.HorizontalScrollMode="Enabled"                  
-                                    ScrollViewer.VerticalScrollMode="Disabled"
-                                    ItemsSource="{Binding AbilitiesList}" Padding="10" Margin="0,15,0,15" ShowsScrollingPlaceholders="False" >
-                                <ListView.ItemsPanel>
-                                    <ItemsPanelTemplate>
-                                        <ItemsStackPanel ItemsUpdatingScrollMode="KeepLastItemInView" Orientation="Horizontal"/>
-                                    </ItemsPanelTemplate>
-                                </ListView.ItemsPanel>
-                                <ListView.ItemTemplate>
-                                    <DataTemplate>
-                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                            <Grid HorizontalAlignment="Center">
-                                                <Image Source="Assets/koffie.png"></Image>
-                                            </Grid>
-                                        </StackPanel>
-                                    </DataTemplate>
-                                </ListView.ItemTemplate>
-                            </ListView>
-                        </Grid>
                         <Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">
-                            <Button Name="switchscreen" MinWidth="130" Padding="20,20,20,20" BorderThickness="0" >
+                            <Button Name="switchscreen" MinWidth="130" Padding="20,20,20,20" BorderThickness="0" Click="UitlegScreen_OnClick">
                                 <Button.Background>
-                                    <ImageBrush ImageSource="Assets/Progress_Button.png"/>
+                                    <ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
                                 </Button.Background>
-                                <TextBlock></TextBlock>
-                            </Button>
+                                <TextBlock FontFamily="Tahoma" FontWeight="Bold">Uitleg</TextBlock>
+                            </Button> 
                         </Grid>
                     </Grid>
                 </Border>
@@ -515,23 +504,21 @@
                     </TransitionCollection>
                 </Popup.ChildTransitions>
 
-                <Border CornerRadius="5,0,0,5">
+                <Border CornerRadius="5,0,0,5" Visibility="Visible">
                     <Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popup, Path=Width}" Height="{Binding ElementName=popup, Path=Height}">
                         <Grid Name="friendGrid" Width="400" HorizontalAlignment="Center">
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="50*"/>
+                                <RowDefinition Height="30*"/>
+                                <RowDefinition Height="20*"/>
                                 <RowDefinition Height="50*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="1" Margin="0,40,0,0">
-                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
-                                <TextBox Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
-                                <Button Margin="0,0,0,10" HorizontalAlignment="left">Search</Button>
-
-                                <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                            <StackPanel Grid.Row="0" Margin="0,40,0,0">
+                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden:</TextBlock>
+                                <ListView Name="Friends" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
-                                            <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=searchFriend, Path=Width}">
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=Friends, Path=Width}">
                                                 <Grid Margin="5">
                                                     <Grid.ColumnDefinitions>
                                                         <ColumnDefinition Width="50*"/>
@@ -541,7 +528,7 @@
                                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
                                                     </Grid>
                                                     <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Uitnodiging sturen</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Invite</Button>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -553,12 +540,102 @@
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                 </ListView>
+                            </StackPanel>
 
+                            <Grid Grid.Row="1" Margin="0,40,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="25*"/>
+                                    <RowDefinition Height="75*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Uitnodigingen</TextBlock>
+                                <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                    ScrollViewer.HorizontalScrollMode="Enabled"                  
+                                    ScrollViewer.VerticalScrollMode="Enabled"
+                                    Name="Invites" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=Invites, Path=Width}">
+                                                <Grid Margin="5">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="50*"/>
+                                                        <ColumnDefinition Width="50*"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid Grid.Column="0">
+                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                    </Grid>
+                                                    <Grid Grid.Column="1">
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red">Accepteren</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange">Weigeren</Button>
+                                                    </Grid>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                    <ListView.ItemContainerStyle>
+                                        <Style TargetType="ListViewItem">
+                                            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                        </Style>
+                                    </ListView.ItemContainerStyle>
+                                </ListView>
+                            </Grid>
+
+                            <StackPanel Grid.Row="2" Margin="0,40,0,0">
+                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
+                                <TextBox Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
+                                <Button Margin="0,0,0,10" HorizontalAlignment="left">Search</Button>
+
+                                <Grid>
+                                    <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=searchFriend, Path=Width}">
+                                                    <Grid Margin="5">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="50*"/>
+                                                            <ColumnDefinition Width="50*"/>
+                                                        </Grid.ColumnDefinitions>
+                                                        <Grid Grid.Column="0">
+                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                        </Grid>
+                                                        <Grid Grid.Column="1">
+                                                            <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Uitnodiging sturen</Button>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                        <ListView.ItemContainerStyle>
+                                            <Style TargetType="ListViewItem">
+                                                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                            </Style>
+                                        </ListView.ItemContainerStyle>
+                                    </ListView>
+                                </Grid>
                             </StackPanel>
                         </Grid>
                     </Grid>
                 </Border>
+            </Popup>
+        </RelativePanel>
 
+        <RelativePanel Name="panelUitleg" Grid.Column="2">
+            <Popup Name="popupUitleg" IsOpen="false"  IsLightDismissEnabled="True" RelativePanel.AlignLeftWithPanel="True" HorizontalAlignment="Right">
+
+                <Popup.ChildTransitions>
+                    <TransitionCollection>
+                        <PaneThemeTransition Edge="Right"/>
+                    </TransitionCollection>
+                </Popup.ChildTransitions>
+
+                <Border CornerRadius="5,0,0,5" Visibility="Visible">
+                    <Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popupUitleg, Path=Width}" Height="{Binding ElementName=popupUitleg, Path=Height}">
+                        <Grid Name="UitegGrid" Width="400" HorizontalAlignment="Center">
+                            <StackPanel Grid.Row="2" Margin="0,40,0,0">
+                                <TextBlock>Uitleg</TextBlock>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
             </Popup>
         </RelativePanel>
     </Grid>

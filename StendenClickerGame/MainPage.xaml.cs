@@ -42,5 +42,12 @@ namespace StendenClickerGame
             popup.Height = Window.Current.Bounds.Height;
             popup.IsOpen = true;
         }
+
+        private void UitlegScreen_OnClick(object sender, RoutedEventArgs e)
+        {
+            popupUitleg.Width = panel.ActualWidth;
+            popupUitleg.Height = Window.Current.Bounds.Height;
+            popupUitleg.IsOpen = true;
+        }
     }
 }
