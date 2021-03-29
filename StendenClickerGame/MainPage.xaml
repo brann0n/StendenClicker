@@ -364,7 +364,10 @@
                                                     <Image Source="{Binding Image}"/>
                                                 </Grid>
                                                 <Grid Grid.Column="1" Margin="10,0,40,0" HorizontalAlignment="left">
-                                                    <TextBlock Text="{Binding AbilitieName}" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="30">De Tester</TextBlock>
+                                                    <StackPanel>
+                                                        <TextBlock Text="{Binding AbilitieName}" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="30">De Tester</TextBlock>
+                                                        <TextBlock Text="test"/>
+                                                    </StackPanel>
                                                 </Grid>
                                             </Grid>
                                         </StackPanel>
@@ -417,7 +420,7 @@
             </Grid>
 
             <Grid Grid.Row="1" Name="monster">
-                <Image  DataContext="{Binding CurrencyTray.CurrentScene.Background,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" Stretch="Fill"/>
+                <Image DataContext="{Binding CurrencyTray.CurrentScene.Background,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" Stretch="Fill" Margin="0,0,0,50"/>
                 <Ellipse Name="platform" Fill="#E1E1E1"  Height="100" VerticalAlignment="Bottom" UseLayoutRounding="True" Stretch="Fill" StrokeDashCap="Round" StrokeLineJoin="Miter" StrokeStartLineCap="Flat"/>
 				<Button Command="{Binding CurrencyTray.TappedEvent}" HorizontalAlignment="Center" VerticalAlignment="Bottom" Height="{Binding ElementName=monster, Path=Height}" Width="{Binding ElementName=monster, Path=Width}" Background="Transparent" >
 					<Button.Resources>
@@ -437,32 +440,31 @@
 							</ResourceDictionary.ThemeDictionaries>
 						</ResourceDictionary>
 					</Button.Resources>
-					<Image DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
-					<!--<Image Source="Assets/nse.png"/>-->
-				</Button>
+                    <Image HorizontalAlignment="Center" DataContext="{Binding CurrencyTray.CurrentMonster.Sprite,Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+                </Button>
 
 				<customui:CoinGrid VerticalAlignment="Bottom" Background="Transparent" Height="{Binding ElementName=platform, Path=Height}" Currencies="{Binding CurrencyTray.CurrencyInView}" Margin="20,0,20,5" Padding="0">
                     <customui:CoinGrid.RowDefinitions>
-                        <RowDefinition Height="33*"/>
-                        <RowDefinition Height="33*"/>
-                        <RowDefinition Height="33*"/>
+                        <RowDefinition Height="28*"/>
+                        <RowDefinition Height="32*"/>
+                        <RowDefinition Height="40*"/>
                     </customui:CoinGrid.RowDefinitions>
                     <customui:CoinGrid.ColumnDefinitions>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="28"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="28*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="28*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="28*"/>
-                        <ColumnDefinition Width="29*"/>
-                        <ColumnDefinition Width="28*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
+                        <ColumnDefinition Width="6.6*"/>
                     </customui:CoinGrid.ColumnDefinitions>
                 </customui:CoinGrid>
             </Grid>
