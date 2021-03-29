@@ -61,7 +61,6 @@ namespace StendenClickerGame.Multiplayer
 
 		private async void InitProxyAsync(string serverUrl)
 		{
-			//MultiplayerHubProxy p = new MultiplayerHubProxy(serverUrl);
 			//perform async initiating operations.
 			CurrentPlayer = await PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
 

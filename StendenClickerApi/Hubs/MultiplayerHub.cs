@@ -6,10 +6,12 @@ using Microsoft.AspNet.SignalR;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
+using StendenClickerApi.Helpers;
 using MultiPlayerSession = StendenClicker.Library.Multiplayer.MultiPlayerSession;
 
 namespace StendenClickerApi.Hubs
 {
+	[UserGUIDSecurity]
 	public class MultiplayerHub : Hub
 	{
 		private static Dictionary<string, MultiPlayerSession> Sessions = new Dictionary<string, MultiPlayerSession>();
