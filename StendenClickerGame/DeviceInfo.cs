@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Windows.Security.ExchangeActiveSyncProvisioning;
+using Windows.Storage.Streams;
 using Windows.System.Profile;
 
 namespace StendenClickerGame
@@ -53,6 +54,32 @@ namespace StendenClickerGame
 			}
 
 			throw new Exception("NO API FOR DEVICE ID PRESENT!");
+		}
+
+		public string GetSystemId()
+		{
+			// This sample gets the publisher ID which is the same for all apps
+			// by this publisher on this device.
+			// Use GetSystemIdForUser if you have the userSystemId capability
+			// and need the same ID across all apps for this user (not 
+			// really applicable for apps in the Windows Store)
+			var systemId = SystemIdentification.GetSystemIdForPublisher();
+
+			// Make sure this device can generate the IDs
+			if (systemId.Source != SystemIdentificationSource.None)
+			{
+				var dataReader = DataReader.FromBuffer(systemId.Id);
+				byte[] bytes = new byte[systemId.Id.Length];
+				dataReader.ReadBytes(bytes);
+				// The Id property has a buffer with the unique ID
+				return BitConverter.ToString(bytes);
+			}
+
+			// This is a very old PC without the correct hardware. Use 
+			// another mechanism to generate an ID (or perhaps just give 
+			// up due to the small number of people that won't have the ID; 
+			// depends on your business needs).
+			return GetId();
 		}
 	}
 }

@@ -84,7 +84,7 @@ namespace StendenClickerGame.ViewModels
 
 		public async Task<Player> GetPlayerContextAsync()
 		{
-			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.Id);
+			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}
 	}	
 }

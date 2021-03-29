@@ -60,17 +60,12 @@ namespace StendenClicker.Library.Factory
 			else
 			{
 				//define these stats of the current lobby
-				int HighestLevelsDefeated = players.Max(n => n.State.LevelsDefeated);
-				int LowestLevelsDefeated = players.Min(n => n.State.LevelsDefeated);
-
 				int HighestMonstersDefeated = players.Max(n => n.State.MonstersDefeated);
 				int LowestMonstersDefeated = players.Min(n => n.State.MonstersDefeated);
-
-				double AverageLevelsDefeated = players.Average(n => n.State.LevelsDefeated);
 				double AverageMonstersDefeated = players.Average(n => n.State.MonstersDefeated);
 
 				//create new playerstate from above variables
-				state = new PlayerState { LevelsDefeated = LowestLevelsDefeated, MonstersDefeated = LowestMonstersDefeated };
+				state = new PlayerState { MonstersDefeated = LowestMonstersDefeated };
 			}
 			return state;
 		}

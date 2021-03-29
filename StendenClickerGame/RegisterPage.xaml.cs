@@ -47,7 +47,7 @@ namespace StendenClickerGame
             NormalScene.Initialize();
 
             // check if this player has played before
-            Player player = await beforeContextPlayerHandler.GetPlayerStateAsync(DeviceInfo.Instance.Id);
+            Player player = await beforeContextPlayerHandler.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
             if (!Player.IsPlayerObjectEmpty(player))
             {            
                 //load datacontext after resources have been initiated, otherwise you get errors.
@@ -72,7 +72,7 @@ namespace StendenClickerGame
                // MainPageViewModel context = (MainPageViewModel)this.DataContext;
                 try
                 {
-                    await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.Id);
+                    await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());
                     this.DataContext = new MainPageViewModel();
                     this.Frame.Navigate(typeof(MainPage), this.DataContext);
                 }
