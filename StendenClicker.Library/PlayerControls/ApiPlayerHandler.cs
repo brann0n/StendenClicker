@@ -32,6 +32,14 @@ namespace StendenClicker.Library.PlayerControls
 				else
 				{
 					state = await LocalPlayerData.LoadLocalPlayerDataAsync();
+					if (response.StatusCode == HttpStatusCode.InternalServerError)
+					{
+						if (response.StatusDescription == "No player found with this deviceid")
+						{
+							//remove the local player state
+							await LocalPlayerData.RemoveLocalPlayerData();
+						}
+					}				
 				}
 			}
 

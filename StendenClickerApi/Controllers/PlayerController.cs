@@ -29,7 +29,7 @@ namespace StendenClickerApi.Controllers
             var player = db.Players.FirstOrDefault(n => n.DeviceId == device_id);
             if (player == null)
             {
-                throw new Exception("No player found with this deviceid");
+                return new HttpStatusCodeResult(500, "No player found with this deviceid");
             }
             return new JsonStringResult(player);
         }
