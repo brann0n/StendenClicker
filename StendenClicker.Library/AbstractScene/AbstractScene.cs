@@ -17,7 +17,7 @@ namespace StendenClicker.Library.AbstractScene
 
 		public AbstractScene(PlayerState state)
 		{
-
+			
 		}
 	}
 

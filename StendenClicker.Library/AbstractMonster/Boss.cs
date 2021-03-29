@@ -36,7 +36,7 @@ namespace StendenClicker.Library.AbstractMonster
         public Boss(PlayerState state)
         {
             //the first 7 bosses need to be in order, then they can be randomized
-            int bossNumber = (state.LevelsDefeated / 5);
+            int bossNumber = (state.MonstersDefeated / 5);
 
             Random r = new Random();
             if (bossNumber >= InternalBossCount && InternalBossCount != 0)

@@ -17,6 +17,9 @@ namespace StendenClicker.Library.AbstractScene
             if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
             Background = item.SceneAsset.Base64Image;
             Name = item.SceneName;
+
+            MonsterCount = 1;
+            CurrentMonster = 0;
         }
     }
 

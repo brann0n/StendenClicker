@@ -33,14 +33,24 @@ namespace StendenClickerGame.ViewModels
 		public ICommand TappedEvent { get; set; }
 		public int? MonsterHealthPercentage { get { return CurrentLevel?.Monster?.GetHealthPercentage(); } }
 
-		public string LevelProgressString { get { return $"{CurrentScene?.CurrentMonster}/{CurrentScene?.MonsterCount}"; } }
+		public string LevelProgressString { get { return $"Level voortgang {CurrentScene?.CurrentMonster}/{CurrentScene?.MonsterCount}"; } }
+		public string CurrentStageString
+		{
+			get
+			{
+				if (CurrentMonster is Boss)
+					return $"Stage {CurrentMonster.Name}";
+				else
+					return $"Stage {CurrentPlayer?.State?.LevelsDefeated}";
+			}
+		}
 
 		//Context variables
 		public GamePlatform CurrentLevel { get { return CurrentSession?.CurrentLevel; } }
 		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
 		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel?.Monster; } }
 		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel?.Scene; } }
-		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }		
+		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 		public PlayerCurrency Wallet { get { return CurrentPlayer?.Wallet; } }
 
 		private BatchedClick Clicks;
@@ -101,7 +111,7 @@ namespace StendenClickerGame.ViewModels
 
 					//todo: update all the user accounts and the current session that a monster has been defeated.
 					UpdatePlayerStatsAfterMonsterDefeat(true, false);
-					if(CurrentScene.MonsterCount == CurrentScene.CurrentMonster)
+					if (CurrentScene.MonsterCount == CurrentScene.CurrentMonster + 1)
 					{
 						UpdatePlayerStatsAfterMonsterDefeat(false, true);
 					}
@@ -113,16 +123,24 @@ namespace StendenClickerGame.ViewModels
 		}
 
 		private void UpdatePlayerStatsAfterMonsterDefeat(bool MonsterDefeated, bool SceneDefeated)
-        {
-			foreach(Player player in CurrentSession.CurrentPlayerList)
-            {
-				if(MonsterDefeated)
-					player.State.MonstersDefeated++;
+		{
+			foreach (Player player in CurrentSession.CurrentPlayerList)
+			{
+				if (CurrentMonster is Boss)
+				{
+					if (MonsterDefeated)
+						player.State.BossesDefeated++;
+				}
+				else
+				{
+					if (MonsterDefeated)
+						player.State.MonstersDefeated++;
 
-				if (SceneDefeated)
-					player.State.LevelsDefeated++;
-            }
-        }
+					if (SceneDefeated)
+						player.State.LevelsDefeated++;
+				}
+			}
+		}
 
 		private void RenderLevel()
 		{
@@ -132,6 +150,8 @@ namespace StendenClickerGame.ViewModels
 			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
 			NotifyPropertyChanged("CurrencyTray");
 			NotifyPropertyChanged("MonsterHealthPercentage");
+			NotifyPropertyChanged("LevelProgressString");
+			NotifyPropertyChanged("CurrentStageString");
 		}
 
 		/// <summary>
@@ -165,7 +185,7 @@ namespace StendenClickerGame.ViewModels
 			{
 				//todo: add new value to wallet (possible lagswitch)
 
-				if(o is SparkCoin)
+				if (o is SparkCoin)
 				{
 					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(monsterDefeatedCoinValue);
 				}

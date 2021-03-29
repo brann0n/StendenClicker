@@ -37,7 +37,10 @@ namespace StendenClicker.Library.Factory
 
 		private bool CalculateIfBoss(PlayerState state)
 		{
-			return (state.LevelsDefeated % LevelsUntilBoss == 0) && state.LevelsDefeated != 0;
+			bool CurrentBossIsDefeated = state.MonstersDefeated / LevelsUntilBoss == state.BossesDefeated;
+			bool ShouldNextLevelBeBoss = state.MonstersDefeated % LevelsUntilBoss == 0;
+
+			return ShouldNextLevelBeBoss && !CurrentBossIsDefeated && state.MonstersDefeated != 0;
 		}
 
 		private PlayerState CalculateState(List<Player> players)
