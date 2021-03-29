@@ -15,7 +15,7 @@ namespace StendenClicker.Library.AbstractPlatform
 
         public override IAbstractScene getScene()
         {
-            return new NormalScene();
+            return new NormalScene(CurrentPlayerState);
         }
     }
 
