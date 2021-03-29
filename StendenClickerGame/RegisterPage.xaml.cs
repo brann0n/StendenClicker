@@ -44,7 +44,7 @@ namespace StendenClickerGame
             await Hero.Initialize();
             await Boss.Initialize();
             await Normal.Initialize();
-            await NormalScene.Initialize();
+            NormalScene.Initialize();
 
             // check if this player has played before
             Player player = await beforeContextPlayerHandler.GetPlayerStateAsync(DeviceInfo.Instance.Id);

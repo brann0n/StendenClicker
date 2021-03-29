@@ -84,7 +84,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 
 					//do what next?
-
+					MultiPlayerHub.Invoke("beginGameThread");
 				}
 
 				//for now render a new level anyways.

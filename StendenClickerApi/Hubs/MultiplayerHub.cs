@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using StendenClicker.Library.Batches;
@@ -68,6 +69,11 @@ namespace StendenClickerApi.Hubs
 
 
 			return base.OnReconnected();
+		}
+
+		public void beginGameThread()
+		{
+			//Thread.
 		}
 
 		public void joinFriend(string FriendId)
