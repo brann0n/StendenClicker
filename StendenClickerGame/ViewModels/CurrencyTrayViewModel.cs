@@ -128,6 +128,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			CurrentSession.CurrentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.CurrentPlayerList);
 			NotifyPropertyChanged("CurrentMonster");
+			NotifyPropertyChanged("CurrentScene");
 			NotifyPropertyChanged("CurrencyTray.CurrentMonster");
 			NotifyPropertyChanged("CurrencyTray");
 			NotifyPropertyChanged("MonsterHealthPercentage");
