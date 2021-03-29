@@ -21,8 +21,10 @@ namespace StendenClickerGame.ViewModels
 		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
 
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
+		public KoffieMachineViewModel KoffieMachine { get; set; }
+
 		public ObservableCollection<Hero> HeroList { get; set; }
-        public ObservableCollection<abilities> AbilitiesList { get; set; }
+        
         public ObservableCollection<Coins> CoinList { get; set; }
 
 		public string dingetje { get { return ((Hero)Hero.Heroes.FirstOrDefault()).Base64Image; } }
@@ -30,19 +32,11 @@ namespace StendenClickerGame.ViewModels
 		{
 			//sub viewmodels
 			CurrencyTray = new CurrencyTrayViewModel();
+			KoffieMachine = new KoffieMachineViewModel();
 
-			//asl test om te kijken of de heros aan de shop worden toegevoegd
+			//Herolist
 			HeroList = new ObservableCollection<Hero>();
-			AbilitiesList = new ObservableCollection<abilities>()
-			{
-				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(triggerTest) },
-				new abilities { AbilitieName = "Water", Cooldown = 100, Image = "Assets/koffie.png" },
-				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
-				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
-				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
-				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
-				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" }
-			};
+			
 
 			//AbilitiesList[0].OnExecute();
 
@@ -54,11 +48,6 @@ namespace StendenClickerGame.ViewModels
 			};
 
 			CheckContextVariables();
-		}
-
-		public void triggerTest()
-		{
-
 		}
 
 		public void LoadHeroes()
