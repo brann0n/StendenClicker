@@ -135,16 +135,13 @@ namespace StendenClickerGame.ViewModels
 				{
 					if (MonsterDefeated)
 						player.State.MonstersDefeated++;
-
-					if (SceneDefeated)
-						player.State.LevelsDefeated++;
 				}
 			}
 		}
 
 		private void RenderLevel()
 		{
-			CurrentSession.CurrentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.CurrentPlayerList);
+			CurrentSession.CurrentLevel = MultiplayerHubProxy.Instance.LevelGenerator.BuildLevel(CurrentSession.CurrentPlayerList); //broadcast the generated thing if you are the host.
 			NotifyPropertyChanged("CurrentMonster");
 			NotifyPropertyChanged("CurrentScene");
 			NotifyPropertyChanged("CurrencyTray.CurrentMonster");

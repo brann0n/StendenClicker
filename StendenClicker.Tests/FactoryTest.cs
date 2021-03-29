@@ -36,7 +36,7 @@ namespace StendenClicker.Tests
 				{
 					connectionId = "01",
 					deviceId = $"{i}",
-					State = new PlayerState { LevelsDefeated = stateNumber, MonstersDefeated = stateNumber },
+					State = new PlayerState { MonstersDefeated = stateNumber },
 					UserId = Guid.NewGuid(),
 					Username = $"Test{i}",
 					Wallet = new PlayerCurrency { }
