@@ -30,8 +30,8 @@ namespace StendenClicker.Library.Factory
 			return new GamePlatform()
 			{
 				Monster = (AbstractMonster.AbstractMonster)pl.getMonster(),
-				Scene = new NormalScene(true) {MonsterCount = 5, CurrentMonster = 1 }
-				//Scene = (AbstractScene.AbstractScene)pl.getScene()
+				//Scene = new NormalScene(true) {MonsterCount = 5, CurrentMonster = 1 }
+				Scene = (AbstractScene.AbstractScene)pl.getScene()
 			};
 		}
 

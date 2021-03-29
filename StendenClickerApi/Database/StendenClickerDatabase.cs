@@ -1,4 +1,5 @@
 using Newtonsoft.Json;
+using StendenClicker.Library.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -115,6 +116,19 @@ namespace StendenClickerApi.Database
 			if (string.IsNullOrEmpty(player.DeviceId)) return true;
 
 			return false;
+		}
+
+		public static implicit operator StendenClicker.Library.PlayerControls.Player(Player player)
+		{
+			return new StendenClicker.Library.PlayerControls.Player
+			{
+				connectionId = player.ConnectionId,
+				deviceId = player.DeviceId,
+				Username = player.PlayerName,
+				UserId = Guid.Parse(player.PlayerGuid),
+				State = new PlayerState(),
+				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency()
+			};
 		}
 	}
 

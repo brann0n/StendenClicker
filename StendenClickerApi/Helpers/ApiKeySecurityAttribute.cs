@@ -1,6 +1,10 @@
-﻿using System;
+﻿//using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
+using StendenClickerApi.Database;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 
@@ -40,4 +44,18 @@ namespace StendenClickerApi.Helpers
             filterContext.Result = new HttpStatusCodeResult(System.Net.HttpStatusCode.Unauthorized, "Your API-KEY does not match");
         }
     }
+
+	public class UserGUIDSecurityAttribute : Microsoft.AspNet.SignalR.AuthorizeAttribute
+	{
+        StendenClickerDatabase db = new StendenClickerDatabase();
+
+		public override bool AuthorizeHubConnection(HubDescriptor hubDescriptor, Microsoft.AspNet.SignalR.IRequest request)
+		{
+            string userGuid = request.Headers.Get("UserGuid");
+
+			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == userGuid);
+
+            return p != null;			
+		}		
+	}
 }
