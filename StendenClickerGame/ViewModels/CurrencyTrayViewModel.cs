@@ -176,7 +176,7 @@ namespace StendenClickerGame.ViewModels
 				throw new Exception("Unkown coin type was passed into this create coin function.");
 			}
 
-			int monsterDefeatedCoinValue = CurrentPlayer.State.MonstersDefeated;
+			int monsterDefeatedCoinValue = CurrentPlayer.State.MonstersDefeated + 1;
 
 			coin.OnCoinHover += (o, e) =>
 			{
