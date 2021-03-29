@@ -1,9 +1,11 @@
-﻿using StendenClickerGame.ViewModels;
+﻿using StendenClickerGame.Multiplayer;
+using StendenClickerGame.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -49,5 +51,11 @@ namespace StendenClickerGame
             popupUitleg.Height = Window.Current.Bounds.Height;
             popupUitleg.IsOpen = true;
         }
-    }
+
+		private void CurrencyTray_OnClickAbilityProcess(object sender, EventArgs e)
+		{
+            MainPageViewModel vm = (MainPageViewModel)this.DataContext;
+            vm.CurrencyTray.CurrentMonster.DamageFactor = 100;
+        }
+	}
 }

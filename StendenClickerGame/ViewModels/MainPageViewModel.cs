@@ -35,7 +35,7 @@ namespace StendenClickerGame.ViewModels
 			HeroList = new ObservableCollection<Hero>();
 			AbilitiesList = new ObservableCollection<abilities>()
 			{
-				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" },
+				new abilities { AbilitieName = "Koffie", Cooldown = 100, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(triggerTest) },
 				new abilities { AbilitieName = "Water", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
@@ -43,6 +43,8 @@ namespace StendenClickerGame.ViewModels
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" },
 				new abilities { AbilitieName = "Depresso", Cooldown = 100, Image = "Assets/koffie.png" }
 			};
+
+			//AbilitiesList[0].OnExecute();
 
 			CoinList = new ObservableCollection<Coins>()
 			{
@@ -52,6 +54,11 @@ namespace StendenClickerGame.ViewModels
 			};
 
 			CheckContextVariables();
+		}
+
+		public void triggerTest()
+		{
+
 		}
 
 		public void LoadHeroes()
