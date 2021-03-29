@@ -9,8 +9,8 @@ namespace StendenClicker.Library.AbstractScene
 {
 	public class NormalScene : AbstractScene
 	{
-		private static List<Models.DatabaseModels.Scene> NormalScenes;
-        private static int InternalSceneCount { get { return NormalScenes.Count; } }
+		public static List<Models.DatabaseModels.Scene> NormalScenes;
+        public static int InternalSceneCount { get { return NormalScenes.Count; } }
 
         public static async Task Initialize()
 		{
