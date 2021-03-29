@@ -19,33 +19,52 @@ namespace StendenClickerApi.Controllers
         [Route("Monsters")]
         public ActionResult GetMonsters()
 		{
-            return new JsonStringResult(JsonConvert.SerializeObject(db.Monsters));
+            List<Monster> Monsters = new List<Monster>();
+            int counter = 1;
+            foreach(Monster m in db.Monsters)
+			{
+                m.MonsterId = counter++;
+                Monsters.Add(m);
+			}
+
+            return new JsonStringResult(JsonConvert.SerializeObject(Monsters));
 		}
         [Route("Bosses")]
         public ActionResult GetBosses()
 		{
-            return new JsonStringResult(JsonConvert.SerializeObject(db.Bosses));
+            List<Boss> Bosses = new List<Boss>();
+            int counter = 1;
+            foreach (Boss m in db.Bosses)
+            {
+                m.BossId = counter++;
+                Bosses.Add(m);
+            }
+            return new JsonStringResult(JsonConvert.SerializeObject(Bosses));
 		}
         [Route("Heroes")]
         public ActionResult GetHeroes()
 		{
-            return new JsonStringResult(JsonConvert.SerializeObject(db.Heroes));
+            List<Hero> Heroes = new List<Hero>();
+            int counter = 1;
+            foreach (Hero m in db.Heroes)
+            {
+                m.HeroId = counter++;
+                Heroes.Add(m);
+            }
+            return new JsonStringResult(JsonConvert.SerializeObject(Heroes));
         }
         [Route("Scenes")]
         public ActionResult GetScenes()
 		{
-            return new JsonStringResult(JsonConvert.SerializeObject(db.Scenes));
-        }
-        public Image Base64ToImage(string Base64)
-        {
-            byte[] bytes = Convert.FromBase64String(Base64);
-
-            using (MemoryStream ms = new MemoryStream(bytes))
+            List<Scene> Scenes = new List<Scene>();
+            int counter = 1;
+            foreach (Scene m in db.Scenes)
             {
-                return Image.FromStream(ms);
+                m.SceneId = counter++;
+                Scenes.Add(m);
             }
+            return new JsonStringResult(JsonConvert.SerializeObject(Scenes));
         }
-
     }
 
     public class JsonStringResult : ContentResult

@@ -62,5 +62,7 @@ namespace StendenClicker.Library.PlayerControls
                 Wallet = new PlayerCurrency()
 			};
 		}
+
+        
     }
 }

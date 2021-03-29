@@ -14,9 +14,11 @@ namespace StendenClickerApi.Hubs
 	[UserGUIDSecurity]
 	public class MultiplayerHub : Hub
 	{
-		private static Dictionary<string, MultiPlayerSession> Sessions = new Dictionary<string, MultiPlayerSession>();
+		private static readonly Dictionary<string, MultiPlayerSession> Sessions = new Dictionary<string, MultiPlayerSession>();
 
-		private Database.StendenClickerDatabase db = new Database.StendenClickerDatabase();
+		private readonly StendenClickerDatabase db = new StendenClickerDatabase();
+
+		private string UserGuid { get => Context.Headers.Get("UserGuid"); }
 
 		public override Task OnConnected()
 		{
@@ -26,14 +28,20 @@ namespace StendenClickerApi.Hubs
 			//check if that userguid is in the database.
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == userGuid);
 
-			if(p == null) //NOTE: users are created in the production database, multiplayer connects with the local database.
+			if(p != null) //NOTE: users are created in the production database, multiplayer connects with the local database.
 			{
-				//player does not exists in database yet, send request to client to abort this session.
-			}
-			else
-			{
+				p.ConnectionId = Context.ConnectionId;
+				db.SaveChanges();
+
 				//player exists, create a new multiplayer session with current player as host, if the host wants to join another player, this session will be abandoned.
 				//tell the client that it can subscribe to the batched click function so the server can periodically receive its clicks.
+				MultiPlayerSession session = new MultiPlayerSession() 
+				{
+					hostPlayerId = p.PlayerGuid,
+					CurrentPlayerList = new List<StendenClicker.Library.PlayerControls.Player> { p }
+				};
+
+				Sessions.Add(p.PlayerGuid, session);
 			}
 
 			return base.OnConnected();
@@ -41,6 +49,11 @@ namespace StendenClickerApi.Hubs
 
 		public override Task OnDisconnected(bool stopCalled)
 		{
+			//remove connection id from database.
+			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
+			p.ConnectionId = null;
+			db.SaveChanges();
+
 			//save the current session to the database and then dispose of the object.
 
 			return base.OnDisconnected(stopCalled);
@@ -49,12 +62,20 @@ namespace StendenClickerApi.Hubs
 		public override Task OnReconnected()
 		{
 			//find the player's most recent session and rejoin it.
+			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
+			p.ConnectionId = Context.ConnectionId;
+			db.SaveChanges();
+
+
 			return base.OnReconnected();
 		}
 
 
 		public void broadcastSession(MultiPlayerSession session)
         {
+			//verifys that only the host can broadcast
+			if (session.hostPlayerId != UserGuid) throw new Exception("Session doesnt match the current userguid");
+
 			//verify the given session against the server's copy
 			bool SessionIsValid = Sessions.ContainsKey(session.hostPlayerId);
 

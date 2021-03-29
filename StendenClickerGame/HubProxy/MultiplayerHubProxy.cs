@@ -73,6 +73,7 @@ namespace StendenClickerGame.Multiplayer
 				if (task.IsFaulted)
 				{
 					OnConnectionError?.Invoke(task.Exception);
+					//could also be unauthorized due to no correct userguid
 					//if this happens go into offline mode and load the most recent player information. then render a level out of that.
 				}
 				else
@@ -81,6 +82,9 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
 					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
+
+					//do what next?
+
 				}
 
 				//for now render a new level anyways.
