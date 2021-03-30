@@ -122,6 +122,7 @@
     <Compile Include="CustomUI\Base64ImageConverter.cs" />
     <Compile Include="CustomUI\CoinGrid.cs" />
     <Compile Include="CustomUI\CustomCoinList.cs" />
+    <Compile Include="CustomUI\SmallBase64ImageScaler.cs" />
     <Compile Include="Data\abilities.cs" />
     <Compile Include="Data\Coins.cs" />
     <Compile Include="Data\heroes.cs" />
