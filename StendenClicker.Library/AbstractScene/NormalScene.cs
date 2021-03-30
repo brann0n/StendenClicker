@@ -15,7 +15,7 @@ namespace StendenClicker.Library.AbstractScene
         public static async Task Initialize()
 		{           
             NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
-            if(NormalScenes == null)
+            if(NormalScenes == null || NormalScenes?.Count == 0)
 			{
                 var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
                 NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
