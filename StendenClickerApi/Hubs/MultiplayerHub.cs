@@ -81,7 +81,7 @@ namespace StendenClickerApi.Hubs
 		/// </summary>
 		/// <param name="FriendId"></param>
 		/// <returns></returns>
-		public bool joinFriend(string FriendId)
+		public async Task<bool> joinFriend(string FriendId)
 		{
 			bool SessionExists = Sessions.ContainsKey(FriendId);
 			if(SessionExists)
@@ -100,6 +100,8 @@ namespace StendenClickerApi.Hubs
 					if(Sessions.ContainsKey(UserGuid))
 					{
 						Sessions.Remove(UserGuid);
+						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
+						await Clients.Client(friend.ConnectionId).updateHostPlayerList(FriendMultiPlayerSession);
 						return true;
 					}
                 }
