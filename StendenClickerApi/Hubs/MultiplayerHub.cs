@@ -19,6 +19,8 @@ namespace StendenClickerApi.Hubs
 
 		private readonly StendenClickerDatabase db = new StendenClickerDatabase();
 
+		private static object SessionWriteLock = new object();
+
 		private string UserGuid { get => Context.Headers.Get("UserGuid"); }
 
 		public override Task OnConnected()
