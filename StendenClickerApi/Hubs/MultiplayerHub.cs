@@ -76,12 +76,19 @@ namespace StendenClickerApi.Hubs
 			//Thread.
 		}
 
-		public void joinFriend(string FriendId)
+		/// <summary>
+		/// returns success
+		/// </summary>
+		/// <param name="FriendId"></param>
+		/// <returns></returns>
+		public bool joinFriend(string FriendId)
 		{
 			//todo: check if they are friends.
 
-
 			bool SessionExists = Sessions.ContainsKey(FriendId);
+
+
+			return false;
 		}
 
 		public void broadcastSession(MultiPlayerSession session)
