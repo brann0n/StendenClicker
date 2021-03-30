@@ -24,7 +24,7 @@ namespace StendenClicker.Library.PlayerControls
 
         public PlayerState State { get; set; }
 
-        public int DamageFactor { get; set; }
+        
 
         public string GetUsername()
         {
@@ -67,6 +67,9 @@ namespace StendenClicker.Library.PlayerControls
 			};
 		}
 
-        
+        public int getDamageFactor()
+        {
+            return 1;
+        }
     }
 }
