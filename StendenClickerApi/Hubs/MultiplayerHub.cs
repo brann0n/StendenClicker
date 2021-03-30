@@ -76,12 +76,38 @@ namespace StendenClickerApi.Hubs
 			//Thread.
 		}
 
-		public void joinFriend(string FriendId)
+		/// <summary>
+		/// Checks if friend has a session, checks if the current player is friends, adds them to their friend's session and deletes the current player session
+		/// </summary>
+		/// <param name="FriendId"></param>
+		/// <returns></returns>
+		public async Task<bool> joinFriend(string FriendId)
 		{
-			//todo: check if they are friends.
-
-
 			bool SessionExists = Sessions.ContainsKey(FriendId);
+			if(SessionExists)
+            {
+				Sessions.ContainsKey(FriendId);
+
+				Friendship fship = db.Friendships
+					.Where(n => n.Player1.PlayerGuid == UserGuid || n.Player2.PlayerGuid == UserGuid)
+					.Where(n => n.Player1.PlayerGuid == FriendId || n.Player2.PlayerGuid == FriendId)
+					.FirstOrDefault();
+				if(fship != null)
+                {
+					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
+					MultiPlayerSession FriendMultiPlayerSession = Sessions[FriendId];
+					FriendMultiPlayerSession.CurrentPlayerList.Add(p);
+					if(Sessions.ContainsKey(UserGuid))
+					{
+						Sessions.Remove(UserGuid);
+						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
+						await Clients.Client(friend.ConnectionId).updateHostPlayerList(FriendMultiPlayerSession);
+						return true;
+					}
+                }
+            }
+
+			return false;
 		}
 
 		public void broadcastSession(MultiPlayerSession session)

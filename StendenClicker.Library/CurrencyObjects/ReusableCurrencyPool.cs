@@ -13,8 +13,8 @@ namespace StendenClicker.Library.CurrencyObjects
 		private int PoolSizeSC { get { return Reusables.Where(owo => owo is SparkCoin).Count(); } }
 		private int PoolSizeEC { get { return Reusables.Where(uwu => uwu is EuropeanCredit).Count(); } }
 		
-		public const int PoolSizeSC_MAX = 5;
-		public const int PoolSizeEC_MAX = 5;
+		public const int PoolSizeSC_MAX = 50;
+		public const int PoolSizeEC_MAX = 20;
 
 		private ReusableCurrencyPool()
 		{

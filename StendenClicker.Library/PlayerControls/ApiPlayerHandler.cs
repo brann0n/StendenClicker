@@ -38,6 +38,7 @@ namespace StendenClicker.Library.PlayerControls
 						{
 							//remove the local player state
 							await LocalPlayerData.RemoveLocalPlayerData();
+							return null;
 						}
 					}				
 				}

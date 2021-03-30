@@ -24,7 +24,7 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyRemoved;
 
 		//click eventhandler
-		public event EventHandler OnClickAbilityProcess;
+		public static event EventHandler OnClickAbilityProcess;
 
 		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
@@ -89,7 +89,7 @@ namespace StendenClickerGame.ViewModels
 				Clicks.addClick();
 
 				//execute pending abilities
-				OnClickAbilityProcess?.Invoke(null, null);
+				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
 
 				//damage monster and set its damage multiplier
 				CurrentMonster.DamageFactor = 1;// CurrentPlayer.GetDamageFactor();
@@ -201,6 +201,8 @@ namespace StendenClickerGame.ViewModels
 				CurrencyInView.Remove((Currency)o);
 				CurrencyPool.ReleaseCurrency((Currency)o);
 			};
+
+			coin.SetAutoRemove(5000);
 
 			CurrencyInView.Add(coin);
 		}

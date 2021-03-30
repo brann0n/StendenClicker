@@ -10,6 +10,7 @@ namespace StendenClickerGame.Data
 	public class abilities
 	{
 		public String AbilitieName { get; set; }
+		public String AbilitieDescription { get; set; }
 		public int Cooldown { get; set; }
 		public String Image { get; set; }
 

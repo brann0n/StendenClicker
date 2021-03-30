@@ -24,10 +24,14 @@ namespace StendenClicker.Library.PlayerControls
 
         public PlayerState State { get; set; }
 
+        public int DamageFactor { get; set; }
+
         public string GetUsername()
         {
             return null;
         }
+
+        
 
         //public static string GetMachineKey()
         //{

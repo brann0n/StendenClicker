@@ -1,17 +1,22 @@
 using StendenClicker.Library.AbstractMonster;
 using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace StendenClicker.Library.CurrencyObjects
 {
     public abstract class Currency : IDisposable
     {
-        private Image image;
         public event EventHandler OnCoinHover;
         public string CoinId { get; set; }
         public abstract ulong getValue(int multiplier);
+
+        private CancellationTokenSource CurrencyPickupCancellationSource;
+
         public Currency()
 		{
             CoinId = Guid.NewGuid().ToString();
+            CurrencyPickupCancellationSource = new CancellationTokenSource();
         }
 
         /// <summary>
@@ -25,13 +30,10 @@ namespace StendenClicker.Library.CurrencyObjects
             return new Point { X = r.Next(0, windowSize.X), Y = r.Next(0, windowSize.Y) };
         }
 
-        public Image getSprite()
-        {
-            return image;
-        }
         protected virtual void Dispose(bool disposing)
         {
-            image = null;
+            //Dispose of other objects
+            CurrencyPickupCancellationSource.Dispose();
         }
 
         public void Dispose()
@@ -44,6 +46,7 @@ namespace StendenClicker.Library.CurrencyObjects
 
         public void Hovered()
 		{
+            CurrencyPickupCancellationSource.Cancel();
             OnCoinHover?.Invoke(this, null);
 		}
 
@@ -59,7 +62,24 @@ namespace StendenClicker.Library.CurrencyObjects
                 OnCoinHover -= (EventHandler)d;
             }
         }
-    }
 
+		public async void SetAutoRemove(int v)
+		{
+			try
+			{
+                await Task.Delay(v, CurrencyPickupCancellationSource.Token);
+                OnCoinHover?.Invoke(this, null);
+            }
+			catch (TaskCanceledException)
+			{
+                CurrencyPickupCancellationSource = new CancellationTokenSource();
+			}
+			catch (Exception)
+			{
+                //ok, dikke error
+                throw; // smijt weg dat ding
+			}         
+        }
+	}
 }
 

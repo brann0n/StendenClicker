@@ -15,7 +15,7 @@ namespace StendenClicker.Library.AbstractScene
         public static async Task Initialize()
 		{           
             NormalScenes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Scene>>("normal-scenes-asset-data.json");
-            if(NormalScenes == null)
+            if(NormalScenes == null || NormalScenes?.Count == 0)
 			{
                 var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
                 NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
@@ -32,7 +32,7 @@ namespace StendenClicker.Library.AbstractScene
 
         public NormalScene(PlayerState state) : base(state)
         {
-            int levelId = state.LevelsDefeated % InternalSceneCount;
+            int levelId = state.LevelsDefeated % InternalSceneCount + 1;
 
             var item = NormalScenes.FirstOrDefault(n => n.SceneId == levelId);
             if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");

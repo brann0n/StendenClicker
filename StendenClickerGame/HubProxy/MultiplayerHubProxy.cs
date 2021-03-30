@@ -84,7 +84,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 
 					//do what next?
-					MultiPlayerHub.Invoke("beginGameThread");
+					MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
 				}
 
 				//for now render a new level anyways.
