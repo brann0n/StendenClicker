@@ -1,4 +1,6 @@
 using StendenClicker.Library.Abilities;
+using StendenClicker.Library.AbstractMonster;
+using StendenClicker.Library.Factory;
 using StendenClickerGame.Data;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -25,7 +27,20 @@ namespace StendenClickerGame.ViewModels
 
 		private void KoffieAbilityClick()
 		{
+			CurrencyTrayViewModel.OnClickAbilityProcess += CurrencyTrayViewModel_OnClickAbilityProcess;
 
+		}
+
+		private void CurrencyTrayViewModel_OnClickAbilityProcess(object sender, System.EventArgs e)
+		{
+			GamePlatform platform = (GamePlatform)sender;
+
+			AbstractMonster m = (AbstractMonster)platform.Monster;
+
+			if(platform.Monster is Boss)
+			{
+				//is boss
+			}
 		}
 	}
 }
