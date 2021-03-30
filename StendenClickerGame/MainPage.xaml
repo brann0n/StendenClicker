@@ -52,7 +52,7 @@
                                 <Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
                             </Canvas>
                         </Viewbox>
-						<TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.SparkCoin}"/>
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.SparkCoin}" Foreground="White"/>
 					</Grid>
                     <Grid  Grid.Column="1" HorizontalAlignment="Center">
                         <Grid.ColumnDefinitions>
@@ -79,7 +79,7 @@
 
                             </Canvas>
                         </Viewbox>
-						<TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.EuropeanCredit}" />
+                        <TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.EuropeanCredit}" Foreground="White"/>
 					</Grid>
                 </Grid>
             </Border>
@@ -110,7 +110,7 @@
                                                         <ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
                                                     </Button.Background>
                                                     <RelativePanel HorizontalAlignment="Center" VerticalAlignment="Center" >
-                                                        <TextBlock x:Name="Koopdan" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">Koop dan</TextBlock>
+                                                        <TextBlock x:Name="Koopdan" Foreground="White" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True" HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">Koop dan</TextBlock>
                                                         <Grid HorizontalAlignment="Center"  RelativePanel.AlignHorizontalCenterWith="Koopdan"  RelativePanel.Below="Koopdan">
                                                             <Grid.ColumnDefinitions>
                                                                 <ColumnDefinition Width="50*" />
@@ -122,7 +122,7 @@
                                                                     <Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
                                                                 </Canvas>
                                                             </Viewbox>
-                                                            <TextBlock Text="{Binding Price}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal">108K</TextBlock>
+                                                            <TextBlock Foreground="White" Text="{Binding Price}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal">108K</TextBlock>
                                                         </Grid>
                                                     </RelativePanel>
                                                 </Button>
@@ -205,7 +205,7 @@
 
                                             <Grid Grid.Column="2" HorizontalAlignment="Right">
                                                 <RelativePanel HorizontalAlignment="Right" VerticalAlignment="Center">
-                                                    <TextBlock Text="{Binding Name}" Name="HeroName" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">De Tester</TextBlock>
+                                                    <TextBlock Foreground="White" Text="{Binding Name}" Name="HeroName" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Center" VerticalAlignment="Center" FontFamily="Tahoma" FontWeight="Bold">De Tester</TextBlock>
                                                     <Grid HorizontalAlignment="Center" VerticalAlignment="Center" RelativePanel.AlignRightWith="HeroName"  RelativePanel.Below="HeroName">
                                                         <Grid.ColumnDefinitions>
                                                             <ColumnDefinition Width="50*" />
@@ -236,22 +236,17 @@
 
             <Grid Grid.Row="2">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="40*"/>
-                    <ColumnDefinition Width="24.5*"/>
-                    <ColumnDefinition Width="35.5*"/>
+                    <ColumnDefinition Width="50*"/>
+                    <ColumnDefinition Width="50*"/>
                 </Grid.ColumnDefinitions>
                 <Border Grid.Column="0" CornerRadius="5,5,0,5" Margin="0,30,0,0">
                     <Grid>
                         <Grid.Background>
                             <SolidColorBrush Color="#FF2E7988"/>
                         </Grid.Background>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="20*"/>
-                            <ColumnDefinition Width="80*"/>
-                        </Grid.ColumnDefinitions>
                         <Image Grid.Column="0" Source="Assets/nse.png" HorizontalAlignment="left" Margin="20,10,0,10"></Image>
-                        <TextBlock Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{Binding CurrencyTray.CurrentPlayer.Username}" TextTrimming="CharacterEllipsis"/>
-					</Grid>
+                        <TextBlock Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{Binding CurrencyTray.CurrentPlayer.Username}" TextTrimming="CharacterEllipsis" Foreground="White" />
+                    </Grid>
                 </Border>
                 <Grid Grid.Column="1">
                     <Grid.RowDefinitions>
@@ -261,7 +256,7 @@
                     </Grid.RowDefinitions>
                     <Border Grid.Row="1" Background="#FF2E7988" Margin="0,0,0,0" CornerRadius="0,5,0,0">
                         <Grid>
-                            <Button Margin="0,0,0,0" Padding="1" Click="ButtonFriend_OnClick" Background="Transparent">Invite Players +
+                            <Button Margin="0,0,0,0" Padding="1" Click="ButtonFriend_OnClick" Foreground="White" Background="Transparent">Invite Players +
                                 <Button.Resources>
                                     <ResourceDictionary>
                                         <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -286,7 +281,9 @@
                                 </ListView.ItemsPanel>
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <Button Content="Ja" Margin="5" CornerRadius="5"></Button>
+                                        <Button Margin="5" CornerRadius="5" Width="65">
+                                            <TextBlock Foreground="White" TextTrimming="Clip"  Text="Jarno"/>
+                                        </Button>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                                 <ListView.ItemContainerStyle>
@@ -329,14 +326,14 @@
 
                     <!--Tekst koffiemachine-->
                     <Grid Grid.Row="0">
-                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="40">Waar heeft u vandaag zin in?</TextBlock>
+                        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="40" Foreground="White">Waar heeft u vandaag zin in?</TextBlock>
                     </Grid>
 
                     <Grid Grid.Row="1" Name="KoffieGrid">
 						<ListView Name="koffie" ItemsSource="{Binding KoffieMachine.AbilitiesList}"  Width="{Binding ActualWidth, ElementName=KoffieGrid}" Padding="0" UseLayoutRounding="False" Margin="0,10,0,0" SelectionMode="None">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
-                                    <Button Background="#424242"  BorderThickness="0" Margin="20,0,20,5" CornerRadius="5" Command="{Binding OnExecute}">
+                                    <Button Foreground="White" Background="#424242"  BorderThickness="0" Margin="20,0,20,5" CornerRadius="5" Command="{Binding OnExecute}" IsEnabled="true">
                                         <StackPanel Width="{Binding ElementName=koffie, Path=Width}" Orientation="Horizontal" Height="68">
                                             <Grid Width="{Binding ElementName=koffie, Path=Width}" >
                                                 <Grid.ColumnDefinitions>
@@ -348,8 +345,8 @@
                                                 </Grid>
                                                 <Grid Grid.Column="1" Margin="10,0,40,0" HorizontalAlignment="left">
                                                     <StackPanel>
-                                                        <TextBlock Text="{Binding AbilitieName}" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="30">De Tester</TextBlock>
-                                                        <TextBlock Text="test"/>
+                                                        <TextBlock Foreground="White" Text="{Binding AbilitieName}" Grid.Column="0" RelativePanel.AlignHorizontalCenterWithPanel="True"  HorizontalAlignment="Left" VerticalAlignment="Center" FontFamily="Fonts/GFY_Michael_W00_Reg.ttf#GFYMichaelW00-Reg" FontSize="30">De Tester</TextBlock>
+                                                        <TextBlock Foreground="White" Text="{Binding AbilitieDescription}"/>
                                                     </StackPanel>
                                                 </Grid>
                                             </Grid>
@@ -389,8 +386,8 @@
 						</Grid.ColumnDefinitions>
 						<Grid Grid.Column="0" HorizontalAlignment="Center"  >
 							<StackPanel VerticalAlignment="Center">
-								<TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentStageString}"/>
-								<TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.LevelProgressString}"/>
+                                <TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Foreground="White" Text="{Binding CurrencyTray.CurrentStageString}"/>
+                                <TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Foreground="White" Text="{Binding CurrencyTray.LevelProgressString}"/>
 							</StackPanel>
 						</Grid>
 						<Grid Grid.Column="1" HorizontalAlignment="Right" Margin="0,0,10,0">
@@ -398,7 +395,7 @@
 								<Button.Background>
 									<ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
 								</Button.Background>
-								<TextBlock FontFamily="Tahoma" FontWeight="Bold">Uitleg</TextBlock>
+                                <TextBlock FontFamily="Tahoma" FontWeight="Bold" Foreground="White">Uitleg</TextBlock>
 							</Button>
 						</Grid>
 					</Grid>
@@ -458,13 +455,13 @@
                             <ColumnDefinition Width="45*"/>
                         </Grid.ColumnDefinitions>
                         <Grid Grid.Column="0">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0" Text="{Binding CurrencyTray.CurrentMonster.Name}"/>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0"  Foreground="White" Text="{Binding CurrencyTray.CurrentMonster.Name}"/>
                         </Grid>
                         <Grid Grid.Column="1">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0">lvl.</TextBlock>
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Margin="0,0,10,0" Foreground="White" >lvl.</TextBlock>
                         </Grid>
                         <Grid Grid.Column="2">
-                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentMonster.MonsterLevel}" />
+                            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Foreground="White" Text="{Binding CurrencyTray.CurrentMonster.MonsterLevel}" />
                         </Grid>
                     </Grid>
                 </Grid>
@@ -497,7 +494,7 @@
                                     <RowDefinition Height="15*"/>
                                     <RowDefinition Height="85*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden:</TextBlock>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White" >Vrieden:</TextBlock>
                                 <ListView  Grid.Row="1" Name="Friends" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
@@ -508,10 +505,10 @@
                                                         <ColumnDefinition Width="50*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">Jarno</TextBlock>
                                                     </Grid>
                                                     <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Invite</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Foreground="White">Invite</Button>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -530,7 +527,7 @@
                                     <RowDefinition Height="25*"/>
                                     <RowDefinition Height="75*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Uitnodigingen</TextBlock>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White">Uitnodigingen</TextBlock>
                                 <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                     ScrollViewer.HorizontalScrollMode="Enabled"                  
                                     ScrollViewer.VerticalScrollMode="Enabled"
@@ -544,11 +541,11 @@
                                                         <ColumnDefinition Width="50*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">Jarno</TextBlock>
                                                     </Grid>
                                                     <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red">Accepteren</Button>
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange">Weigeren</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" >Accepteren</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" >Weigeren</Button>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -569,9 +566,9 @@
                                     <RowDefinition Height="10*"/>
                                     <RowDefinition Height="72*"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
-                                <TextBox Grid.Row="1" Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
-                                <Button Grid.Row="2" Margin="0,0,0,10" HorizontalAlignment="left" CornerRadius="5">Search</Button>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White" >Vrieden toevoegen:</TextBlock>
+                                <TextBox Grid.Row="1" Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in" Foreground="White"/>
+                                <Button Grid.Row="2" Margin="0,0,0,10" HorizontalAlignment="left" CornerRadius="5" Foreground="White">Search</Button>
                                 <Grid Grid.Row="3">
                                     <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                         <ListView.ItemTemplate>
@@ -583,10 +580,10 @@
                                                             <ColumnDefinition Width="50*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Grid Grid.Column="0">
-                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center">Jarno</TextBlock>
+                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" >Jarno</TextBlock>
                                                         </Grid>
                                                         <Grid Grid.Column="1">
-                                                            <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5">Uitnodiging sturen</Button>
+                                                            <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Foreground="White" >Uitnodiging sturen</Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Border>
@@ -617,7 +614,7 @@
                     <Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popupUitleg, Path=Width}" Height="{Binding ElementName=popupUitleg, Path=Height}">
                         <Grid Name="UitegGrid" Width="400" HorizontalAlignment="Center">
                             <StackPanel Grid.Row="2" Margin="0,40,0,0">
-                                <TextBlock>Uitleg</TextBlock>
+                                <TextBlock Foreground="White">Uitleg</TextBlock>
                             </StackPanel>
                         </Grid>
                     </Grid>
