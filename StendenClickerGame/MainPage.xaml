@@ -15,6 +15,7 @@
     </Page.DataContext>-->
     <Page.Resources>
         <customui:Base64ImageConverter x:Key="Base64ImageConverter"/>
+		<customui:SmallBase64ImageScaler x:Key="SmallBase64ImageScaler"/>
     </Page.Resources>
 
     
@@ -145,7 +146,7 @@
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                                             </ResourceDictionary>
                                                         </Button.Resources>
-                                                        <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+														<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="Dikke abilitie"/>
                                                         </ToolTipService.ToolTip>
@@ -159,7 +160,7 @@
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                                             </ResourceDictionary>
                                                         </Button.Resources>
-                                                        <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+														<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="Dikke abilitie"/>
                                                         </ToolTipService.ToolTip>
@@ -173,7 +174,7 @@
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                                             </ResourceDictionary>
                                                         </Button.Resources>
-                                                        <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+														<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="Dikke abilitie" />
                                                         </ToolTipService.ToolTip>
@@ -187,7 +188,7 @@
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                                             </ResourceDictionary>
                                                         </Button.Resources>
-                                                        <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+														<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="Dikke abilitie" />
                                                         </ToolTipService.ToolTip>
@@ -201,7 +202,7 @@
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
                                                             </ResourceDictionary>
                                                         </Button.Resources>
-                                                        <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}"/>
+														<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
                                                         <ToolTipService.ToolTip>
                                                             <ToolTip Content="Dikke abilitie" />
                                                         </ToolTipService.ToolTip>
@@ -226,7 +227,7 @@
                                             </Grid>
                                             <!--Hero image-->
                                             <Grid Grid.Column="3" Margin="0,0,10,0">
-                                                <Image DataContext="{Binding Base64Image, Converter={StaticResource Base64ImageConverter}}" Source="{Binding Result}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,-5"></Image>
+												<Image DataContext="{Binding Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,-5"></Image>
                                             </Grid>
                                         </Grid>
                                     </StackPanel>
