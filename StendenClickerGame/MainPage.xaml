@@ -91,7 +91,7 @@
                         <SolidColorBrush Color="#2E7988"></SolidColorBrush>
                     </Grid.Background>
 
-                    <!--List voor alle heroes moet de button nog in worden gezet-->
+                    <!--List voor alle heroes -->
                     <ListView Name="shop" ItemsSource="{Binding HeroList}"  Width="{Binding ActualWidth, ElementName=MainGrid}" Padding="0" UseLayoutRounding="False" Margin="0,0,0,0" SelectionMode="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -130,7 +130,7 @@
 
                                             <Grid Grid.Column="1">
                                                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="0,0,0,5">
-                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                    <Button Style="{StaticResource AbilityButton}">
                                                         <Button.Resources>
                                                             <ResourceDictionary>
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -144,7 +144,7 @@
                                                             <ToolTip Content="Dikke abilitie"/>
                                                         </ToolTipService.ToolTip>
                                                     </Button>
-                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                    <Button Style="{StaticResource AbilityButton}">
                                                         <Button.Resources>
                                                             <ResourceDictionary>
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -158,7 +158,7 @@
                                                             <ToolTip Content="Dikke abilitie"/>
                                                         </ToolTipService.ToolTip>
                                                     </Button>
-                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                    <Button Style="{StaticResource AbilityButton}">
                                                         <Button.Resources>
                                                             <ResourceDictionary>
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -172,7 +172,7 @@
                                                             <ToolTip Content="Dikke abilitie" />
                                                         </ToolTipService.ToolTip>
                                                     </Button>
-                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                    <Button Style="{StaticResource AbilityButton}">
                                                         <Button.Resources>
                                                             <ResourceDictionary>
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -186,7 +186,7 @@
                                                             <ToolTip Content="Dikke abilitie" />
                                                         </ToolTipService.ToolTip>
                                                     </Button>
-                                                    <Button Width="40" Height="40" Margin="0,0,5,0" Background="Transparent" BorderBrush="#2EAAB6" CornerRadius="5">
+                                                    <Button Style="{StaticResource AbilityButton}">
                                                         <Button.Resources>
                                                             <ResourceDictionary>
                                                                 <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
@@ -245,8 +245,12 @@
                         <Grid.Background>
                             <SolidColorBrush Color="#FF2E7988"/>
                         </Grid.Background>
-                        <Image Source="Assets/nse.png" HorizontalAlignment="left" Margin="20,10,0,10"></Image>
-						<TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{Binding CurrencyTray.CurrentPlayer.Username}"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="80*"/>
+                        </Grid.ColumnDefinitions>
+                        <Image Grid.Column="0" Source="Assets/nse.png" HorizontalAlignment="left" Margin="20,10,0,10"></Image>
+                        <TextBlock Grid.Column="1" Margin="10,0,10,0" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="30" Text="{Binding CurrencyTray.CurrentPlayer.Username}" TextTrimming="CharacterEllipsis"/>
 					</Grid>
                 </Border>
                 <Grid Grid.Column="1">
@@ -271,7 +275,31 @@
                     </Border>
                     <Border Grid.Row="2" Background="#FF2E7988" Margin="0,0,0,0" CornerRadius="0,0,5,0">
                         <Grid>
-                                 
+                            <ListView ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
+                                    ScrollViewer.HorizontalScrollMode="Enabled"                  
+                                    ScrollViewer.VerticalScrollMode="Disabled"
+                                    ItemsSource="{Binding HeroList}" Padding="0" Margin="0" ShowsScrollingPlaceholders="False" SelectionMode="none">
+                                <ListView.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <ItemsStackPanel Orientation="Horizontal" GroupPadding="0" Margin="0" MinWidth="0" MinHeight="0"/>
+                                    </ItemsPanelTemplate>
+                                </ListView.ItemsPanel>
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Content="Ja" Margin="5" CornerRadius="5"></Button>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                                <ListView.ItemContainerStyle>
+                                    <Style TargetType="ListViewItem">
+                                        <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                                        <Setter Property="Margin" Value="0"/>
+                                        <Setter Property="Padding" Value="0"/>
+                                        <Setter Property="MinWidth" Value="0"/>
+                                    </Style>
+                                </ListView.ItemContainerStyle>
+                            </ListView>
+                           
+                            <!-- Moeten alle multilayer mensen in de lobby in komen -->
                         </Grid>
                     </Border>
                 </Grid>
@@ -360,7 +388,7 @@
 							<ColumnDefinition Width="35*"/>
 						</Grid.ColumnDefinitions>
 						<Grid Grid.Column="0" HorizontalAlignment="Center"  >
-							<StackPanel>
+							<StackPanel VerticalAlignment="Center">
 								<TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.CurrentStageString}"/>
 								<TextBlock FontFamily="Tahoma" FontSize="30" FontWeight="Bold" Text="{Binding CurrencyTray.LevelProgressString}"/>
 							</StackPanel>
@@ -464,9 +492,13 @@
                                 <RowDefinition Height="50*"/>
                             </Grid.RowDefinitions>
 
-                            <StackPanel Grid.Row="0" Margin="0,40,0,0">
-                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden:</TextBlock>
-                                <ListView Name="Friends" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                            <Grid Grid.Row="0" Margin="0,40,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="15*"/>
+                                    <RowDefinition Height="85*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden:</TextBlock>
+                                <ListView  Grid.Row="1" Name="Friends" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=Friends, Path=Width}">
@@ -491,7 +523,7 @@
                                         </Style>
                                     </ListView.ItemContainerStyle>
                                 </ListView>
-                            </StackPanel>
+                            </Grid>
 
                             <Grid Grid.Row="1" Margin="0,40,0,0">
                                 <Grid.RowDefinitions>
@@ -529,13 +561,18 @@
                                     </ListView.ItemContainerStyle>
                                 </ListView>
                             </Grid>
-
-                            <StackPanel Grid.Row="2" Margin="0,40,0,0">
-                                <TextBlock Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
-                                <TextBox Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
-                                <Button Margin="0,0,0,10" HorizontalAlignment="left">Search</Button>
-
-                                <Grid>
+                            
+                            <Grid Grid.Row="2" Margin="0,40,0,0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="8*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="10*"/>
+                                    <RowDefinition Height="72*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20">Vrieden toevoegen:</TextBlock>
+                                <TextBox Grid.Row="1" Margin="0,0,0,10"  Width="400" PlaceholderText="Voer gebruikersnaam in"/>
+                                <Button Grid.Row="2" Margin="0,0,0,10" HorizontalAlignment="left" CornerRadius="5">Search</Button>
+                                <Grid Grid.Row="3">
                                     <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
@@ -562,7 +599,7 @@
                                         </ListView.ItemContainerStyle>
                                     </ListView>
                                 </Grid>
-                            </StackPanel>
+                            </Grid>
                         </Grid>
                     </Grid>
                 </Border>
@@ -571,13 +608,11 @@
 
         <RelativePanel Name="panelUitleg" Grid.Column="2">
             <Popup Name="popupUitleg" IsOpen="false"  IsLightDismissEnabled="True" RelativePanel.AlignLeftWithPanel="True" HorizontalAlignment="Right">
-
                 <Popup.ChildTransitions>
                     <TransitionCollection>
                         <PaneThemeTransition Edge="Right"/>
                     </TransitionCollection>
                 </Popup.ChildTransitions>
-
                 <Border CornerRadius="5,0,0,5" Visibility="Visible">
                     <Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popupUitleg, Path=Width}" Height="{Binding ElementName=popupUitleg, Path=Height}">
                         <Grid Name="UitegGrid" Width="400" HorizontalAlignment="Center">
