@@ -32,7 +32,7 @@ namespace StendenClicker.Library.AbstractScene
 
         public NormalScene(PlayerState state) : base(state)
         {
-            int levelId = state.LevelsDefeated % InternalSceneCount;
+            int levelId = state.LevelsDefeated % InternalSceneCount + 1;
 
             var item = NormalScenes.FirstOrDefault(n => n.SceneId == levelId);
             if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
