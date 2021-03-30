@@ -13,12 +13,12 @@
             <ImageBrush ImageSource="Assets/bg-page.png"/>
         </Grid.Background>
         <StackPanel Name="LoadingBox" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Visible">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="50">Account controle...</TextBlock>
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="50" Foreground="White">Account controle...</TextBlock>
             <ProgressRing IsActive="True" Foreground="White" Width="80" Height="80"/>
         </StackPanel>
         <StackPanel Name="LoginBox" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="Collapsed">
-            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="50">Vul hier uw naam in:</TextBlock>
-            <TextBox Name="UsernameTextBox" Background="Transparent" Margin="0,0,0,10">
+            <TextBlock VerticalAlignment="Center" HorizontalAlignment="Center" Margin="10" FontSize="50" Foreground="White">Vul hier uw naam in:</TextBlock>
+            <TextBox Name="UsernameTextBox" Background="Transparent" Margin="0,0,0,10" Foreground="White">
                 <TextBox.Resources>
                     <SolidColorBrush x:Key="TextControlBackgroundFocused" Color="white" Opacity="0.2"/>
                     <SolidColorBrush x:Key="TextControlForegroundFocused" Color="White"/>
@@ -29,7 +29,7 @@
                     <SolidColorBrush x:Key="TextControlBackgroundPressed" Color="Transparent"/>
                 </TextBox.Resources>
             </TextBox>
-            <Button Name="GoToMainPage" HorizontalAlignment="Center" VerticalAlignment="Center">Creeër account</Button>
+            <Button Name="GoToMainPage" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">Creeër account</Button>
         </StackPanel>
     </Grid>
 </Page>
