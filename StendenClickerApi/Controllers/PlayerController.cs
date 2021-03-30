@@ -65,5 +65,20 @@ namespace StendenClickerApi.Controllers
 
             return new HttpStatusCodeResult(200, "Created the player");
         }
+
+        [ApiKeySecurity, HttpGet, Route("Friendships")]
+        public ActionResult GetFriendships(string PlayerId)
+        {
+            List<Friendship> friendships = db.Friendships
+                    .Where(n => n.Player1.PlayerGuid == PlayerId || n.Player2.PlayerGuid == PlayerId)
+                    .ToList();
+
+            if(friendships !== null)
+            {
+                return new HttpStatusCodeResult(404, "No friendships were found with player id [" + PlayerId + "]");
+            }
+
+            return new JsonStringResult(friendships);
+        }
     }
 }
