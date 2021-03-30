@@ -73,7 +73,7 @@ namespace StendenClickerApi.Controllers
                     .Where(n => n.Player1.PlayerGuid == PlayerId || n.Player2.PlayerGuid == PlayerId)
                     .ToList();
 
-            if(friendships !== null)
+            if(friendships == null)
             {
                 return new HttpStatusCodeResult(404, "No friendships were found with player id [" + PlayerId + "]");
             }
