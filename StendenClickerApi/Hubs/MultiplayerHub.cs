@@ -14,12 +14,8 @@ namespace StendenClickerApi.Hubs
 {
 	[UserGUIDSecurity]
 	public class MultiplayerHub : Hub
-	{
-		private static readonly Dictionary<string, MultiPlayerSession> Sessions = new Dictionary<string, MultiPlayerSession>();
-
+	{		
 		private readonly StendenClickerDatabase db = new StendenClickerDatabase();
-
-		private static object SessionWriteLock = new object();
 
 		private string UserGuid { get => Context.Headers.Get("UserGuid"); }
 
@@ -44,7 +40,7 @@ namespace StendenClickerApi.Hubs
 					CurrentPlayerList = new List<StendenClicker.Library.PlayerControls.Player> { p }
 				};
 
-				Sessions.Add(p.PlayerGuid, session);
+				SessionExtensions.Add(p.PlayerGuid, session);
 			}
 
 			return base.OnConnected();
@@ -85,10 +81,10 @@ namespace StendenClickerApi.Hubs
 		/// <returns></returns>
 		public async Task<bool> joinFriend(string FriendId)
 		{
-			bool SessionExists = Sessions.ContainsKey(FriendId);
+			bool SessionExists = SessionExtensions.ContainsKey(FriendId);
 			if(SessionExists)
             {
-				Sessions.ContainsKey(FriendId);
+				SessionExtensions.ContainsKey(FriendId);
 
 				Friendship fship = db.Friendships
 					.Where(n => n.Player1.PlayerGuid == UserGuid || n.Player2.PlayerGuid == UserGuid)
@@ -97,11 +93,11 @@ namespace StendenClickerApi.Hubs
 				if(fship != null)
                 {
 					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
-					MultiPlayerSession FriendMultiPlayerSession = Sessions[FriendId];
+					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
 					FriendMultiPlayerSession.CurrentPlayerList.Add(p);
-					if(Sessions.ContainsKey(UserGuid))
+					if(SessionExtensions.ContainsKey(UserGuid))
 					{
-						Sessions.Remove(UserGuid);
+						SessionExtensions.Remove(UserGuid);
 						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
 						await Clients.Client(friend.ConnectionId).updateHostPlayerList(FriendMultiPlayerSession);
 						return true;
@@ -112,13 +108,13 @@ namespace StendenClickerApi.Hubs
 			return false;
 		}
 
-		public void broadcastSession(MultiPlayerSession session)
+		public async void broadcastSession(MultiPlayerSession session)
         {
 			//verifys that only the host can broadcast
 			if (session.hostPlayerId != UserGuid) throw new Exception("Session doesnt match the current userguid");
 
 			//verify the given session against the server's copy
-			bool SessionIsValid = Sessions.ContainsKey(session.hostPlayerId);
+			bool SessionIsValid = SessionExtensions.ContainsKey(session.hostPlayerId);
 
 			if (SessionIsValid)
 			{
@@ -126,12 +122,12 @@ namespace StendenClickerApi.Hubs
 				List<string> PlayersInSession = session.CurrentPlayerList.Where(n => string.IsNullOrEmpty(n.connectionId)).Select(n => n.connectionId).ToList();
 
 
-				Clients.Clients(PlayersInSession).updateSession(session);
+				await Clients.Clients(PlayersInSession).updateSession(session);
 			}
 		}
 
 
-		public void processBatch<T>(IBatchProcessable<T> batchItem)
+		public async void processBatch<T>(IBatchProcessable<T> batchItem)
         {
 
         }
