@@ -18,22 +18,22 @@ namespace StendenClickerGame.ViewModels
 		{
 			AbilitiesList = new ObservableCollection<abilities>()
 			{
-				new abilities { AbilitieName = "Gerjan's Nucleare Koffie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanKoffieAbilityClick) },
-				new abilities { AbilitieName = "Sji's Gekoeld Water", AbilitieDescription = "Dubbel zo verfrissend, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiWaterAbilityCommandAsync) }
+				new abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
+				new abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityCommandAsync) }
 			};
 		}
 
-        private async void SjiWaterAbilityCommandAsync()
+        private async void SjiKoffieAbilityCommandAsync()
         {
 			await Task.Run(async () => //Task.Run automatically unwraps nested Task types!
 			{
-				CurrencyTrayViewModel.OnClickAbilityProcess += SjiWaterAbility;
+				CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
 				await Task.Delay(5000);
-				CurrencyTrayViewModel.OnClickAbilityProcess -= SjiWaterAbility;
+				CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
 			});
 		}
 
-        private void SjiWaterAbility(object sender, EventArgs e)
+        private void SjiKoffieAbility(object sender, EventArgs e)
         {
 			GamePlatform platform = (GamePlatform)sender;
 
@@ -45,12 +45,12 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-        private void GerjanKoffieAbilityClick()
+        private void GerjanSmoothieAbilityClick()
 		{
-			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanKoffieAbility;
+			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 		}
 
-		private void GerjanKoffieAbility(object sender, System.EventArgs e)
+		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
 		{
 			GamePlatform platform = (GamePlatform)sender;
 
@@ -59,7 +59,7 @@ namespace StendenClickerGame.ViewModels
 			{
 				//is boss
 				m.DoDamage(m.Health / 2);
-				CurrencyTrayViewModel.OnClickAbilityProcess -= GerjanKoffieAbility;
+				CurrencyTrayViewModel.OnClickAbilityProcess -= GerjanSmoothieAbility;
             }
 		}
 	}
