@@ -22,17 +22,18 @@ namespace StendenClickerGame.ViewModels
 
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public KoffieMachineViewModel KoffieMachine { get; set; }
+		public FriendshipPanelViewmodel Friends { get; set; }
 
 		public ObservableCollection<Hero> HeroList { get; set; }
         
         public ObservableCollection<Coins> CoinList { get; set; }
 
-		public string dingetje { get { return ((Hero)Hero.Heroes.FirstOrDefault()).Base64Image; } }
 		public MainPageViewModel()
 		{
 			//sub viewmodels
 			CurrencyTray = new CurrencyTrayViewModel();
 			KoffieMachine = new KoffieMachineViewModel();
+			Friends = new FriendshipPanelViewmodel();
 
 			//Herolist
 			HeroList = new ObservableCollection<Hero>();
@@ -70,6 +71,7 @@ namespace StendenClickerGame.ViewModels
 		private void MpProxy_InitializeComplete(object sender, EventArgs e)
 		{
 			NotifyPropertyChanged("CurrencyTray");
+			Friends.InitializeFriendship(mpProxy.CurrentPlayer.UserId.ToString());
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()

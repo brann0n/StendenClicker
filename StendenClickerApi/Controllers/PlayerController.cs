@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity.Migrations;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -79,6 +80,38 @@ namespace StendenClickerApi.Controllers
             }
 
             return new JsonStringResult(friendships);
+        }
+
+        [ApiKeySecurity, HttpGet, Route("GetAccountsByNameSearch")]
+        public ActionResult GetAccountsByNameSearch(string name)
+        {
+            if (string.IsNullOrEmpty(name)) return new HttpStatusCodeResult(500, "search name is empty.");
+            if (name.Length > 128) return new HttpStatusCodeResult(500, "Searched for a too long string.");
+            List<Player> players = db.Players.Where(n => n.PlayerName.Contains(name.Trim())).ToList();
+
+            return new JsonStringResult(players);
+        }
+
+        [ApiKeySecurity, HttpPost, Route("CreateFriendship")]
+        public async Task<ActionResult> CreateFriendship(List<Player> playerList)
+        {
+            if (playerList == null) return new HttpStatusCodeResult(500, "No player list received.");
+            if (playerList.Count != 2) return new HttpStatusCodeResult(500, "Player list didnt contain 2 players.");
+
+            //check both player objects with the empty checker
+            Player friend1 = playerList[0];
+            Player friend2 = playerList[1];
+
+            if (Player.IsPlayerObjectEmpty(friend1) && Player.IsPlayerObjectEmpty(friend2)) return new HttpStatusCodeResult(500, "Player objects didnt validate.");
+
+            Friendship friendship = new Friendship();
+            friendship.Player1 = friend1;
+            friendship.Player2 = friend2;
+
+            db.Friendships.Add(friendship);
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(200, "Friendship was created.");
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
+using Microsoft.AspNet.SignalR.Hubs;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
@@ -69,7 +70,8 @@ namespace StendenClickerApi.Hubs
 			return base.OnReconnected();
 		}
 
-		public void beginGameThread()
+		[HubMethodName("beginGameThread")]
+		public async void beginGameThread()
 		{
 			//Thread.
 		}

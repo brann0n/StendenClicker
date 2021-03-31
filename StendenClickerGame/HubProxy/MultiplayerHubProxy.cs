@@ -68,7 +68,7 @@ namespace StendenClickerGame.Multiplayer
 			hubConnection.Headers.Add("UserGuid", CurrentPlayer.UserId.ToString());
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
 			hubConnection.StateChanged += HubConnection_StateChanged;
-			await hubConnection.Start().ContinueWith(task =>
+			await hubConnection.Start().ContinueWith(async task =>
 			{
 				if (task.IsFaulted)
 				{
@@ -84,7 +84,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 
 					//do what next?
-					MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
+					await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
 				}
 
 				//for now render a new level anyways.
