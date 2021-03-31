@@ -90,6 +90,7 @@ namespace StendenClickerApi.Hubs
 					.Where(n => n.Player1.PlayerGuid == UserGuid || n.Player2.PlayerGuid == UserGuid)
 					.Where(n => n.Player1.PlayerGuid == FriendId || n.Player2.PlayerGuid == FriendId)
 					.FirstOrDefault();
+
 				if(fship != null)
                 {
 					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);

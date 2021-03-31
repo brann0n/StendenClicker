@@ -13,8 +13,8 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if !DEBUG
-		private const string ServerURL = "http://localhost:50120/signalr";
+#if DEBUG
+		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
 #endif

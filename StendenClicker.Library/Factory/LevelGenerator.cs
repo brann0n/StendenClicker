@@ -20,7 +20,7 @@ namespace StendenClicker.Library.Factory
 
 			if (CalculateIfBoss(state))
 			{
-				pl = new BossLevel(state);
+				pl = new BossLevel(state); 
 			}
 			else
 			{
