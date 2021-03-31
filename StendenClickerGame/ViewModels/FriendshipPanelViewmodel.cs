@@ -1,5 +1,6 @@
 ﻿using StendenClicker.Library;
 using StendenClicker.Library.Models.DatabaseModels;
+using StendenClickerGame.Data;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -11,10 +12,10 @@ namespace StendenClickerGame.ViewModels
 {
     public class FriendshipPanelViewmodel : ViewModelBase
     {
-        public ObservableCollection<Player> ObservableFriendship { get; }
+        public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
         public FriendshipPanelViewmodel()
         {
-            ObservableFriendship = new ObservableCollection<Player>();           
+            ObservableFriendship = new ObservableCollection<FriendshipListObject>();           
         }
 
         protected async Task UpdateFriendships(string userguid)
@@ -38,9 +39,20 @@ namespace StendenClickerGame.ViewModels
             pList.AddRange(friend.Where(n => n.Player2.PlayerGuid != userguid).Select(n => n.Player2));
 
             foreach (Player f in pList)
-                ObservableFriendship.Add(f);
+            {
+                FriendshipListObject friendUI = new FriendshipListObject
+                {
+                    Name = f.PlayerName,
+                    Guid = f.PlayerGuid,
+                    InviteCommand = new RelayCommand(() => 
+                    {
+                        //todo: perform invite.
+                    })
+                };
 
-
+                ObservableFriendship.Add(friendUI);
+            }
+               
 
             NotifyPropertyChanged("ObservableFriendship");
         }
