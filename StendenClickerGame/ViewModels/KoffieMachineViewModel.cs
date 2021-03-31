@@ -19,11 +19,22 @@ namespace StendenClickerGame.ViewModels
 			AbilitiesList = new ObservableCollection<abilities>()
 			{
 				new abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
-				new abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityCommandAsync) }
+				new abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
+				new abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Leun achterover en laat het spel het werk doen (10s)", Cooldown = 300, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
 			};
 		}
 
-        private async void SjiKoffieAbilityCommandAsync()
+        private void JanWaterAbilityClick()
+        {
+			CurrencyTrayViewModel.OnClickAbilityProcess += JanWaterAbility;
+        }
+
+        private void JanWaterAbility(object sender, EventArgs e)
+        {
+              
+        }
+
+        private async void SjiKoffieAbilityClickAsync()
         {
 			await Task.Run(async () => //Task.Run automatically unwraps nested Task types!
 			{
@@ -35,14 +46,7 @@ namespace StendenClickerGame.ViewModels
 
         private void SjiKoffieAbility(object sender, EventArgs e)
         {
-			GamePlatform platform = (GamePlatform)sender;
-
-			AbstractMonster m = (AbstractMonster)platform.Monster;
-			if (platform.Monster is Boss)
-			{
-				//is boss
-				m.DoDamage(m.Health / 2);
-			}
+			CurrencyTrayViewModel.AbilityMultiplier = 2;
 		}
 
         private void GerjanSmoothieAbilityClick()

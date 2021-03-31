@@ -25,6 +25,7 @@ namespace StendenClickerGame.ViewModels
 
 		//click eventhandler
 		public static event EventHandler OnClickAbilityProcess;
+		public static int AbilityMultiplier;
 
 		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
@@ -89,10 +90,11 @@ namespace StendenClickerGame.ViewModels
 				Clicks.addClick();
 
 				//execute pending abilities
+				AbilityMultiplier = 1;
 				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
 
 				//damage monster and set its damage multiplier
-				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor()); //todo: change this back to 10  * (int)Math.Ceiling(((double)CurrentMonster.MonsterLevel / (double)2))
+				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier); //todo: change this back to 10  * (int)Math.Ceiling(((double)CurrentMonster.MonsterLevel / (double)2))
 				NotifyPropertyChanged("MonsterHealthPercentage");
 
 				if (CurrentMonster.IsDefeated())
