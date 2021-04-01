@@ -123,7 +123,7 @@ namespace StendenClickerApi.Hubs
 			if (SessionIsValid)
 			{
 				//find all players connectionid's in this session
-				List<string> PlayersInSession = session.CurrentPlayerList.Where(n => string.IsNullOrEmpty(n.connectionId)).Select(n => n.connectionId).ToList();
+				List<string> PlayersInSession = session.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
 
 
 				await Clients.Groups(PlayersInSession).updateSession(session);
@@ -145,7 +145,7 @@ namespace StendenClickerApi.Hubs
 			if (TargetPlayer == null) return;
 			if (TargetPlayer.ConnectionId == null) return;
 
-			Clients.Group(TargetPlayer.ConnectionId).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
+			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 	}
 }
