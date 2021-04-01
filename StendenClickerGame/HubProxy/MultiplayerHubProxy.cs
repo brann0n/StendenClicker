@@ -107,10 +107,15 @@ namespace StendenClickerGame.Multiplayer
 			OnInviteReceived?.Invoke(invite, null);
 		}
 
-		private void updateSession(MultiPlayerSession session)
+		private async void updateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. this happens when someone joins your session, or you are playing the game.
-			OnSessionUpdateReceived?.Invoke(session, null);
+			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			{
+				OnSessionUpdateReceived?.Invoke(session, null);
+			});
+								
 		}
 
 		private void receiveUpdate()
