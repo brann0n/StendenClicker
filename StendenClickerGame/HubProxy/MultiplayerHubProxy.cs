@@ -2,6 +2,7 @@ using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
+using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using System;
@@ -82,6 +83,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
 					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
+					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveUpdate);
 
 					//do what next?
 					await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
@@ -96,6 +98,11 @@ namespace StendenClickerGame.Multiplayer
 		}
 
 		#region ServerInvokableMethods
+		private async void receiveUpdate(InviteModel invite)
+		{
+			//update the UI
+		}
+
 		private void updateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. TODO -> decide if the current session should be overwritten
@@ -138,6 +145,11 @@ namespace StendenClickerGame.Multiplayer
 		private void HubConnection_StateChanged(StateChange obj)
 		{
 			OnConnectionStateChanged?.Invoke(obj);
+		}
+
+		public async Task SendInvite(string targetPlayerGuid)
+		{
+			await MultiPlayerHub.Invoke<string>("sendInvite", targetPlayerGuid);
 		}
 	}
 

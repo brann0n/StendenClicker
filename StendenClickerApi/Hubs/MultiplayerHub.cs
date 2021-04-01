@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using StendenClicker.Library.Batches;
+using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
 using StendenClickerApi.Helpers;
@@ -15,7 +16,7 @@ namespace StendenClickerApi.Hubs
 {
 	[UserGUIDSecurity]
 	public class MultiplayerHub : Hub
-	{		
+	{
 		private readonly StendenClickerDatabase db = new StendenClickerDatabase();
 
 		private string UserGuid { get => Context.Headers.Get("UserGuid"); }
@@ -28,20 +29,27 @@ namespace StendenClickerApi.Hubs
 			//check if that userguid is in the database.
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == userGuid);
 
-			if(p != null) //NOTE: users are created in the production database, multiplayer connects with the local database.
+			if (p != null) //NOTE: users are created in the production database, multiplayer connects with the local database.
 			{
 				p.ConnectionId = Context.ConnectionId;
 				db.SaveChanges();
 
 				//player exists, create a new multiplayer session with current player as host, if the host wants to join another player, this session will be abandoned.
 				//tell the client that it can subscribe to the batched click function so the server can periodically receive its clicks.
-				MultiPlayerSession session = new MultiPlayerSession() 
+				MultiPlayerSession session = new MultiPlayerSession()
 				{
 					hostPlayerId = p.PlayerGuid,
 					CurrentPlayerList = new List<StendenClicker.Library.PlayerControls.Player> { p }
 				};
 
+				if (SessionExtensions.ContainsKey(p.PlayerGuid))
+				{
+					//this player already has an active session...
+					SessionExtensions.Remove(p.PlayerGuid);
+				}
+
 				SessionExtensions.Add(p.PlayerGuid, session);
+
 			}
 
 			return base.OnConnected();
@@ -84,8 +92,8 @@ namespace StendenClickerApi.Hubs
 		public async Task<bool> joinFriend(string FriendId)
 		{
 			bool SessionExists = SessionExtensions.ContainsKey(FriendId);
-			if(SessionExists)
-            {
+			if (SessionExists)
+			{
 				SessionExtensions.ContainsKey(FriendId);
 
 				Friendship fship = db.Friendships
@@ -93,26 +101,26 @@ namespace StendenClickerApi.Hubs
 					.Where(n => n.Player1.PlayerGuid == FriendId || n.Player2.PlayerGuid == FriendId)
 					.FirstOrDefault();
 
-				if(fship != null)
-                {
+				if (fship != null)
+				{
 					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
 					FriendMultiPlayerSession.CurrentPlayerList.Add(p);
-					if(SessionExtensions.ContainsKey(UserGuid))
+					if (SessionExtensions.ContainsKey(UserGuid))
 					{
 						SessionExtensions.Remove(UserGuid);
 						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
 						await Clients.Client(friend.ConnectionId).updateHostPlayerList(FriendMultiPlayerSession);
 						return true;
 					}
-                }
-            }
+				}
+			}
 
 			return false;
 		}
 
 		public async void broadcastSession(MultiPlayerSession session)
-        {
+		{
 			//verifys that only the host can broadcast
 			if (session.hostPlayerId != UserGuid) throw new Exception("Session doesnt match the current userguid");
 
@@ -131,11 +139,22 @@ namespace StendenClickerApi.Hubs
 
 
 		public async void processBatch<T>(IBatchProcessable<T> batchItem)
-        {
+		{
 
-        }
+		}
 
-    }
+		public async void sendInvite(string targetPlayer)
+		{
+			//get the target player his connection id.
+
+			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
+			if (p == null) return;
+			if (p.ConnectionId == null) return;
+
+			Clients.Client(p.ConnectionId).receiveInvite(new InviteModel { });
+		}
+
+	}
 
 }
 

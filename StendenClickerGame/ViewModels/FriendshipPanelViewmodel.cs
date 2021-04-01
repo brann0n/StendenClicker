@@ -17,6 +17,8 @@ namespace StendenClickerGame.ViewModels
 		public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 
+		public ObservableCollection<string> ObservablePendingInvites { get; }
+
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
 
@@ -110,9 +112,9 @@ namespace StendenClickerGame.ViewModels
 					{
 						Name = f.PlayerName,
 						Guid = f.PlayerGuid,
-						InviteCommand = new RelayCommand(() =>
+						InviteCommand = new RelayCommand(async () =>
 						{
-							//todo: perform invite.
+							await MultiplayerHubProxy.Instance.SendInvite(f.PlayerGuid);
 						})
 					};
 
