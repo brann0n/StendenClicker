@@ -29,7 +29,7 @@ namespace StendenClickerGame.ViewModels
 
 		public ObservableCollection<Hero> HeroList { get; set; }
 
-		public List<Player> CurrentPlayers { get => mpProxy.getContext().CurrentPlayerList.Where(n => n.UserId != mpProxy.CurrentPlayer.UserId).ToList(); }
+		public List<Player> CurrentPlayers { get => mpProxy?.getContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
 
 		public MainPageViewModel()
 		{
