@@ -64,6 +64,11 @@ namespace StendenClickerGame.ViewModels
 			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
 		}
 
+		/// <summary>
+		/// Can only process current level and current playerlist, other objects are defaulted.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
 		{
 			MultiPlayerSession session = (MultiPlayerSession)sender;
@@ -80,10 +85,13 @@ namespace StendenClickerGame.ViewModels
 			Friends.AddPendingInvite((InviteModel)sender);
 		}
 
-		private void MpProxy_InitializeComplete(object sender, EventArgs e)
+		private async void MpProxy_InitializeComplete(object sender, EventArgs e)
 		{
 			NotifyPropertyChanged("CurrencyTray");
 			Friends.InitializeFriendship(mpProxy.CurrentPlayer.UserId.ToString());
+
+			//Sync session to server
+			await mpProxy.BroadcastSessionToServer();
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()

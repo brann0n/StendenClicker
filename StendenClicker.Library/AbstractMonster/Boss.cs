@@ -12,9 +12,9 @@ namespace StendenClicker.Library.AbstractMonster
     public class Boss : AbstractMonster
     {
         private static List<Models.DatabaseModels.Boss> Bosses;
-        private static int InternalBossCount { get { return Bosses.Count; } }
+        private static int InternalBossCount { get { return Bosses == null ? 0 : Bosses.Count; } }
 
-        static Boss()
+        public Boss()
 		{
             
 		}

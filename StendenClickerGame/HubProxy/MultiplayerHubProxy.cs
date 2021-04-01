@@ -1,11 +1,14 @@
 using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
+using StendenClicker.Library.AbstractPlatform;
+using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -14,7 +17,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if !DEBUG
+#if DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -83,7 +86,9 @@ namespace StendenClickerGame.Multiplayer
 				else
 				{
 					//connected:
-					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
+					MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
+					MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
+					MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
@@ -92,20 +97,39 @@ namespace StendenClickerGame.Multiplayer
 				}
 
 				//for now render a new level anyways.
-				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
+				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer }, hostPlayerId = CurrentPlayer.UserId.ToString() };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
-
-				BroadcastSessionToServer(); //perform the first broadcast.
 			});
 			
 			InitializeComplete?.Invoke(null, null);
 		}
 
 		#region ServerInvokableMethods
-		private async void receiveInvite(InviteModel invite)
+		private void receiveInvite(InviteModel invite)
 		{
 			//update the UI
 			OnInviteReceived?.Invoke(invite, null);
+		}
+
+		private async void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl)
+		{
+			MultiPlayerSession session = new MultiPlayerSession
+			{
+				CurrentPlayerList = players,
+				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene }
+			};
+			updateSession(session);
+		}
+		private async void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl)
+		{
+
+
+			MultiPlayerSession session = new MultiPlayerSession
+			{
+				CurrentPlayerList = players,
+				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene }
+			};
+			updateSession(session);
 		}
 
 		private async void updateSession(MultiPlayerSession session)
@@ -128,9 +152,27 @@ namespace StendenClickerGame.Multiplayer
 		}
 		#endregion
 
-		public void BroadcastSessionToServer()
+		public async Task BroadcastSessionToServer()
 		{
-			MultiPlayerHub.Invoke("broadcastSession", SessionContext);
+			if(SessionContext.CurrentLevel.Scene is BossScene)
+			{
+				BossGamePlatform p = new BossGamePlatform();
+				p.Monster = (StendenClicker.Library.AbstractMonster.Boss)SessionContext.CurrentLevel.Monster;
+				p.Scene = (BossScene)SessionContext.CurrentLevel.Scene;
+
+				await MultiPlayerHub.Invoke("broadcastSessionBoss", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p);
+			}
+			else
+			{
+				NormalGamePlatform p = new NormalGamePlatform();
+				p.Monster = (StendenClicker.Library.AbstractMonster.Normal)SessionContext.CurrentLevel.Monster;
+				p.Scene = (NormalScene)SessionContext.CurrentLevel.Scene;
+
+				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) => 
+				{
+					bool success = task.Result;
+				});
+			}
 		}
 
 		public void ProcessBatchOnServer()

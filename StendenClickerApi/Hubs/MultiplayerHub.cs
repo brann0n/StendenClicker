@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using StendenClicker.Library.Batches;
+using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
@@ -120,24 +121,49 @@ namespace StendenClickerApi.Hubs
 			return false;
 		}
 
-		public async Task broadcastSession(MultiPlayerSession session)
+		[HubMethodName("broadcastSessionBoss")]
+		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
 		{
 			//verifys that only the host can broadcast
-			if (session.hostPlayerId != UserGuid) throw new Exception("Session doesnt match the current userguid");
+			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
 
 			//verify the given session against the server's copy
-			bool SessionIsValid = SessionExtensions.ContainsKey(session.hostPlayerId);
+			bool SessionIsValid = SessionExtensions.ContainsKey(key);
 
 			if (SessionIsValid)
 			{
 				//find all players connectionid's in this session
-				List<string> PlayersInSession = session.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
+				List<string> PlayersInSession = sessionPlayers.Select(n => n.UserId.ToString()).ToList();
 
-				SessionExtensions.UpdatePlayers(session.hostPlayerId, session.CurrentPlayerList);
-				SessionExtensions.UpdateLevel(session.hostPlayerId, session.CurrentLevel);
+				SessionExtensions.UpdatePlayers(key, sessionPlayers);
+				SessionExtensions.UpdateLevel(key, a);
 
-				await Clients.Groups(PlayersInSession).updateSession(session);
+				await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a);
 			}
+
+			return SessionIsValid;
+		}
+
+		[HubMethodName("broadcastSessionNormal")]
+		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, NormalGamePlatform a)
+		{
+			//verifys that only the host can broadcast
+			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
+
+			//verify the given session against the server's copy
+			bool SessionIsValid = SessionExtensions.ContainsKey(key);
+
+			if (SessionIsValid)
+			{
+				//find all players connectionid's in this session
+				List<string> PlayersInSession = sessionPlayers.Select(n => n.UserId.ToString()).ToList();
+
+				SessionExtensions.UpdatePlayers(key, sessionPlayers);
+				SessionExtensions.UpdateLevel(key, a);
+				await Clients.Groups(PlayersInSession).receiveNormalMonsterBroadcast(sessionPlayers, a);
+			}
+
+			return SessionIsValid;
 		}
 
 		public async Task processBatch<T>(IBatchProcessable<T> batchItem)

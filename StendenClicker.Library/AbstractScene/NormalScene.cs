@@ -10,7 +10,7 @@ namespace StendenClicker.Library.AbstractScene
 	public class NormalScene : AbstractScene
 	{
 		public static List<Models.DatabaseModels.Scene> NormalScenes = new List<Models.DatabaseModels.Scene>();
-        public static int InternalSceneCount { get { return NormalScenes.Count; } }
+        public static int InternalSceneCount { get { return NormalScenes == null ? 0 : NormalScenes.Count; } }
 
         public static async Task Initialize()
 		{           
@@ -44,5 +44,10 @@ namespace StendenClicker.Library.AbstractScene
             MonsterCount = 5;
             CurrentMonster = currentMonster;
         }
+
+        public NormalScene():  base(null)
+		{
+
+		}
     }
 }

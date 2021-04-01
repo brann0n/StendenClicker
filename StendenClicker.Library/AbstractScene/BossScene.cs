@@ -21,6 +21,11 @@ namespace StendenClicker.Library.AbstractScene
             MonsterCount = 1;
             CurrentMonster = 0;
         }
+
+        public BossScene():base(null)
+		{
+
+		}
     }
 
 }
