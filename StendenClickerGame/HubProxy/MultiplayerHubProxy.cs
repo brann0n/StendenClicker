@@ -9,6 +9,7 @@ using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 
@@ -57,8 +58,8 @@ namespace StendenClickerGame.Multiplayer
 		//internal session
 		private MultiPlayerSession SessionContext;
 
-		public Player CurrentPlayer { get; private set; }
-
+		public Player CurrentPlayer { get { return SessionContext?.CurrentPlayerList?.FirstOrDefault(n => n.UserId.ToString() == CurrentPlayerGuid); } }
+		public string CurrentPlayerGuid { get; set; }
 
 		public MultiplayerHubProxy()
 		{
@@ -69,10 +70,11 @@ namespace StendenClickerGame.Multiplayer
 		private async void InitProxyAsync(string serverUrl)
 		{
 			//perform async initiating operations.
-			CurrentPlayer = await PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
+			var pl = await PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
+			CurrentPlayerGuid = pl.UserId.ToString();
 
 			hubConnection = new HubConnection(serverUrl);
-			hubConnection.Headers.Add("UserGuid", CurrentPlayer.UserId.ToString());
+			hubConnection.Headers.Add("UserGuid", CurrentPlayerGuid);
 			MultiPlayerHub = hubConnection.CreateHubProxy("MultiplayerHub");
 			hubConnection.StateChanged += HubConnection_StateChanged;
 			await hubConnection.Start().ContinueWith(async task =>
@@ -97,8 +99,9 @@ namespace StendenClickerGame.Multiplayer
 				}
 
 				//for now render a new level anyways.
-				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer }, hostPlayerId = CurrentPlayer.UserId.ToString() };
+				SessionContext = new MultiPlayerSession { CurrentPlayerList = new List<Player> { pl }, hostPlayerId = CurrentPlayerGuid };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
+				await BroadcastSessionToServer();
 			});
 			
 			InitializeComplete?.Invoke(null, null);

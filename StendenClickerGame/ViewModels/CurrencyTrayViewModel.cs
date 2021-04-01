@@ -94,7 +94,7 @@ namespace StendenClickerGame.ViewModels
 				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
 
 				//damage monster and set its damage multiplier
-				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier); 
+				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier);
 				NotifyPropertyChanged("MonsterHealthPercentage");
 
 				if (CurrentMonster.IsDefeated())
@@ -114,7 +114,7 @@ namespace StendenClickerGame.ViewModels
 					UpdatePlayerStatsAfterMonsterDefeat(true, false);
 					if (CurrentScene.MonsterCount == CurrentScene.CurrentMonster + 1)
 					{
-						UpdatePlayerStatsAfterMonsterDefeat(false, true);
+						//UpdatePlayerStatsAfterMonsterDefeat(false, true);
 					}
 
 					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
@@ -127,16 +127,15 @@ namespace StendenClickerGame.ViewModels
 		{
 			foreach (Player player in CurrentSession.CurrentPlayerList)
 			{
-				if (CurrentMonster is Boss)
-				{
-					if (MonsterDefeated)
+				if (MonsterDefeated)
+					if (CurrentMonster is Boss)
+					{
 						player.State.BossesDefeated++;
-				}
-				else
-				{
-					if (MonsterDefeated)
+					}
+					else
+					{
 						player.State.MonstersDefeated++;
-				}
+					}
 			}
 		}
 
