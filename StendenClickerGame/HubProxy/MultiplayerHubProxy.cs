@@ -14,7 +14,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if !DEBUG
+#if DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -87,7 +87,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
 					//do what next?
-					await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
+					//await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
 				}
 
 				//for now render a new level anyways.

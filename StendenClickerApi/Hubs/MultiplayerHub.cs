@@ -143,8 +143,7 @@ namespace StendenClickerApi.Hubs
 			Player TargetPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
 			Player InviteFromPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 			if (TargetPlayer == null) return;
-			if (TargetPlayer.ConnectionId == null) return;
-
+			
 			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 	}
