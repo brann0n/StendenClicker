@@ -111,7 +111,20 @@ namespace StendenClickerApi.Hubs
 						if (SessionExtensions.ContainsKey(UserGuid))
 						{
 							SessionExtensions.Remove(UserGuid);
-							await Clients.Groups(FriendMultiPlayerSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList()).updateSession(SessionExtensions.Get(FriendId));
+							var targetClients = FriendMultiPlayerSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
+
+							var session = SessionExtensions.Get(FriendId);
+
+							if (session.CurrentLevel is NormalGamePlatform)
+							{
+								await Clients.Groups(targetClients).receiveNormalMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel);
+							}
+							else
+							{
+								await Clients.Groups(targetClients).receiveBossMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel);
+							}
+
+							
 							return true;
 						}
 					}
