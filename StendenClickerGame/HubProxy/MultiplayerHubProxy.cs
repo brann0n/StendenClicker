@@ -40,6 +40,8 @@ namespace StendenClickerGame.Multiplayer
 
 		public event EventHandler InitializeComplete;
 		public event EventHandler OnInviteReceived;
+		public event EventHandler OnSessionUpdateReceived;
+
 
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
@@ -108,9 +110,7 @@ namespace StendenClickerGame.Multiplayer
 		private void updateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. this happens when someone joins your session, or you are playing the game.
-			SessionContext = session;
-			SessionContext.CurrentPlayerList = session.CurrentPlayerList;
-			SessionContext.CurrentLevel = session.CurrentLevel;
+			OnSessionUpdateReceived?.Invoke(session, null);
 		}
 
 		private void receiveUpdate()

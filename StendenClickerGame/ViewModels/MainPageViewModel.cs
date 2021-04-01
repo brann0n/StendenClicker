@@ -2,11 +2,13 @@
 using StendenClicker.Library;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
+using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
 using StendenClickerGame.Multiplayer;
 
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
@@ -26,8 +28,8 @@ namespace StendenClickerGame.ViewModels
 		public FriendshipPanelViewmodel Friends { get; set; }
 
 		public ObservableCollection<Hero> HeroList { get; set; }
-        
-        public ObservableCollection<Coins> CoinList { get; set; }
+
+		public List<Player> CurrentPlayers { get => mpProxy.getContext().CurrentPlayerList.Where(n => n.UserId != mpProxy.CurrentPlayer.UserId).ToList(); }
 
 		public MainPageViewModel()
 		{
@@ -38,16 +40,6 @@ namespace StendenClickerGame.ViewModels
 
 			//Herolist
 			HeroList = new ObservableCollection<Hero>();
-			
-
-			//AbilitiesList[0].OnExecute();
-
-			CoinList = new ObservableCollection<Coins>()
-			{
-				new Coins { point = new Point{ X = 50, Y=0}, CurrencyName="SparkCoin", Image=""},
-				new Coins { point = new Point{ X = 1, Y=10}, CurrencyName="SparkCoin", Image=""},
-				new Coins { point = new Point{ X = 70, Y=20}, CurrencyName="SparkCoin", Image=""}
-			};
 
 			CheckContextVariables();
 		}
@@ -69,6 +61,18 @@ namespace StendenClickerGame.ViewModels
 			mpProxy.InitializeComplete += MpProxy_InitializeComplete;
 
 			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
+			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
+		}
+
+		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
+		{
+			MultiPlayerSession session = (MultiPlayerSession)sender;
+
+			CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
+			CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
+
+			NotifyPropertyChanged("CurrentPlayers");
+			NotifyPropertyChanged("CurrencyTray");
 		}
 
 		private void MpProxy_OnInviteReceived(object sender, EventArgs e)

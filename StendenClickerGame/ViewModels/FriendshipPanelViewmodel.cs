@@ -20,13 +20,6 @@ namespace StendenClickerGame.ViewModels
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
 
-		// the 3 friend objects:
-
-		public string Friend_1 { get => GetPlayerFromSession(0).PlayerName; }
-		public string Friend_2 { get => GetPlayerFromSession(1).PlayerName; }
-		public string Friend_3 { get => GetPlayerFromSession(2).PlayerName; }
-
-
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
 
@@ -163,15 +156,6 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private Player GetPlayerFromSession(int number)
-		{
-			if (number >= 0 && number <= 2) throw new Exception("Number out of range.");			
-
-			var context = MultiplayerHubProxy.Instance;
-			Guid currentGuid = context.CurrentPlayer.UserId;
-			var playerListNoMe = context.getContext().CurrentPlayerList.Where(n => n.UserId != currentGuid).ToList();
-			return playerListNoMe[number];
-		}
 		public async void InitializeFriendship(string userguid) => await UpdateFriendships(userguid);
 	}
 }
