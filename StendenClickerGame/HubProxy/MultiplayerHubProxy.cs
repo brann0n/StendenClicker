@@ -84,7 +84,6 @@ namespace StendenClickerGame.Multiplayer
 				{
 					//connected:
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
-					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
@@ -95,8 +94,9 @@ namespace StendenClickerGame.Multiplayer
 				//for now render a new level anyways.
 				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
+				
 			});
-
+			BroadcastSessionToServer(); //perform the first broadcast.
 			InitializeComplete?.Invoke(null, null);
 		}
 
@@ -118,11 +118,6 @@ namespace StendenClickerGame.Multiplayer
 								
 		}
 
-		private void receiveUpdate()
-		{
-			//received a game update from the server, decide what to do with this information.
-		}
-
 		private void requestClickBatches()
 		{
 			BatchedClick clicks = OnRequireBatches?.Invoke();
@@ -132,9 +127,9 @@ namespace StendenClickerGame.Multiplayer
 		}
 		#endregion
 
-		public void BroadcastSessionToServer(MultiPlayerSession session)
+		public void BroadcastSessionToServer()
 		{
-			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession", session);
+			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession", SessionContext);
 		}
 
 		public void ProcessBatchOnServer()
