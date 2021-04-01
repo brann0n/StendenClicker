@@ -7,12 +7,12 @@ using System.Windows.Input;
 
 namespace StendenClickerGame.Data
 {
-	public class abilities
+	public class Abilities
 	{
-		public String AbilitieName { get; set; }
-		public String AbilitieDescription { get; set; }
+		public string AbilitieName { get; set; }
+		public string AbilitieDescription { get; set; }
 		public int Cooldown { get; set; }
-		public String Image { get; set; }
+		public string Image { get; set; }
 
 		public ICommand OnExecute { get; set; }
 	}

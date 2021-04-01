@@ -123,10 +123,10 @@
     <Compile Include="CustomUI\CoinGrid.cs" />
     <Compile Include="CustomUI\CustomCoinList.cs" />
     <Compile Include="CustomUI\SmallBase64ImageScaler.cs" />
-    <Compile Include="Data\abilities.cs" />
+    <Compile Include="Data\Abilities.cs" />
     <Compile Include="Data\Coins.cs" />
     <Compile Include="Data\FriendshipListObject.cs" />
-    <Compile Include="Data\heroes.cs" />
+    <Compile Include="Data\SearchPlayerObject.cs" />
     <Compile Include="HubProxy\MultiplayerHubProxy.cs" />
     <Compile Include="DeviceInfo.cs" />
     <Compile Include="RegisterPage.xaml.cs">

@@ -83,13 +83,32 @@ namespace StendenClickerApi.Controllers
         }
 
         [ApiKeySecurity, HttpGet, Route("GetAccountsByNameSearch")]
-        public ActionResult GetAccountsByNameSearch(string name)
+        public ActionResult GetAccountsByNameSearch(string name, string user)
         {
             if (string.IsNullOrEmpty(name)) return new HttpStatusCodeResult(500, "search name is empty.");
             if (name.Length > 128) return new HttpStatusCodeResult(500, "Searched for a too long string.");
-            List<Player> players = db.Players.Where(n => n.PlayerName.Contains(name.Trim())).ToList();
 
-            return new JsonStringResult(players);
+            List<Player> players = db.Players.Where(n => n.PlayerName.Contains(name.Trim()) && n.PlayerGuid != user).ToList();
+
+            //remove existing friends from above list
+            List<Friendship> friendships = db.Friendships
+                    .Where(n => n.Player1.PlayerGuid == user || n.Player2.PlayerGuid == user)
+                    .ToList();
+
+            List<string> FriendIds = friendships.Select(n => n.Player1.PlayerGuid).ToList();
+            FriendIds.AddRange(friendships.Select(n => n.Player2.PlayerGuid));
+
+            List<Player> ReturnNonFriends = new List<Player>();
+
+            foreach(Player p in players)
+			{
+				if (!FriendIds.Contains(p.PlayerGuid))
+				{
+                    ReturnNonFriends.Add(p);
+				}
+			}
+
+            return new JsonStringResult(ReturnNonFriends);
         }
 
         [ApiKeySecurity, HttpPost, Route("CreateFriendship")]

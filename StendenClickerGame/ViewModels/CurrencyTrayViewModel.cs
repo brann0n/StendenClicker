@@ -94,7 +94,7 @@ namespace StendenClickerGame.ViewModels
 				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
 
 				//damage monster and set its damage multiplier
-				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier); //todo: change this back to 10  * (int)Math.Ceiling(((double)CurrentMonster.MonsterLevel / (double)2))
+				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier); 
 				NotifyPropertyChanged("MonsterHealthPercentage");
 
 				if (CurrentMonster.IsDefeated())

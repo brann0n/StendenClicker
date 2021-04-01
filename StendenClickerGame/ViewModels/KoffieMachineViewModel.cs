@@ -13,14 +13,14 @@ namespace StendenClickerGame.ViewModels
 	public class KoffieMachineViewModel : ViewModelBase
 	{
 		private List<SpecialAbility> UnlockedAbilities;
-		public ObservableCollection<abilities> AbilitiesList { get; set; }
+		public ObservableCollection<Abilities> AbilitiesList { get; set; }
 		public KoffieMachineViewModel()
 		{
-			AbilitiesList = new ObservableCollection<abilities>()
+			AbilitiesList = new ObservableCollection<Abilities>()
 			{
-				new abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
-				new abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
-				new abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Leun achterover en laat het spel het werk doen (10s)", Cooldown = 300, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
+				new Abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
+				new Abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
+				new Abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Leun achterover en laat het spel het werk doen (10s)", Cooldown = 300, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
 			};
 		}
 

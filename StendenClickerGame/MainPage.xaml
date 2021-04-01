@@ -377,7 +377,7 @@
             </Border>
         </Grid>
 
-        <!--Left Grid-->
+        <!--Right Grid-->
         <Grid Name ="RightGrid" Grid.Column="2" Margin="10,20,20,20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="15*"/>
@@ -590,11 +590,11 @@
                                 </Grid.RowDefinitions>
                                 <StackPanel>
                                     <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White" >Vrieden toevoegen:</TextBlock>
-                                    <TextBox Grid.Row="1" Margin="0,0,0,5"  Width="400" PlaceholderText="Voer gebruikersnaam in" Foreground="White" CornerRadius="5" VerticalAlignment="Center"/>
-                                    <Button Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="left" CornerRadius="5" Foreground="White">Search</Button>
+                                    <TextBox Grid.Row="1" Margin="0,0,0,5"  Width="400" PlaceholderText="Voer gebruikersnaam in" Foreground="White" CornerRadius="5" VerticalAlignment="Center" Text="{Binding Friends.FriendSearchbar, Mode=TwoWay}"/>
+                                    <Button Grid.Row="2" Margin="0,0,0,5" HorizontalAlignment="left" CornerRadius="5" Foreground="White" Command="{Binding Friends.SearchFriendsCommand}">Search</Button>
                                 </StackPanel>
                                 <Grid Grid.Row="3">
-                                    <ListView Name="searchFriend" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+									<ListView Name="searchFriend" ItemsSource="{Binding Friends.ObservableSearchPlayerList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                         <ListView.ItemTemplate>
                                             <DataTemplate>
                                                 <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=searchFriend, Path=Width}">
@@ -604,10 +604,10 @@
                                                             <ColumnDefinition Width="50*"/>
                                                         </Grid.ColumnDefinitions>
                                                         <Grid Grid.Column="0">
-                                                            <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" >Jarno</TextBlock>
-                                                        </Grid>
+															<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding PlayerName}"/>
+														</Grid>
                                                         <Grid Grid.Column="1">
-                                                            <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Foreground="White" >Uitnodiging sturen</Button>
+                                                            <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Foreground="White" Command="{Binding OnAddFriend}">Vriend toevoegen</Button>
                                                         </Grid>
                                                     </Grid>
                                                 </Border>
