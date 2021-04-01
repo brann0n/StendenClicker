@@ -14,7 +14,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if DEBUG
+#if !DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -39,6 +39,7 @@ namespace StendenClickerGame.Multiplayer
 		public event SignalRConnectionError OnConnectionError;
 
 		public event EventHandler InitializeComplete;
+		public event EventHandler OnInviteReceived;
 
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
@@ -101,6 +102,7 @@ namespace StendenClickerGame.Multiplayer
 		private async void receiveUpdate(InviteModel invite)
 		{
 			//update the UI
+			OnInviteReceived?.Invoke(invite, null);
 		}
 
 		private void updateSession(MultiPlayerSession session)

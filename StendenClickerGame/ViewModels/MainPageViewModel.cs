@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
 using StendenClicker.Library.Factory;
+using StendenClicker.Library.Models;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
 using StendenClickerGame.Multiplayer;
@@ -66,6 +67,13 @@ namespace StendenClickerGame.ViewModels
 			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
 			mpProxy.InitializeComplete += MpProxy_InitializeComplete;
+
+			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
+		}
+
+		private void MpProxy_OnInviteReceived(object sender, EventArgs e)
+		{
+			Friends.AddPendingInvite((InviteModel)sender);
 		}
 
 		private void MpProxy_InitializeComplete(object sender, EventArgs e)

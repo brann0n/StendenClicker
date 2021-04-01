@@ -1,4 +1,5 @@
 ﻿using StendenClicker.Library;
+using StendenClicker.Library.Models;
 using StendenClicker.Library.Models.DatabaseModels;
 using StendenClickerGame.Data;
 using StendenClickerGame.Multiplayer;
@@ -17,7 +18,7 @@ namespace StendenClickerGame.ViewModels
 		public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 
-		public ObservableCollection<string> ObservablePendingInvites { get; }
+		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
 
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
@@ -28,6 +29,13 @@ namespace StendenClickerGame.ViewModels
 			ObservableSearchPlayerList = new ObservableCollection<SearchPlayerObject>();
 
 			SearchFriendsCommand = new RelayCommand(SearchFriends);
+		}
+
+		public void AddPendingInvite(InviteModel invite)
+		{
+			invite.OnAccept = new RelayCommand(() => { });
+			invite.OnDecline = new RelayCommand(() => { });
+			ObservablePendingInvites.Add(invite);
 		}
 
 		private async void SearchFriends()
