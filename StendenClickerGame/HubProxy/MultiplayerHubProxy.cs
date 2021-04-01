@@ -94,9 +94,10 @@ namespace StendenClickerGame.Multiplayer
 				//for now render a new level anyways.
 				SessionContext = new MultiPlayerSession { CurrentPlayerList = new System.Collections.Generic.List<Player> { CurrentPlayer } };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
-				
+
+				BroadcastSessionToServer(); //perform the first broadcast.
 			});
-			BroadcastSessionToServer(); //perform the first broadcast.
+			
 			InitializeComplete?.Invoke(null, null);
 		}
 
@@ -129,7 +130,7 @@ namespace StendenClickerGame.Multiplayer
 
 		public void BroadcastSessionToServer()
 		{
-			MultiPlayerHub.Invoke<MultiPlayerSession>("broadcastSession", SessionContext);
+			MultiPlayerHub.Invoke("broadcastSession", SessionContext);
 		}
 
 		public void ProcessBatchOnServer()

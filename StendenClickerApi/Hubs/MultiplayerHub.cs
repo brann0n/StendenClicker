@@ -11,6 +11,7 @@ using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
 using StendenClickerApi.Helpers;
 using MultiPlayerSession = StendenClicker.Library.Multiplayer.MultiPlayerSession;
+using PlayerObject = StendenClicker.Library.PlayerControls.Player;
 
 namespace StendenClickerApi.Hubs
 {
@@ -99,17 +100,20 @@ namespace StendenClickerApi.Hubs
 					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
 
-					if(FriendMultiPlayerSession.CurrentPlayerList.Count <= 4)
+					if (FriendMultiPlayerSession.CurrentPlayerList.Count <= 4)
 					{
-						FriendMultiPlayerSession.CurrentPlayerList.Add(p);
+						List<PlayerObject> sessionMembers = new List<PlayerObject>();
+						sessionMembers.AddRange(FriendMultiPlayerSession.CurrentPlayerList);
+						sessionMembers.Add(p);
+						SessionExtensions.UpdatePlayers(FriendMultiPlayerSession.hostPlayerId, sessionMembers);
+
 						if (SessionExtensions.ContainsKey(UserGuid))
 						{
 							SessionExtensions.Remove(UserGuid);
-							Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
-							await Clients.Groups(FriendMultiPlayerSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList()).updateSession(FriendMultiPlayerSession);
+							await Clients.Groups(FriendMultiPlayerSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList()).updateSession(SessionExtensions.Get(FriendId));
 							return true;
 						}
-					}			
+					}
 				}
 			}
 
@@ -129,6 +133,8 @@ namespace StendenClickerApi.Hubs
 				//find all players connectionid's in this session
 				List<string> PlayersInSession = session.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
 
+				SessionExtensions.UpdatePlayers(session.hostPlayerId, session.CurrentPlayerList);
+				SessionExtensions.UpdateLevel(session.hostPlayerId, session.CurrentLevel);
 
 				await Clients.Groups(PlayersInSession).updateSession(session);
 			}
@@ -147,8 +153,8 @@ namespace StendenClickerApi.Hubs
 			Player TargetPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
 			Player InviteFromPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 			if (TargetPlayer == null) return;
-			
-			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
+
+			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel { UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 	}
 }

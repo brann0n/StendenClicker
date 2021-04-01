@@ -1,4 +1,6 @@
-﻿using StendenClicker.Library.Multiplayer;
+﻿using StendenClicker.Library.Factory;
+using StendenClicker.Library.Multiplayer;
+using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +10,7 @@ namespace StendenClickerApi.Helpers
 {
 	/// <summary>
 	/// Extension class for the session dictionary that provides locking for all access to the dictionary
+	/// However this does not lock read/write access to the fields inside the objects.
 	/// </summary>
 	public static class SessionExtensions
 	{
@@ -24,6 +27,18 @@ namespace StendenClickerApi.Helpers
 		{
 			lock (AccessLock)
 				return Sessions[key];
+		}
+
+		public static void UpdatePlayers(string key, List<Player> players)
+		{
+			lock (AccessLock)
+				Sessions[key].CurrentPlayerList = players;
+		}
+
+		public static void UpdateLevel(string key, GamePlatform gamePlatform)
+		{
+			lock (AccessLock)
+				Sessions[key].CurrentLevel = gamePlatform;
 		}
 
 		public static void Add(string key, MultiPlayerSession Session)
