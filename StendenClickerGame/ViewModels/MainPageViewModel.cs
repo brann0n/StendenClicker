@@ -89,9 +89,6 @@ namespace StendenClickerGame.ViewModels
 		{
 			NotifyPropertyChanged("CurrencyTray");
 			Friends.InitializeFriendship(mpProxy.CurrentPlayer.UserId.ToString());
-
-			//Sync session to server
-			//await mpProxy.BroadcastSessionToServer();
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()

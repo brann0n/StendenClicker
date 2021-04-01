@@ -32,14 +32,8 @@ namespace StendenClickerGame
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
-			this.Suspending += App_Suspending;
             ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
         }
-
-		private void App_Suspending(object sender, SuspendingEventArgs e)
-		{
-			//disconnect
-		}
 
 		/// <summary>
 		/// Invoked when the application is launched normally by the end user.  Other entry points

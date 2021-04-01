@@ -61,8 +61,8 @@ namespace StendenClickerApi.Hubs
 			//remove connection id from database.
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 			Groups.Remove(Context.ConnectionId, p.PlayerGuid);
-			//save the current session to the database and then dispose of the object.
-
+			//todo: save the current session to the database and then dispose of the object.
+			//todo: tell the other players in the session that someone left them, and remove the players from the game.
 			return base.OnDisconnected(stopCalled);
 		}
 
@@ -78,6 +78,7 @@ namespace StendenClickerApi.Hubs
 		[HubMethodName("beginGameThread")]
 		public async Task beginGameThread()
 		{
+			//todo: enable a thread per game session and periodically retrieve and dispatch game info.
 			//Thread.
 		}
 
@@ -188,7 +189,6 @@ namespace StendenClickerApi.Hubs
 		public async Task sendInvite(string targetPlayer)
 		{
 			//get the target player his connection id.
-
 			Player TargetPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
 			Player InviteFromPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 			if (TargetPlayer == null) return;

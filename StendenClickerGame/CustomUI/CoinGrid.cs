@@ -75,6 +75,7 @@ namespace StendenClickerGame.CustomUI
 
 			Viewbox coinViewbox = new Viewbox();
 
+			//todo: move the load somewhere else, so it only needs to parse once.
 			if (coin is SparkCoin)
 			{
 				coinViewbox = (Viewbox)XamlReader.Load(SparkCoin.ImageContent);

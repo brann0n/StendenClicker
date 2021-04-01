@@ -87,7 +87,7 @@ namespace StendenClickerGame.ViewModels
 			if (CurrentMonster != null)
 			{
 				//batch collect the clicks
-				Clicks.addClick();
+				Clicks.addClick(); //todo: implement the rest of the batches system.
 
 				//execute pending abilities
 				AbilityMultiplier = 1;
@@ -180,8 +180,6 @@ namespace StendenClickerGame.ViewModels
 
 			coin.OnCoinHover += (o, e) =>
 			{
-				//todo: add new value to wallet (possible lagswitch)
-
 				if (o is SparkCoin)
 				{
 					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(monsterDefeatedCoinValue);
