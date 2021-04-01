@@ -94,8 +94,6 @@ namespace StendenClickerApi.Hubs
 			bool SessionExists = SessionExtensions.ContainsKey(FriendId);
 			if (SessionExists)
 			{
-				SessionExtensions.ContainsKey(FriendId);
-
 				Friendship fship = db.Friendships
 					.Where(n => n.Player1.PlayerGuid == UserGuid || n.Player2.PlayerGuid == UserGuid)
 					.Where(n => n.Player1.PlayerGuid == FriendId || n.Player2.PlayerGuid == FriendId)
@@ -147,11 +145,12 @@ namespace StendenClickerApi.Hubs
 		{
 			//get the target player his connection id.
 
-			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
-			if (p == null) return;
-			if (p.ConnectionId == null) return;
+			Player TargetPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
+			Player InviteFromPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
+			if (TargetPlayer == null) return;
+			if (TargetPlayer.ConnectionId == null) return;
 
-			Clients.Client(p.ConnectionId).receiveInvite(new InviteModel {UserGuid = p.PlayerGuid, UserName = p.PlayerName });
+			Clients.Client(TargetPlayer.ConnectionId).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 	}
 }

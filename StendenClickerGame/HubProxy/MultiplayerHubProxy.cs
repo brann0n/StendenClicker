@@ -84,7 +84,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", updateSession);
 					MultiPlayerHub.On("receiveUpdate", receiveUpdate);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
-					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveUpdate);
+					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
 					//do what next?
 					await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
@@ -99,7 +99,7 @@ namespace StendenClickerGame.Multiplayer
 		}
 
 		#region ServerInvokableMethods
-		private async void receiveUpdate(InviteModel invite)
+		private async void receiveInvite(InviteModel invite)
 		{
 			//update the UI
 			OnInviteReceived?.Invoke(invite, null);
