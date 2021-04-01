@@ -10,7 +10,8 @@ namespace StendenClicker.Library.Multiplayer
 {
 	public class MultiPlayerSession : INotifyPropertyChanged
 	{
-		public List<Player> CurrentPlayerList { get; set; }
+		private List<Player> _currentPlayers;
+		public List<Player> CurrentPlayerList { get { return _currentPlayers; } set { _currentPlayers = value; NotifyPropertyChanged(); } }
 		private GamePlatform _currentLevel;
 		public GamePlatform CurrentLevel { get { return _currentLevel; } set { _currentLevel = value; NotifyPropertyChanged(); } }
 		public string hostPlayerId { get; set; }

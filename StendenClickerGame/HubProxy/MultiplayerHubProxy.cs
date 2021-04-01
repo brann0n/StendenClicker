@@ -107,8 +107,10 @@ namespace StendenClickerGame.Multiplayer
 
 		private void updateSession(MultiPlayerSession session)
 		{
-			//got a session update from the server. TODO -> decide if the current session should be overwritten
+			//got a session update from the server. this happens when someone joins your session, or you are playing the game.
 			SessionContext = session;
+			SessionContext.CurrentPlayerList = session.CurrentPlayerList;
+			SessionContext.CurrentLevel = session.CurrentLevel;
 		}
 
 		private void receiveUpdate()

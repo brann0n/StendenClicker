@@ -98,14 +98,18 @@ namespace StendenClickerApi.Hubs
 				{
 					Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
-					FriendMultiPlayerSession.CurrentPlayerList.Add(p);
-					if (SessionExtensions.ContainsKey(UserGuid))
+
+					if(FriendMultiPlayerSession.CurrentPlayerList.Count <= 4)
 					{
-						SessionExtensions.Remove(UserGuid);
-						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
-						await Clients.Group(friend.PlayerGuid).updateHostPlayerList(FriendMultiPlayerSession);
-						return true;
-					}
+						FriendMultiPlayerSession.CurrentPlayerList.Add(p);
+						if (SessionExtensions.ContainsKey(UserGuid))
+						{
+							SessionExtensions.Remove(UserGuid);
+							Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
+							await Clients.Groups(FriendMultiPlayerSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList()).updateSession(FriendMultiPlayerSession);
+							return true;
+						}
+					}			
 				}
 			}
 
