@@ -14,7 +14,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if DEBUG
+#if !DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -160,7 +160,14 @@ namespace StendenClickerGame.Multiplayer
 			{
 				//check if joining the session succeded.
 				bool success = task.Result;
-
+				if (success)
+				{
+					//render the new session and wait for updates.
+				}
+				else
+				{
+					//show the user that joining the game failed.
+				}
 			});
 		}
 	}

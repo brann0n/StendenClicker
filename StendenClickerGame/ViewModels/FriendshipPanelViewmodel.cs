@@ -20,6 +20,12 @@ namespace StendenClickerGame.ViewModels
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
 
+		// the 3 friend objects:
+
+		public string Friend_1 { get => GetPlayerFromSession(0).PlayerName; }
+		public string Friend_2 { get => GetPlayerFromSession(1).PlayerName; }
+		public string Friend_3 { get => GetPlayerFromSession(2).PlayerName; }
+
 
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
@@ -36,17 +42,19 @@ namespace StendenClickerGame.ViewModels
 		public async void AddPendingInvite(InviteModel invite)
 		{
 			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
-			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			{
 
 				//check if the user already has an invite for this session
-				if(ObservablePendingInvites.FirstOrDefault(n => n.UserGuid == invite.UserGuid) == null)
+				if (ObservablePendingInvites.FirstOrDefault(n => n.UserGuid == invite.UserGuid) == null)
 				{
-					invite.OnAccept = new RelayCommand(async () => 
+					invite.OnAccept = new RelayCommand(async () =>
 					{
 						//do the signalR join session command.
+						ObservablePendingInvites.Remove(invite);
 						await MultiplayerHubProxy.Instance.JoinFriend(invite.UserGuid);
 					});
-					invite.OnDecline = new RelayCommand(() => 
+					invite.OnDecline = new RelayCommand(() =>
 					{
 						//remove this object from the Observable list
 						ObservablePendingInvites.Remove(invite);
@@ -56,7 +64,7 @@ namespace StendenClickerGame.ViewModels
 				else
 				{
 					//show a notification ??
-				}				
+				}
 			});
 		}
 
@@ -91,7 +99,6 @@ namespace StendenClickerGame.ViewModels
 						}
 					}
 				}
-
 			}
 		}
 
@@ -156,6 +163,15 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
+		private Player GetPlayerFromSession(int number)
+		{
+			if (number >= 0 && number <= 2) throw new Exception("Number out of range.");			
+
+			var context = MultiplayerHubProxy.Instance;
+			Guid currentGuid = context.CurrentPlayer.UserId;
+			var playerListNoMe = context.getContext().CurrentPlayerList.Where(n => n.UserId != currentGuid).ToList();
+			return playerListNoMe[number];
+		}
 		public async void InitializeFriendship(string userguid) => await UpdateFriendships(userguid);
 	}
 }

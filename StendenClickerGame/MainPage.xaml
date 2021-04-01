@@ -287,7 +287,7 @@
                             <ListView ScrollViewer.VerticalScrollBarVisibility="Disabled" ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                     ScrollViewer.HorizontalScrollMode="Enabled"                  
                                     ScrollViewer.VerticalScrollMode="Disabled"
-                                    ItemsSource="{Binding HeroList}" Padding="0" Margin="0" ShowsScrollingPlaceholders="False" SelectionMode="none">
+                                    ItemsSource="{Binding CurrencyTray.CurrentSession.CurrentPlayerList}" Padding="0" Margin="0" ShowsScrollingPlaceholders="False" SelectionMode="none">
                                 <ListView.ItemsPanel>
                                     <ItemsPanelTemplate>
                                         <ItemsStackPanel Orientation="Horizontal" GroupPadding="0" Margin="0" MinWidth="0" MinHeight="0"/>
@@ -296,7 +296,7 @@
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
                                         <Button Margin="5,0,5,5" CornerRadius="5" Width="65">
-                                            <TextBlock Foreground="White" TextTrimming="Clip"  Text="Jarno"/>
+                                            <TextBlock Foreground="White" TextTrimming="Clip"  Text="{Binding Username}"/>
                                         </Button>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
