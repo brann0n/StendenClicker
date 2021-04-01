@@ -79,7 +79,7 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("beginGameThread")]
-		public async void beginGameThread()
+		public async Task beginGameThread()
 		{
 			//Thread.
 		}
@@ -119,7 +119,7 @@ namespace StendenClickerApi.Hubs
 			return false;
 		}
 
-		public async void broadcastSession(MultiPlayerSession session)
+		public async Task broadcastSession(MultiPlayerSession session)
 		{
 			//verifys that only the host can broadcast
 			if (session.hostPlayerId != UserGuid) throw new Exception("Session doesnt match the current userguid");
@@ -138,12 +138,13 @@ namespace StendenClickerApi.Hubs
 		}
 
 
-		public async void processBatch<T>(IBatchProcessable<T> batchItem)
+		public async Task processBatch<T>(IBatchProcessable<T> batchItem)
 		{
 
 		}
 
-		public async void sendInvite(string targetPlayer)
+		[HubMethodName("sendInvite")]
+		public async Task sendInvite(string targetPlayer)
 		{
 			//get the target player his connection id.
 
@@ -153,8 +154,6 @@ namespace StendenClickerApi.Hubs
 
 			Clients.Client(p.ConnectionId).receiveInvite(new InviteModel { });
 		}
-
 	}
-
 }
 

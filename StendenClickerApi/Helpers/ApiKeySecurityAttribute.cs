@@ -1,6 +1,7 @@
 ﻿//using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using StendenClickerApi.Database;
+using StendenClickerApi.Hubs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -56,6 +57,15 @@ namespace StendenClickerApi.Helpers
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == userGuid);
 
             return p != null;			
-		}		
+		}
+
+		public override bool AuthorizeHubMethodInvocation(IHubIncomingInvokerContext hubIncomingInvokerContext, bool appliesToMethod)
+		{
+            if(hubIncomingInvokerContext.Hub is MultiplayerHub)
+			{
+                return true;
+			}
+			return base.AuthorizeHubMethodInvocation(hubIncomingInvokerContext, appliesToMethod);
+		}
 	}
 }

@@ -118,8 +118,8 @@ namespace StendenClickerApi.Controllers
             if (playerList.Count != 2) return new HttpStatusCodeResult(500, "Player list didnt contain 2 players.");
 
             //check both player objects with the empty checker
-            Player friend1 = playerList[0];
-            Player friend2 = playerList[1];
+            Player friend1 = db.Players.FirstOrDefault(n => n.PlayerGuid == playerList[0].PlayerGuid);
+            Player friend2 = db.Players.FirstOrDefault(n => n.PlayerGuid == playerList[1].PlayerGuid);
 
             if (Player.IsPlayerObjectEmpty(friend1) && Player.IsPlayerObjectEmpty(friend2)) return new HttpStatusCodeResult(500, "Player objects didnt validate.");
 

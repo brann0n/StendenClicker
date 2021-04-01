@@ -149,7 +149,7 @@ namespace StendenClickerGame.Multiplayer
 
 		public async Task SendInvite(string targetPlayerGuid)
 		{
-			await MultiPlayerHub.Invoke<string>("sendInvite", targetPlayerGuid);
+			await MultiPlayerHub.Invoke("sendInvite", targetPlayerGuid);
 		}
 	}
 
