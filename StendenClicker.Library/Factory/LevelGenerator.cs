@@ -64,8 +64,12 @@ namespace StendenClicker.Library.Factory
 				int LowestMonstersDefeated = players.Min(n => n.State.MonstersDefeated);
 				double AverageMonstersDefeated = players.Average(n => n.State.MonstersDefeated);
 
+				int HighestBossesDefeated = players.Max(n => n.State.BossesDefeated);
+				int LowestBossesDefeated = players.Min(n => n.State.BossesDefeated);
+				double AverageBossesDefeated = players.Average(n => n.State.BossesDefeated);
+
 				//create new playerstate from above variables
-				state = new PlayerState { MonstersDefeated = LowestMonstersDefeated };
+				state = new PlayerState { MonstersDefeated = LowestMonstersDefeated, BossesDefeated = LowestBossesDefeated };
 			}
 			return state;
 		}
