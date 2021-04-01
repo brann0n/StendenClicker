@@ -15,6 +15,11 @@ namespace StendenClickerApi.Helpers
 
 		private static object AccessLock = new object();
 
+		public static List<MultiPlayerSession> Get()
+		{
+			lock (AccessLock)
+				return Sessions.Values.ToList();
+		}
 		public static MultiPlayerSession Get(string key)
 		{
 			lock (AccessLock)

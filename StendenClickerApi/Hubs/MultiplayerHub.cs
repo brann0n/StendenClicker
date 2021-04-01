@@ -31,8 +31,7 @@ namespace StendenClickerApi.Hubs
 
 			if (p != null) //NOTE: users are created in the production database, multiplayer connects with the local database.
 			{
-				p.ConnectionId = Context.ConnectionId;
-				db.SaveChanges();
+				Groups.Add(Context.ConnectionId, p.PlayerGuid);
 
 				//player exists, create a new multiplayer session with current player as host, if the host wants to join another player, this session will be abandoned.
 				//tell the client that it can subscribe to the batched click function so the server can periodically receive its clicks.
@@ -59,9 +58,7 @@ namespace StendenClickerApi.Hubs
 		{
 			//remove connection id from database.
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
-			p.ConnectionId = null;
-			db.SaveChanges();
-
+			Groups.Remove(Context.ConnectionId, p.PlayerGuid);
 			//save the current session to the database and then dispose of the object.
 
 			return base.OnDisconnected(stopCalled);
@@ -71,9 +68,7 @@ namespace StendenClickerApi.Hubs
 		{
 			//find the player's most recent session and rejoin it.
 			Player p = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
-			p.ConnectionId = Context.ConnectionId;
-			db.SaveChanges();
-
+			Groups.Add(Context.ConnectionId, p.PlayerGuid);
 
 			return base.OnReconnected();
 		}
@@ -108,7 +103,7 @@ namespace StendenClickerApi.Hubs
 					{
 						SessionExtensions.Remove(UserGuid);
 						Player friend = db.Players.FirstOrDefault(n => n.PlayerGuid == FriendId);
-						await Clients.Client(friend.ConnectionId).updateHostPlayerList(FriendMultiPlayerSession);
+						await Clients.Group(friend.PlayerGuid).updateHostPlayerList(FriendMultiPlayerSession);
 						return true;
 					}
 				}
@@ -131,7 +126,7 @@ namespace StendenClickerApi.Hubs
 				List<string> PlayersInSession = session.CurrentPlayerList.Where(n => string.IsNullOrEmpty(n.connectionId)).Select(n => n.connectionId).ToList();
 
 
-				await Clients.Clients(PlayersInSession).updateSession(session);
+				await Clients.Groups(PlayersInSession).updateSession(session);
 			}
 		}
 
@@ -150,7 +145,7 @@ namespace StendenClickerApi.Hubs
 			if (TargetPlayer == null) return;
 			if (TargetPlayer.ConnectionId == null) return;
 
-			Clients.Client(TargetPlayer.ConnectionId).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
+			Clients.Group(TargetPlayer.ConnectionId).receiveInvite(new InviteModel {UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 	}
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StendenClickerApi.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -10,7 +11,7 @@ namespace StendenClickerApi.Controllers
     {
         public ActionResult Index()
         {
-            return View();
+            return View(SessionExtensions.Get());
         }
     }
 }

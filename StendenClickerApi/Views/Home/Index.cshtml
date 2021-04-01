@@ -1,11 +1,27 @@
-﻿@{
-    ViewBag.Title = "Home Page";
+﻿@model List<StendenClicker.Library.Multiplayer.MultiPlayerSession>
+@{
+	ViewBag.Title = "Home Page";
 }
 
 <div class="jumbotron">
-    <h1>Stenden Clicker</h1>
+	<h1>Stenden Clicker</h1>
 </div>
 
 <div class="row">
-
+	@foreach (StendenClicker.Library.Multiplayer.MultiPlayerSession s in Model)
+	{
+		<div>
+			<p>
+				@s.hostPlayerId
+			</p>
+			<div>
+				@foreach(StendenClicker.Library.PlayerControls.Player p in s.CurrentPlayerList)
+				{
+					<div>
+						@p.Username
+					</div>
+				}
+			</div>
+		</div>
+	}
 </div>
