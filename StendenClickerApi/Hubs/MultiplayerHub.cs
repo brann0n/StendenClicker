@@ -137,7 +137,6 @@ namespace StendenClickerApi.Hubs
 			}
 		}
 
-
 		public async Task processBatch<T>(IBatchProcessable<T> batchItem)
 		{
 
@@ -152,7 +151,7 @@ namespace StendenClickerApi.Hubs
 			if (p == null) return;
 			if (p.ConnectionId == null) return;
 
-			Clients.Client(p.ConnectionId).receiveInvite(new InviteModel { });
+			Clients.Client(p.ConnectionId).receiveInvite(new InviteModel {UserGuid = p.PlayerGuid, UserName = p.PlayerName });
 		}
 	}
 }

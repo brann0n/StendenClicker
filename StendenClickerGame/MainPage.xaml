@@ -554,7 +554,7 @@
                                 <ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
                                     ScrollViewer.HorizontalScrollMode="Enabled"                  
                                     ScrollViewer.VerticalScrollMode="Enabled"
-                                    Name="Invites" ItemsSource="{Binding HeroList}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
+                                    Name="Invites" ItemsSource="{Binding Friends.ObservablePendingInvites}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
                                             <Border BorderThickness="0,0,0,1" BorderBrush="#2EAAB6" Width="{Binding ElementName=Invites, Path=Width}">
@@ -564,11 +564,11 @@
                                                         <ColumnDefinition Width="50*"/>
                                                     </Grid.ColumnDefinitions>
                                                     <Grid Grid.Column="0">
-                                                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">Jarno</TextBlock>
-                                                    </Grid>
+														<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding UserName}" />
+													</Grid>
                                                     <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" >Accepteren</Button>
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" >Weigeren</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" Command="{Binding OnAccept}">Accepteren</Button>
+                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" Command="{Binding OnDecline}">Weigeren</Button>
                                                     </Grid>
                                                 </Grid>
                                             </Border>

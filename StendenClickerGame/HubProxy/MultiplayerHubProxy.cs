@@ -153,6 +153,16 @@ namespace StendenClickerGame.Multiplayer
 		{
 			await MultiPlayerHub.Invoke("sendInvite", targetPlayerGuid);
 		}
+
+		public async Task JoinFriend(string friendId)
+		{
+			await MultiPlayerHub.Invoke<bool>("joinFriend", friendId).ContinueWith((task) => 
+			{
+				//check if joining the session succeded.
+				bool success = task.Result;
+
+			});
+		}
 	}
 
 }

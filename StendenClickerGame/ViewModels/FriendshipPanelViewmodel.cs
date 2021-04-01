@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.UI.Xaml;
 
 namespace StendenClickerGame.ViewModels
 {
@@ -17,8 +18,8 @@ namespace StendenClickerGame.ViewModels
 	{
 		public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
-
 		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
+
 
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
@@ -27,15 +28,36 @@ namespace StendenClickerGame.ViewModels
 		{
 			ObservableFriendship = new ObservableCollection<FriendshipListObject>();
 			ObservableSearchPlayerList = new ObservableCollection<SearchPlayerObject>();
+			ObservablePendingInvites = new ObservableCollection<InviteModel>();
 
 			SearchFriendsCommand = new RelayCommand(SearchFriends);
 		}
 
-		public void AddPendingInvite(InviteModel invite)
+		public async void AddPendingInvite(InviteModel invite)
 		{
-			invite.OnAccept = new RelayCommand(() => { });
-			invite.OnDecline = new RelayCommand(() => { });
-			ObservablePendingInvites.Add(invite);
+			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => {
+
+				//check if the user already has an invite for this session
+				if(ObservablePendingInvites.FirstOrDefault(n => n.UserGuid == invite.UserGuid) == null)
+				{
+					invite.OnAccept = new RelayCommand(async () => 
+					{
+						//do the signalR join session command.
+						await MultiplayerHubProxy.Instance.JoinFriend(invite.UserGuid);
+					});
+					invite.OnDecline = new RelayCommand(() => 
+					{
+						//remove this object from the Observable list
+						ObservablePendingInvites.Remove(invite);
+					});
+					ObservablePendingInvites.Add(invite);
+				}
+				else
+				{
+					//show a notification ??
+				}				
+			});
 		}
 
 		private async void SearchFriends()
