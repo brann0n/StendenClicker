@@ -279,6 +279,17 @@
                                     </ResourceDictionary>
                                 </Button.Resources>
                             </Button>
+
+                            <Button Margin="0,0,10,0" Padding="1" Foreground="White" Background="Transparent" HorizontalAlignment="Right" Content="Leave sessie">
+                                <Button.Resources>
+                                    <ResourceDictionary>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                        <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="#2EAAB6"/>
+                                        <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                        <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                    </ResourceDictionary>
+                                </Button.Resources>
+                            </Button>
                         </Grid>
                     </Border>
                     <!--Players in session-->
@@ -517,6 +528,7 @@
                                     <RowDefinition Height="85*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White" >Vrieden:</TextBlock>
+                                <Button Grid.Row="0" HorizontalAlignment="Right" CornerRadius="5" Background="Transparent" Foreground="White" Margin="0,0,12,10">Refresh</Button>
                                 <ListView  Grid.Row="1" Name="Friends" ItemsSource="{Binding Friends.ObservableFriendship}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
@@ -529,8 +541,11 @@
                                                     <Grid Grid.Column="0">
                                                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding Name}" />
                                                     </Grid>
-                                                    <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Foreground="White" Command="{Binding InviteCommand}">Invite</Button>
+                                                    <Grid Grid.Column="1" HorizontalAlignment="right">
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Button Margin="0,0,20,0" VerticalAlignment="Center" CornerRadius="5" Foreground="White" Background="Red">Delete</Button>
+                                                            <Button Margin="0,0,20,0"  VerticalAlignment="Center" CornerRadius="5" Foreground="White" Command="{Binding InviteCommand}">Invite</Button>
+                                                        </StackPanel>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
@@ -566,9 +581,11 @@
                                                     <Grid Grid.Column="0">
 														<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White" Text="{Binding UserName}" />
 													</Grid>
-                                                    <Grid Grid.Column="1">
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Right" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" Command="{Binding OnAccept}">Accepteren</Button>
-                                                        <Button Margin="0,0,20,0" HorizontalAlignment="Left" VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" Command="{Binding OnDecline}">Weigeren</Button>
+                                                    <Grid Grid.Column="1" HorizontalAlignment="right">
+                                                        <StackPanel>
+                                                            <Button Margin="0,0,20,0" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" Command="{Binding OnAccept}">Accepteren</Button>
+                                                            <Button Margin="0,0,20,0"  VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" Command="{Binding OnDecline}">Weigeren</Button>
+                                                        </StackPanel>
                                                     </Grid>
                                                 </Grid>
                                             </Border>
