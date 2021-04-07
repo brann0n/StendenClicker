@@ -543,7 +543,7 @@
                                                     </Grid>
                                                     <Grid Grid.Column="1" HorizontalAlignment="right">
                                                         <StackPanel Orientation="Horizontal">
-                                                            <Button Margin="0,0,20,0" VerticalAlignment="Center" CornerRadius="5" Foreground="White" Background="Red">Delete</Button>
+                                                            <Button Margin="0,0,20,0" VerticalAlignment="Center" CornerRadius="5" Foreground="White" Background="Red" Command="{Binding DeleteFriend}">Delete</Button>
                                                             <Button Margin="0,0,20,0"  VerticalAlignment="Center" CornerRadius="5" Foreground="White" Command="{Binding InviteCommand}">Invite</Button>
                                                         </StackPanel>
                                                     </Grid>
