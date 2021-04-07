@@ -119,11 +119,11 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.GetRequestAsync("api/player/isusernameavailable", parameters);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				if(response.Content == "false")
+				if(response.StatusDescription == "true")
                 {
-					return false;
+					return true;
 				}
-				return true;
+				return false;
 			}
 			else
 			{
