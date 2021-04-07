@@ -122,7 +122,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			List<Player> Friends = new List<Player> { MultiplayerHubProxy.Instance.CurrentPlayer, player };
 
-			var response = await RestHelper.GetRequestAsync("");
+			var response = await RestHelper.GetRequestAsync("api/player/DeleteFriendship");
 			if (response.StatusCode == System.Net.HttpStatusCode.OK)
 			{
 				//friend has been added, update friendlist at the top:
@@ -131,7 +131,7 @@ namespace StendenClickerGame.ViewModels
 			}
 			else
 			{
-				//show prompt to user that adding friend failed.
+				//show prompt to user that deleting friend failed.
 			}
 		}
 
