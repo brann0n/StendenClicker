@@ -1,5 +1,6 @@
 using StendenClicker.Library.Abilities;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace StendenClicker.Library.PlayerControls
@@ -43,7 +44,7 @@ namespace StendenClicker.Library.PlayerControls
 				Name = hero.HeroName,
 				HeroLevel = 0,
 				Price = hero.HeroCost,
-				Upgrades = new List<HeroUpgrades>()
+				Upgrades = hero.Upgrades.ToList()
 			};
 		}
 	}

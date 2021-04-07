@@ -179,6 +179,14 @@
     <Compile Include="Migrations\202104070911030_PlayerObjectExpansion.Designer.cs">
       <DependentUpon>202104070911030_PlayerObjectExpansion.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104072019594_AddUpgradesAndHeros.cs" />
+    <Compile Include="Migrations\202104072019594_AddUpgradesAndHeros.Designer.cs">
+      <DependentUpon>202104072019594_AddUpgradesAndHeros.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104072026380_Modification.cs" />
+    <Compile Include="Migrations\202104072026380_Modification.Designer.cs">
+      <DependentUpon>202104072026380_Modification.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
@@ -222,6 +230,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104070911030_PlayerObjectExpansion.resx">
       <DependentUpon>202104070911030_PlayerObjectExpansion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104072019594_AddUpgradesAndHeros.resx">
+      <DependentUpon>202104072019594_AddUpgradesAndHeros.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104072026380_Modification.resx">
+      <DependentUpon>202104072026380_Modification.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

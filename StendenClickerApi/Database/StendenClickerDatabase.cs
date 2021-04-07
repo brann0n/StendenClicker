@@ -25,7 +25,7 @@ namespace StendenClickerApi.Database
 		public virtual DbSet<ImageAsset> ImageAssets { get; set; }
 		public virtual DbSet<Upgrade> Upgrades { get; set; }
 		public virtual DbSet<Player> Players { get; set; }
-		public virtual DbSet<Player> PlayerHeroes { get; set; }
+		public virtual DbSet<PlayerHero> PlayerHeroes { get; set; }
 		public virtual DbSet<Friendship> Friendships { get; set; }
 		public virtual DbSet<MultiPlayerSession> Sessions { get; set; }
 		public virtual DbSet<Scene> Scenes { get; set; }
@@ -79,13 +79,18 @@ namespace StendenClickerApi.Database
 
 	public class Upgrade
 	{
+		public Upgrade()
+		{
+			PlayerHeroes = new HashSet<PlayerHero>();
+		}
 		public int UpgradeId { get; set; }
 		public string UpgradeName { get; set; }
 		public int UpgradeCost { get; set; }
 		public bool UpgradeIsAbility { get; set; }
 		public virtual Hero Hero { get; set; }
 
-		protected virtual PlayerHero Player { get; set; }
+		[JsonIgnore]
+		public virtual ICollection<PlayerHero> PlayerHeroes { get; set; }
 	}
 
 	public class Player
@@ -181,14 +186,19 @@ namespace StendenClickerApi.Database
 
 	public class PlayerHero
 	{
+		public PlayerHero()
+		{
+			Upgrades = new HashSet<Upgrade>();
+		}
 		public int PlayerHeroId { get; set; }
 		public int HeroUpgradeLevel { get; set; }
 		public int SpecialUpgradeLevel { get; set; }
 
+		[JsonIgnore]
 		public virtual Player Player { get; set; }
 		public virtual Hero Hero { get; set; }
 
-		public virtual ICollection<Upgrade> BoughtUpgrades { get; set; }
+		public virtual ICollection<Upgrade> Upgrades { get; set; }
 	}
 
 	public class Friendship

@@ -32,7 +32,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public int HeroCost { get; set; }
 		public virtual ImageAsset HeroAsset { get; set; }
 
-		protected virtual ICollection<Upgrade> Upgrades { get; set; }
+		public virtual ICollection<Upgrade> Upgrades { get; set; }
 
 	}
 
@@ -50,18 +50,25 @@ namespace StendenClicker.Library.Models.DatabaseModels
 
 	public class Upgrade
 	{
+		public Upgrade()
+		{
+			PlayerHeroes = new HashSet<PlayerHero>();
+		}
+
 		public int UpgradeId { get; set; }
 		public string UpgradeName { get; set; }
 		public int UpgradeCost { get; set; }
 		public bool UpgradeIsAbility { get; set; }
 		public virtual Hero Hero { get; set; }
+
+		public virtual ICollection<PlayerHero> PlayerHeroes { get; set; }
 	}
 
 	public class Player
 	{
 		public Player()
 		{
-			Heroes = new HashSet<Hero>();
+			Heroes = new HashSet<PlayerHero>();
 		}
 		public int PlayerId { get; set; }
 		public string PlayerGuid { get; set; }
@@ -74,7 +81,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public int MonstersDefeated { get; set; }
 		public int BossesDefreated { get; set; }
 
-		public virtual ICollection<Hero> Heroes { get; set; }
+		public virtual ICollection<PlayerHero> Heroes { get; set; }
 
 		public static implicit operator Player(PlayerControls.Player player)
 		{
@@ -103,6 +110,22 @@ namespace StendenClicker.Library.Models.DatabaseModels
 
 			return false;
 		}
+	}
+
+	public class PlayerHero
+	{
+		public PlayerHero()
+		{
+			Upgrades = new HashSet<Upgrade>();
+		}
+		public int PlayerHeroId { get; set; }
+		public int HeroUpgradeLevel { get; set; }
+		public int SpecialUpgradeLevel { get; set; }
+
+		public virtual Player Player { get; set; }
+		public virtual Hero Hero { get; set; }
+
+		public virtual ICollection<Upgrade> Upgrades { get; set; }
 	}
 
 	public class Friendship

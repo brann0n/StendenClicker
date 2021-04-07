@@ -25,13 +25,14 @@ namespace StendenClickerApi.Controllers
         {
             if (string.IsNullOrEmpty(device_id)) throw new Exception("No device_id provided on request.");
 
-            List<Player> playerList = db.Players.ToList();
-
             var player = db.Players.FirstOrDefault(n => n.DeviceId == device_id);
             if (player == null)
             {
                 return new HttpStatusCodeResult(500, "No player found with this deviceid");
             }
+
+            //player.Heroes.First().Upgrades.First()
+
             return new JsonStringResult(player);
         }
 

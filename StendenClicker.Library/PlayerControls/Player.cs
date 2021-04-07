@@ -1,5 +1,8 @@
 using StendenClicker.Library.Models;
+using StendenClicker.Library.Models.DatabaseModels;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management;
 
 namespace StendenClicker.Library.PlayerControls
@@ -22,7 +25,7 @@ namespace StendenClicker.Library.PlayerControls
 
         public PlayerState State { get; set; }
 
-        
+        public List<PlayerHero> Heroes { get; set; }
 
         public string GetUsername()
         {
@@ -54,13 +57,14 @@ namespace StendenClicker.Library.PlayerControls
 
         public static implicit operator Player(Models.DatabaseModels.Player player)
 		{
-			return new Player
-			{
+            return new Player
+            {
                 deviceId = player.DeviceId,
                 Username = player.PlayerName,
                 UserId = Guid.Parse(player.PlayerGuid),
                 State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
-                Wallet = new PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
+                Wallet = new PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins },
+                Heroes = player.Heroes.ToList()
             };
 		}
 
