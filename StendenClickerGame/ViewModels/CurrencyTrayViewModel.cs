@@ -105,11 +105,11 @@ namespace StendenClickerGame.ViewModels
 					var rewards = CurrentMonster.GetReward();
 					for (ulong i = 0; i < rewards.SparkCoin; i++)
 					{
-						CreateCoin(typeof(SparkCoin));
+						CreateCoin(typeof(SparkCoin), rewards.Factor);
 					}
 					for (ulong i = 0; i < rewards.EuropeanCredit; i++)
 					{
-						CreateCoin(typeof(EuropeanCredit));
+						CreateCoin(typeof(EuropeanCredit), 0);
 					}
 
 					//todo: update all the user accounts and the current session that a monster has been defeated.
@@ -157,7 +157,7 @@ namespace StendenClickerGame.ViewModels
 		/// Handles coin creation through the CurrencyPool
 		/// </summary>
 		/// <param name="type">The type of coin to create</param>
-		public void CreateCoin(Type type)
+		public void CreateCoin(Type type, double factor)
 		{
 			if (type.BaseType != typeof(Currency))
 			{
@@ -184,7 +184,7 @@ namespace StendenClickerGame.ViewModels
 			{
 				if (o is SparkCoin)
 				{
-					CurrentPlayer.Wallet.SparkCoin += ((Currency)o).getValue(monsterDefeatedCoinValue);
+					CurrentPlayer.Wallet.SparkCoin += (ulong)(((Currency)o).getValue(monsterDefeatedCoinValue) * factor);
 				}
 				else if (o is EuropeanCredit)
 				{
@@ -202,7 +202,7 @@ namespace StendenClickerGame.ViewModels
 				CurrencyPool.ReleaseCurrency((Currency)o);
 			};
 
-			coin.SetAutoRemove(1000);
+			coin.SetAutoRemove();
 
 			CurrencyInView.Add(coin);
 		}

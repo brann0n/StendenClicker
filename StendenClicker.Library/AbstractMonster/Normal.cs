@@ -63,6 +63,13 @@ namespace StendenClicker.Library.AbstractMonster
 
 		public override PlayerCurrency GetReward()
 		{
+			if(CurrencyAmount > 25)
+			{
+				double factorNew = CurrencyAmount / 25;
+
+				return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = 25, Factor = factorNew };
+			}
+			else
 			return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = CurrencyAmount };
 		}
 	}

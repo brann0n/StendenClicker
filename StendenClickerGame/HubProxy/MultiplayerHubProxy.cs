@@ -23,6 +23,7 @@ namespace StendenClickerGame.Multiplayer
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
 #endif
+
 		//Singleton Variables
 		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() => 
 		{
@@ -125,8 +126,6 @@ namespace StendenClickerGame.Multiplayer
 		}
 		private async void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl)
 		{
-
-
 			MultiPlayerSession session = new MultiPlayerSession
 			{
 				CurrentPlayerList = players,

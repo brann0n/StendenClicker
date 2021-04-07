@@ -63,6 +63,10 @@ namespace StendenClicker.Library.CurrencyObjects
             }
         }
 
+        /// <summary>
+        /// Sets the autoremove with specified timeframe.
+        /// </summary>
+        /// <param name="v"></param>
 		public async void SetAutoRemove(int v)
 		{
 			try
@@ -80,6 +84,15 @@ namespace StendenClicker.Library.CurrencyObjects
                 throw; // smijt weg dat ding
 			}         
         }
+
+        /// <summary>
+        /// Sets the autoremove with a randomized timer
+        /// </summary>
+        public async void SetAutoRemove()
+		{
+            Random r = new Random();
+            SetAutoRemove(r.Next(4000, 6000));
+		}
 	}
 }
 
