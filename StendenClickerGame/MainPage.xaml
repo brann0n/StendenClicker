@@ -9,7 +9,8 @@
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:media="using:Microsoft.UI.Xaml.Media" xmlns:customui="using:StendenClickerGame.CustomUI" d:DataContext="{d:DesignInstance Type=viewmodels:MainPageViewModel}"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+	Height="{Binding WindowHeight}" Width="{Binding WindowWidth}">
     <!--<Page.DataContext>
         <viewmodels:MainPageViewModel/>
     </Page.DataContext>-->

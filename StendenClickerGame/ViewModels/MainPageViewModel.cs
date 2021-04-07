@@ -19,9 +19,14 @@ using System.Windows.Input;
 
 namespace StendenClickerGame.ViewModels
 {
-    public class MainPageViewModel : ViewModelBase
-    {
+	public class MainPageViewModel : ViewModelBase
+	{
 		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
+
+		private int _width { get; set; } = 1920;
+		private int _height { get; set; } = 1080;
+		public int WindowHeight { get => _height; set { _height = value; NotifyPropertyChanged(); } }
+		public int WindowWidth { get => _width; set { _width = value; NotifyPropertyChanged(); } }
 
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public KoffieMachineViewModel KoffieMachine { get; set; }
@@ -46,7 +51,7 @@ namespace StendenClickerGame.ViewModels
 
 		public void LoadHeroes()
 		{
-			foreach(Hero h in Hero.Heroes)
+			foreach (Hero h in Hero.Heroes)
 			{
 				//todo: add in player specific information from the list.
 				HeroList.Add(h);
@@ -63,20 +68,20 @@ namespace StendenClickerGame.ViewModels
 			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
 			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
 
-            CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
+			CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
 		}
 
-        private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
-        {
+		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
+		{
 			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
 		}
 
-        /// <summary>
-        /// Can only process current level and current playerlist, other objects are defaulted.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
+		/// <summary>
+		/// Can only process current level and current playerlist, other objects are defaulted.
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
 		{
 			MultiPlayerSession session = (MultiPlayerSession)sender;
 
@@ -104,13 +109,13 @@ namespace StendenClickerGame.ViewModels
 		}
 
 		private void MpProxy_OnConnectionStateChanged(StateChange state)
-        {
+		{
 			//todo: handle state changes, if it cant connect there might not be an internet connection
-        }
+		}
 
 		public async Task<Player> GetPlayerContextAsync()
 		{
 			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}
-	}	
+	}
 }
