@@ -104,5 +104,31 @@ namespace StendenClicker.Library.PlayerControls
 				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 		}
+
+		/// <summary>
+		/// Checks if the username is taken in the database via the API.
+		/// </summary>
+		/// <param name="username"></param>
+		public async Task<bool> IsUsernameAvailable(string username)
+        {
+			Dictionary<string, string> parameters = new Dictionary<string, string>
+			{
+				{ "username", username }
+			};
+
+			var response = await RestHelper.GetRequestAsync("api/player/isusernameavailable", parameters);
+			if (response.StatusCode == HttpStatusCode.OK)
+			{
+				if(response.Content == "false")
+                {
+					return false;
+				}
+				return true;
+			}
+			else
+			{
+				throw new Exception($"Couldn't search for the player name... Api error: [{response.StatusCode}] {response.ErrorMessage}");
+			}
+		}
 	}
 }

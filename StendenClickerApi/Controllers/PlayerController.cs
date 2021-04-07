@@ -135,5 +135,20 @@ namespace StendenClickerApi.Controllers
 
             return new HttpStatusCodeResult(200, "Friendship was created.");
         }
+
+        [ApiKeySecurity, HttpGet, Route("IsUsernameAvailable")]
+        public ActionResult IsUsernameAvailable(string username)
+        {
+            if (string.IsNullOrEmpty(username)) return new HttpStatusCodeResult(500, "Player search name is empty.");
+
+            Player user = db.Players.FirstOrDefault(n => n.PlayerName.ToLower() == username.ToLower());
+
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(200, "true");
+            }
+
+            return new HttpStatusCodeResult(200, "false");
+        }
     }
 }
