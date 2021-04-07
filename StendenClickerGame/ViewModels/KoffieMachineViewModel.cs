@@ -56,11 +56,12 @@ namespace StendenClickerGame.ViewModels
 		private async void JanWaterAbilityClick(Abilities SelfContext)
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += JanWaterAbility;
-			SelfContext.IsOffCooldown = false;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
-			await Task.Delay(300000);
-			SelfContext.IsOffCooldown = true;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+
+			ContextSetAbilityEnabled(SelfContext);
+
+			await ContextDelayProgressbar(SelfContext, 300000);
+
+			ContextSetAbilityDisabled(SelfContext);
 		}
 
 		private void JanWaterAbility(object sender, EventArgs e)
@@ -73,14 +74,14 @@ namespace StendenClickerGame.ViewModels
 
 		private async void SjiKoffieAbilityClick(Abilities SelfContext)
 		{
-			SelfContext.IsOffCooldown = false;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			ContextSetAbilityEnabled(SelfContext);
+
 			CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
 			await Task.Delay(5000);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
-			await Task.Delay(115000);
-			SelfContext.IsOffCooldown = true;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			await ContextDelayProgressbar(SelfContext, 115000);
+
+			ContextSetAbilityDisabled(SelfContext);
 		}
 
 		private void SjiKoffieAbility(object sender, EventArgs e)
@@ -91,27 +92,13 @@ namespace StendenClickerGame.ViewModels
 		private async void GerjanSmoothieAbilityClick(Abilities SelfContext)
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
-			SelfContext.IsOffCooldown = false;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");	
-			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");			
-			await DoDelayWithProgressbar(SelfContext, 150000);
-			SelfContext.IsOffCooldown = true;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
-			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
-		}
 
-		private async Task DoDelayWithProgressbar(Abilities SelfContext, int delayTime)
-		{
-			//devide delaytime by 500 to update the bar every half a second
-			double amountOfTicks = delayTime / 100d;
-			for (int i = 0; i < amountOfTicks; i++)
-			{
-				int percentage = (int)(i / amountOfTicks * 100d);
-				SelfContext.CooldownPercentage = percentage;
-				SelfContext.NotifyPropertyChanged("CooldownPercentage");
-				await Task.Delay(100);
-			}
-		}
+			ContextSetAbilityEnabled(SelfContext);	
+			
+			await ContextDelayProgressbar(SelfContext, 150000);
+
+			ContextSetAbilityDisabled(SelfContext);
+		}		
 
 		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
 		{
@@ -123,6 +110,34 @@ namespace StendenClickerGame.ViewModels
 				//is boss
 				m.DoDamage(m.Health / 2);
 				CurrencyTrayViewModel.OnClickAbilityProcess -= GerjanSmoothieAbility;
+			}
+		}
+
+
+		private void ContextSetAbilityEnabled(Abilities SelfContext)
+		{
+			SelfContext.IsOffCooldown = false;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
+		}
+
+		private void ContextSetAbilityDisabled(Abilities SelfContext)
+		{
+			SelfContext.IsOffCooldown = true;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
+		}
+
+		private async Task ContextDelayProgressbar(Abilities SelfContext, int delayTime)
+		{
+			//devide delaytime by 500 to update the bar every half a second
+			double amountOfTicks = delayTime / 100d;
+			for (int i = 0; i < amountOfTicks; i++)
+			{
+				int percentage = (int)(i / amountOfTicks * 100d);
+				SelfContext.CooldownPercentage = percentage;
+				SelfContext.NotifyPropertyChanged("CooldownPercentage");
+				await Task.Delay(100);
 			}
 		}
 	}
