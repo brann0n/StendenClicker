@@ -7,13 +7,13 @@ namespace StendenClickerApi.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.2.0-61023")]
-    public sealed partial class madevirtual : IMigrationMetadata
+    public sealed partial class PlayerObjectExpansion : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(madevirtual));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(PlayerObjectExpansion));
         
         string IMigrationMetadata.Id
         {
-            get { return "202103181253194_madevirtual"; }
+            get { return "202104070911030_PlayerObjectExpansion"; }
         }
         
         string IMigrationMetadata.Source

@@ -95,7 +95,52 @@ namespace StendenClickerApi.Database
 		public string PlayerGuid { get; set; }
 		public string PlayerName { get; set; }
 		public string DeviceId { get; set; }
-		public string ConnectionId { get; set; }
+
+		public long __SparkCoins { get; set; }
+		public long __EuropeanCredits { get; set; }
+
+		[NotMapped]
+		public ulong SparkCoins
+		{
+			get
+			{
+				unchecked
+				{
+					return (ulong)__SparkCoins;
+				}
+			}
+
+			set
+			{
+				unchecked
+				{
+					__SparkCoins = (long)value;
+				}
+			}
+		}
+
+		[NotMapped]
+		public ulong EuropeanCredits
+		{
+			get
+			{
+				unchecked
+				{
+					return (ulong)__EuropeanCredits;
+				}
+			}
+
+			set
+			{
+				unchecked
+				{
+					__EuropeanCredits = (long)value;
+				}
+			}
+		}
+
+		public int MonstersDefeated { get; set; }
+		public int BossesDefreated { get; set; }
 
 		public virtual ICollection<Hero> Heroes { get; set; }
 		protected virtual ICollection<Friendship> Friendships1 { get; set; }
@@ -122,12 +167,11 @@ namespace StendenClickerApi.Database
 		{
 			return new StendenClicker.Library.PlayerControls.Player
 			{
-				connectionId = player.ConnectionId,
 				deviceId = player.DeviceId,
 				Username = player.PlayerName,
 				UserId = Guid.Parse(player.PlayerGuid),
-				State = new PlayerState(),
-				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency()
+				State = new PlayerState {BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
+				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency {EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
 			};
 		}
 	}
