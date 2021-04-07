@@ -110,7 +110,7 @@ namespace StendenClicker.Library.PlayerControls
 		/// </summary>
 		/// <param name="username"></param>
 		public async Task<bool> IsUsernameAvailable(string username)
-        {
+		{
 			Dictionary<string, string> parameters = new Dictionary<string, string>
 			{
 				{ "username", username }
@@ -119,8 +119,8 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.GetRequestAsync("api/player/isusernameavailable", parameters);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				if(response.Content == "false")
-                {
+				if (response.Content == "false")
+				{
 					return false;
 				}
 				return true;
@@ -128,6 +128,26 @@ namespace StendenClicker.Library.PlayerControls
 			else
 			{
 				throw new Exception($"Couldn't search for the player name... Api error: [{response.StatusCode}] {response.ErrorMessage}");
+			}
+		}
+
+		/// <summary>
+		///	Deletes the friendship if it excist
+		/// </summary>
+		/// <param name="guid1"></param>
+		/// <param name="guid2"></param>
+		public async Task DeleteFriendship(string guid1, string guid2)
+		{
+			List<string> PlayerGuids = new List<string>
+			{
+				{ guid1 },
+				{ guid2 }
+			};
+			
+			var response = await RestHelper.PostRequestAsync("api/player/deletefriendship", PlayerGuids);
+			if (response.StatusCode != HttpStatusCode.OK)
+			{
+				throw new Exception($"Couldn't create the player... Api error: [{response.StatusCode}] {response.ErrorMessage}");
 			}
 		}
 	}
