@@ -36,19 +36,23 @@ namespace StendenClickerApi.Controllers
         }
 
         [ApiKeySecurity, HttpPost, Route("Set")]
-        public HttpStatusCodeResult SetPlayer(Player player)
+        public async Task<HttpStatusCodeResult> SetPlayer(Player player)
         {
             if (player == null) return new HttpStatusCodeResult(500, "no player");
 
             //check if playerobject is okay
             var dbPlayer = db.Players.FirstOrDefault(b => b.DeviceId == player.DeviceId);
-            if (dbPlayer == null) return new HttpStatusCodeResult(401, "player not found");
+            if (dbPlayer == null) return new HttpStatusCodeResult(404, "player not found");
 
-            //maybe do a check that the object is actually valid before sending it into the databse
-            //db.Players.AddOrUpdate(player);
-            //dbPlayer.
+            //set the updated values.
+            dbPlayer.BossesDefreated = player.BossesDefreated;
+            dbPlayer.MonstersDefeated = player.MonstersDefeated;
+            dbPlayer.SparkCoins = player.SparkCoins;
+            dbPlayer.EuropeanCredits = player.EuropeanCredits;
+            
+            //todo: loop over the available heroes, and add them to the db.HeroPlayer table
 
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(200, "player updated");
         }

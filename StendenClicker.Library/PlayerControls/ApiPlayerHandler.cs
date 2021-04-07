@@ -61,7 +61,7 @@ namespace StendenClicker.Library.PlayerControls
 		/// uploads the current player state to the server
 		/// </summary>
 		/// <param name="player"></param>
-		public async void SetPlayerStateAsync(Player player)
+		public async Task SetPlayerStateAsync(Player player)
 		{//todo: implement the save player data, also add hero's to the player object.
 			state = player;
 			Models.DatabaseModels.Player dbPlayer = player;
@@ -119,11 +119,11 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.GetRequestAsync("api/player/isusernameavailable", parameters);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				if (response.Content == "false")
-				{
-					return false;
+				if(response.StatusDescription == "true")
+                {
+					return true;
 				}
-				return true;
+				return false;
 			}
 			else
 			{
