@@ -67,7 +67,12 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public string PlayerGuid { get; set; }
 		public string PlayerName { get; set; }
 		public string DeviceId { get; set; }
-		public string ConnectionId { get; set; }
+
+		public ulong SparkCoins { get; set; }
+		public ulong EuropeanCredits { get; set; }
+
+		public int MonstersDefeated { get; set; }
+		public int BossesDefreated { get; set; }
 
 		public virtual ICollection<Hero> Heroes { get; set; }
 
@@ -75,10 +80,14 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		{
 			return new Player
 			{
-				ConnectionId = player.connectionId,
 				DeviceId = player.deviceId,
 				PlayerGuid = player.UserId.ToString(),
-				PlayerName = player.Username
+				PlayerName = player.Username,
+				BossesDefreated = player.State.BossesDefeated,
+				MonstersDefeated = player.State.MonstersDefeated,
+				SparkCoins = player.Wallet.SparkCoin,
+				EuropeanCredits = player.Wallet.EuropeanCredit,
+				//todo: add heroes here.
 			};
 		}
 

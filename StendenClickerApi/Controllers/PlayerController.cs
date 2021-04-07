@@ -45,7 +45,9 @@ namespace StendenClickerApi.Controllers
             if (dbPlayer == null) return new HttpStatusCodeResult(401, "player not found");
 
             //maybe do a check that the object is actually valid before sending it into the databse
-            db.Players.AddOrUpdate(player);
+            //db.Players.AddOrUpdate(player);
+            //dbPlayer.
+
             db.SaveChanges();
 
             return new HttpStatusCodeResult(200, "player updated");
