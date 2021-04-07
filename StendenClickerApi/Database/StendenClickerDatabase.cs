@@ -25,6 +25,7 @@ namespace StendenClickerApi.Database
 		public virtual DbSet<ImageAsset> ImageAssets { get; set; }
 		public virtual DbSet<Upgrade> Upgrades { get; set; }
 		public virtual DbSet<Player> Players { get; set; }
+		public virtual DbSet<Player> PlayerHeroes { get; set; }
 		public virtual DbSet<Friendship> Friendships { get; set; }
 		public virtual DbSet<MultiPlayerSession> Sessions { get; set; }
 		public virtual DbSet<Scene> Scenes { get; set; }
@@ -50,7 +51,7 @@ namespace StendenClickerApi.Database
 	{
 		public Hero()
 		{
-			Players = new HashSet<Player>();
+			Players = new HashSet<PlayerHero>();
 		}
 		public int HeroId { get; set; }
 		public string HeroName { get; set; }
@@ -61,7 +62,7 @@ namespace StendenClickerApi.Database
 		protected virtual ICollection<Upgrade> Upgrades { get; set; }
 
 		[JsonIgnore]
-		public virtual ICollection<Player> Players { get; set; }
+		public virtual ICollection<PlayerHero> Players { get; set; }
 	}
 
 	public class ImageAsset
@@ -89,7 +90,7 @@ namespace StendenClickerApi.Database
 	{
 		public Player()
 		{
-			Heroes = new HashSet<Hero>();
+			Heroes = new HashSet<PlayerHero>();
 		}
 		public int PlayerId { get; set; }
 		public string PlayerGuid { get; set; }
@@ -142,7 +143,7 @@ namespace StendenClickerApi.Database
 		public int MonstersDefeated { get; set; }
 		public int BossesDefreated { get; set; }
 
-		public virtual ICollection<Hero> Heroes { get; set; }
+		public virtual ICollection<PlayerHero> Heroes { get; set; }
 		protected virtual ICollection<Friendship> Friendships1 { get; set; }
 		protected virtual ICollection<Friendship> Friendships2 { get; set; }
 		protected virtual ICollection<MultiPlayerSession> Sessions1 { get; set; }
@@ -174,6 +175,13 @@ namespace StendenClickerApi.Database
 				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency {EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
 			};
 		}
+	}
+
+	public class PlayerHero 
+	{
+		public int PlayerHeroId { get; set; }
+		public virtual ICollection<Player> Players { get; set; }
+		public virtual ICollection<Hero> Heroes { get; set; }
 	}
 
 	public class Friendship
