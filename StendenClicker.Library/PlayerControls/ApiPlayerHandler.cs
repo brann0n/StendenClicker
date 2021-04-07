@@ -61,7 +61,7 @@ namespace StendenClicker.Library.PlayerControls
 		/// uploads the current player state to the server
 		/// </summary>
 		/// <param name="player"></param>
-		public async void SetPlayerStateAsync(Player player)
+		public async Task SetPlayerStateAsync(Player player)
 		{//todo: implement the save player data, also add hero's to the player object.
 			state = player;
 			Models.DatabaseModels.Player dbPlayer = player;
