@@ -94,10 +94,23 @@ namespace StendenClickerGame.ViewModels
 			SelfContext.IsOffCooldown = false;
 			SelfContext.NotifyPropertyChanged("IsOffCooldown");	
 			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");			
-			await Task.Delay(5000);
+			await DoDelayWithProgressbar(SelfContext, 150000);
 			SelfContext.IsOffCooldown = true;
 			SelfContext.NotifyPropertyChanged("IsOffCooldown");
 			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
+		}
+
+		private async Task DoDelayWithProgressbar(Abilities SelfContext, int delayTime)
+		{
+			//devide delaytime by 500 to update the bar every half a second
+			double amountOfTicks = delayTime / 100d;
+			for (int i = 0; i < amountOfTicks; i++)
+			{
+				int percentage = (int)(i / amountOfTicks * 100d);
+				SelfContext.CooldownPercentage = percentage;
+				SelfContext.NotifyPropertyChanged("CooldownPercentage");
+				await Task.Delay(100);
+			}
 		}
 
 		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
