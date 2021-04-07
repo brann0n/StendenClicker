@@ -20,7 +20,7 @@ namespace StendenClickerGame.ViewModels
 			AbilitiesList = new ObservableCollection<Abilities>()
 			{
 
-				new Abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss! (Stackable)" , IsOffCooldown = false, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
+				new Abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss! (Stackable)" , IsOffCooldown = false, Image = "Assets/koffie.png" , OnExecute = new RelayFunctionCommand<Abilities>(GerjanSmoothieAbilityClick, null) },
 				new Abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage! (5s)", IsOffCooldown = true, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
 				new Abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Je vijand sparkelt uit elkaar!", IsOffCooldown = true, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
 
@@ -55,7 +55,7 @@ namespace StendenClickerGame.ViewModels
 			CurrencyTrayViewModel.AbilityMultiplier = 2;
 		}
 
-        private async void GerjanSmoothieAbilityClick()
+        private async void GerjanSmoothieAbilityClick(Abilities test)
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 			_AbilitiesList[0].IsOffCooldown = false;
