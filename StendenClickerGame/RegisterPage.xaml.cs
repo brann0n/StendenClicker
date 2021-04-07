@@ -68,8 +68,9 @@ namespace StendenClickerGame
         {
             if (!string.IsNullOrEmpty(UsernameTextBox.Text))
             {
+
                 //todo: check if the username has already been taken (although it doenst require to be unique, for searching friends it might be usefull)
-               // MainPageViewModel context = (MainPageViewModel)this.DataContext;
+                // MainPageViewModel context = (MainPageViewModel)this.DataContext;
                 try
                 {
                     await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());

@@ -528,7 +528,7 @@
                                     <RowDefinition Height="85*"/>
                                 </Grid.RowDefinitions>
                                 <TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White" >Vrieden:</TextBlock>
-                                <Button Grid.Row="0" HorizontalAlignment="Right" CornerRadius="5" Background="Transparent" Foreground="White" Margin="0,0,12,10">Refresh</Button>
+                                <Button Grid.Row="0" HorizontalAlignment="Right" CornerRadius="5" Background="Transparent" Foreground="White" Margin="0,0,12,10" Command="{Binding Friends.RefreshFriendList}">Refresh</Button>
                                 <ListView  Grid.Row="1" Name="Friends" ItemsSource="{Binding Friends.ObservableFriendship}" Width="{Binding ActualWidth, ElementName=friendGrid}" HorizontalAlignment="Center" Padding="0" Margin="0" SelectionMode="none">
                                     <ListView.ItemTemplate>
                                         <DataTemplate>
