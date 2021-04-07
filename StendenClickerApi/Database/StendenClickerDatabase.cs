@@ -84,6 +84,8 @@ namespace StendenClickerApi.Database
 		public int UpgradeCost { get; set; }
 		public bool UpgradeIsAbility { get; set; }
 		public virtual Hero Hero { get; set; }
+
+		protected virtual PlayerHero Player { get; set; }
 	}
 
 	public class Player
@@ -171,19 +173,22 @@ namespace StendenClickerApi.Database
 				deviceId = player.DeviceId,
 				Username = player.PlayerName,
 				UserId = Guid.Parse(player.PlayerGuid),
-				State = new PlayerState {BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
-				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency {EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
+				State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
+				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
 			};
 		}
 	}
 
-	public class PlayerHero 
+	public class PlayerHero
 	{
 		public int PlayerHeroId { get; set; }
-		public virtual ICollection<Player> Players { get; set; }
-		public virtual ICollection<Hero> Heroes { get; set; }
 		public int HeroUpgradeLevel { get; set; }
 		public int SpecialUpgradeLevel { get; set; }
+
+		public virtual Player Player { get; set; }
+		public virtual Hero Hero { get; set; }
+
+		public virtual ICollection<Upgrade> BoughtUpgrades { get; set; }
 	}
 
 	public class Friendship

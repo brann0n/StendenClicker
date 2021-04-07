@@ -58,7 +58,7 @@ namespace StendenClickerApi.Controllers
         }
 
         [ApiKeySecurity, HttpPost, Route("Create")]
-        public HttpStatusCodeResult CreatePlayer(Player player)
+        public async Task<HttpStatusCodeResult> CreatePlayer(Player player)
         {
             if (player == null) return new HttpStatusCodeResult(500, "Player object not present");
 
@@ -68,7 +68,7 @@ namespace StendenClickerApi.Controllers
             }
 
             db.Players.Add(player);
-            db.SaveChanges();
+            await db.SaveChangesAsync();
 
             return new HttpStatusCodeResult(200, "Created the player");
         }

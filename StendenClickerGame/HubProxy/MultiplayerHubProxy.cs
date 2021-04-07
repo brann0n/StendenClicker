@@ -31,6 +31,7 @@ namespace StendenClickerGame.Multiplayer
 			proxy.InitProxyAsync(ServerURL);
 			return proxy; 
 		});
+
 		public static MultiplayerHubProxy Instance { get { return instance.Value; } }
 
 		//signalR required objects

@@ -95,7 +95,7 @@ namespace StendenClickerGame.ViewModels
 
 			ContextSetAbilityEnabled(SelfContext);	
 			
-			await ContextDelayProgressbar(SelfContext, 150000);
+			await ContextDelayProgressbar(SelfContext, 5000);
 
 			ContextSetAbilityDisabled(SelfContext);
 		}		
@@ -135,7 +135,7 @@ namespace StendenClickerGame.ViewModels
 			for (int i = 0; i < amountOfTicks; i++)
 			{
 				int percentage = (int)(i / amountOfTicks * 100d);
-				TimeSpan ts = TimeSpan.FromSeconds(((int)amountOfTicks - i)/20);
+				TimeSpan ts = TimeSpan.FromSeconds(Math.Ceiling((amountOfTicks - i) / 10));
 				SelfContext.CooldownPercentage = percentage;
 				SelfContext.CooldownTime = ts;
 				SelfContext.NotifyPropertyChanged("CooldownPercentage");
