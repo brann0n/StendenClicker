@@ -26,6 +26,7 @@ namespace StendenClickerGame.ViewModels
 		//click eventhandler
 		public static event EventHandler OnClickAbilityProcess;
 		public static int AbilityMultiplier;
+		public event EventHandler OnMonsterDefeated;
 
 		private ReusableCurrencyPool CurrencyPool { get { return ReusableCurrencyPool.GetInstance(); } }
 
@@ -99,6 +100,7 @@ namespace StendenClickerGame.ViewModels
 
 				if (CurrentMonster.IsDefeated())
 				{
+					OnMonsterDefeated?.Invoke(null,null);
 					//get the rewards for this monster and generate a new level
 					var rewards = CurrentMonster.GetReward();
 					for (ulong i = 0; i < rewards.SparkCoin; i++)

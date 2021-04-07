@@ -62,14 +62,21 @@ namespace StendenClickerGame.ViewModels
 
 			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
 			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
+
+            CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
 		}
 
-		/// <summary>
-		/// Can only process current level and current playerlist, other objects are defaulted.
-		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
+        private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
+        {
+			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
+		}
+
+        /// <summary>
+        /// Can only process current level and current playerlist, other objects are defaulted.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
 		{
 			MultiPlayerSession session = (MultiPlayerSession)sender;
 
