@@ -11,7 +11,7 @@ namespace StendenClickerGame.Data
 	{
 		public string AbilitieName { get; set; }
 		public string AbilitieDescription { get; set; }
-		public int Cooldown { get; set; }
+		public bool IsOffCooldown { get; set; }
 		public string Image { get; set; }
 
 		public ICommand OnExecute { get; set; }

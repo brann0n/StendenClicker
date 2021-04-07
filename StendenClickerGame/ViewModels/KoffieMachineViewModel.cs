@@ -1,5 +1,6 @@
 using StendenClicker.Library.Abilities;
 using StendenClicker.Library.AbstractMonster;
+using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
@@ -12,15 +13,17 @@ namespace StendenClickerGame.ViewModels
 {
 	public class KoffieMachineViewModel : ViewModelBase
 	{
-		private List<SpecialAbility> UnlockedAbilities;
-		public ObservableCollection<Abilities> AbilitiesList { get; set; }
+		private static ObservableCollection<Abilities> _AbilitiesList { get; set; }
+		public ObservableCollection<Abilities> AbilitiesList { get => _AbilitiesList; set => _AbilitiesList = value; }
 		public KoffieMachineViewModel()
 		{
 			AbilitiesList = new ObservableCollection<Abilities>()
 			{
-				new Abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss (Stackable)" , Cooldown = 60, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
-				new Abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage (5s)", Cooldown = 120, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
-				new Abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Leun achterover en laat het spel het werk doen (10s)", Cooldown = 300, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
+
+				new Abilities { AbilitieName = "Gerjan's Tarwesmoothie", AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss! (Stackable)" , IsOffCooldown = false, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(GerjanSmoothieAbilityClick) },
+				new Abilities { AbilitieName = "Sji's Power Koffie", AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage! (5s)", IsOffCooldown = true, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync) },
+				new Abilities { AbilitieName = "Jan's Spa Bloedrood", AbilitieDescription = "Je vijand sparkelt uit elkaar!", IsOffCooldown = true, Image = "Assets/koffie.png" , OnExecute = new RelayCommand(JanWaterAbilityClick)}
+
 			};
 		}
 
@@ -31,8 +34,11 @@ namespace StendenClickerGame.ViewModels
 
         private void JanWaterAbility(object sender, EventArgs e)
         {
-              
-        }
+			GamePlatform platform = (GamePlatform)sender;
+			AbstractMonster m = (AbstractMonster)platform.Monster;
+			m.DoDamage(m.Health);
+			CurrencyTrayViewModel.OnClickAbilityProcess -= JanWaterAbility;			
+		}
 
         private async void SjiKoffieAbilityClickAsync()
         {
@@ -49,9 +55,14 @@ namespace StendenClickerGame.ViewModels
 			CurrencyTrayViewModel.AbilityMultiplier = 2;
 		}
 
-        private void GerjanSmoothieAbilityClick()
+        private async void GerjanSmoothieAbilityClick()
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
+			_AbilitiesList[0].IsOffCooldown = false;
+			NotifyPropertyChanged("AbilitiesList");
+			await Task.Delay(5000);
+			_AbilitiesList[0].IsOffCooldown = true;
+			NotifyPropertyChanged("AbilitiesList");
 		}
 
 		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
