@@ -84,10 +84,12 @@ namespace StendenClickerGame.ViewModels
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 			SelfContext.IsOffCooldown = false;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");			
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");	
+			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");			
 			await Task.Delay(5000);
 			SelfContext.IsOffCooldown = true;
 			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
 		}
 
 		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
