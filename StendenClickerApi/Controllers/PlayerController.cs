@@ -156,5 +156,36 @@ namespace StendenClickerApi.Controllers
 
             return new HttpStatusCodeResult(200, "false");
         }
+
+        [ApiKeySecurity, HttpPost, Route("DeleteFriendship")]
+        public async Task<ActionResult> DeleteFriendship(List<string> playerGuidList)
+        {
+            if (playerGuidList == null) return new HttpStatusCodeResult(500, "No player list received.");
+            if (playerGuidList.Count != 2) return new HttpStatusCodeResult(500, "Player list didnt contain 2 players.");
+
+            string guid1 = playerGuidList[0];
+            string guid2 = playerGuidList[1];
+
+            //check both player objects with the empty checker
+            Player friend1 = db.Players.FirstOrDefault(n => n.PlayerGuid == guid1);
+            Player friend2 = db.Players.FirstOrDefault(n => n.PlayerGuid == guid2);
+
+            if (Player.IsPlayerObjectEmpty(friend1) && Player.IsPlayerObjectEmpty(friend2)) return new HttpStatusCodeResult(500, "Player objects didnt validate.");
+
+            Friendship friendship = db.Friendships
+                    .Where(n => n.Player1 == friend1 || n.Player2 == friend1)
+                    .Where(n => n.Player1 == friend2 || n.Player2 == friend2)
+                    .FirstOrDefault();
+
+            if(friendship == null)
+            {
+                return new HttpStatusCodeResult(404, "Friendship has not been found");
+            }
+
+            db.Friendships.Remove(friendship);
+            await db.SaveChangesAsync();
+
+            return new HttpStatusCodeResult(200, "Friendship was deleted.");
+        }
     }
 }
