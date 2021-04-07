@@ -20,8 +20,6 @@ namespace StendenClicker.Library.PlayerControls
         /// </summary>
         public string deviceId { get; set; }
 
-        public string connectionId { get; set; }
-
         public PlayerState State { get; set; }
 
         
@@ -58,13 +56,12 @@ namespace StendenClicker.Library.PlayerControls
 		{
 			return new Player
 			{
-				connectionId = player.ConnectionId,
-				deviceId = player.DeviceId,
-				Username = player.PlayerName,
+                deviceId = player.DeviceId,
+                Username = player.PlayerName,
                 UserId = Guid.Parse(player.PlayerGuid),
-                State = new PlayerState(),
-                Wallet = new PlayerCurrency()
-			};
+                State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
+                Wallet = new PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
+            };
 		}
 
         public int getDamageFactor()
