@@ -182,6 +182,8 @@ namespace StendenClickerApi.Database
 		public int PlayerHeroId { get; set; }
 		public virtual ICollection<Player> Players { get; set; }
 		public virtual ICollection<Hero> Heroes { get; set; }
+		public int HeroUpgradeLevel { get; set; }
+		public int SpecialUpgradeLevel { get; set; }
 	}
 
 	public class Friendship
@@ -193,7 +195,7 @@ namespace StendenClickerApi.Database
 
 	public class MultiPlayerSession
 	{
-		//many-to-many-to-many-to-many?
+		//many-to-many-to-many-to-many? yes.
 		public int MultiPlayerSessionId { get; set; }
 		public virtual Player Player1 { get; set; }
 		public virtual Player? Player2 { get; set; }
