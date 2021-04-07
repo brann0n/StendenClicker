@@ -97,8 +97,8 @@ namespace StendenClickerGame
 			this.DataContext = new MainPageViewModel();
 
 			var bounds = Window.Current.Bounds;
-			((MainPageViewModel)DataContext).WindowHeight = bounds.Height < 720 ? 720 : (int)bounds.Height;
-			((MainPageViewModel)DataContext).WindowWidth = bounds.Width < 1280 ? 1280 : (int)bounds.Width;
+			((MainPageViewModel)DataContext).WindowHeight = bounds.Height < 1080 ? 1080 : (int)bounds.Height;
+			((MainPageViewModel)DataContext).WindowWidth = bounds.Width < 1920 ? 1920 : (int)bounds.Width;
 		}
 	}
 }
