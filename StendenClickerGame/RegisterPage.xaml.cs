@@ -68,7 +68,6 @@ namespace StendenClickerGame
         {
             if (!string.IsNullOrEmpty(UsernameTextBox.Text))
             {
-                //todo: check if the username has already been taken (although it doenst require to be unique, for searching friends it might be usefull)
                 //MainPageViewModel context = (MainPageViewModel)this.DataContext;
                 if (await beforeContextPlayerHandler.IsUsernameAvailable(UsernameTextBox.Text))
                 {
@@ -84,11 +83,14 @@ namespace StendenClickerGame
                     }
                 }
                 else
-                { 
-                    //give popup that username is already taken
+                {
+                    feedbackText.Text = "Deze gebruikers naam is al in gebruik";  //give popup that username is already taken
                 }
             }
-            //show a red label with the message that they need to enter a username.
+            else
+            {
+                feedbackText.Text = "Er moet een gruikers naaw worden ingevuld";
+            }
         }
     }
 }

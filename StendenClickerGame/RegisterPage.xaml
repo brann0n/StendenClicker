@@ -29,6 +29,7 @@
                     <SolidColorBrush x:Key="TextControlBackgroundPressed" Color="Transparent"/>
                 </TextBox.Resources>
             </TextBox>
+            <TextBlock Name="feedbackText" Foreground="red" FontWeight="Bold" Margin="0,0,0,10" HorizontalAlignment="Center"/>
             <Button Name="GoToMainPage" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White">Creeër account</Button>
         </StackPanel>
     </Grid>
