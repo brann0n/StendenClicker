@@ -1,4 +1,3 @@
-using StendenClicker.Library.Abilities;
 using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;

@@ -1,4 +1,4 @@
-using StendenClicker.Library.Abilities;
+using StendenClicker.Library.Models.DatabaseModels;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -29,7 +29,7 @@ namespace StendenClicker.Library.PlayerControls
 		public int HeroLevel { get; set; }
 		public int Price { get; set; }
 
-		public List<HeroUpgrades> Upgrades { get; set; }
+		public List<Upgrade> Upgrades { get; set; }
 
 		public Image GetImageSprite()
 		{
