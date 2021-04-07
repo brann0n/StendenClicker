@@ -26,14 +26,15 @@ namespace StendenClickerGame.ViewModels
 			};
 			GerjanAbility.OnExecute = new RelayFunctionCommand<Abilities>(GerjanSmoothieAbilityClick, GerjanAbility);
 
-			var SjihAbility = new Abilities
+			var SjiAbility = new Abilities
 			{
 				AbilitieName = "Sji's Power Koffie",
 				AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage! (5s)",
 				IsOffCooldown = true,
-				Image = "Assets/koffie.png",
-				OnExecute = new RelayCommand(SjiKoffieAbilityClickAsync)
+				Image = "Assets/koffie.png"
 			};
+			SjiAbility.OnExecute = new RelayFunctionCommand<Abilities>(SjiKoffieAbilityClick, SjiAbility);
+
 
 			var JanAbility = new Abilities
 			{
@@ -41,20 +42,25 @@ namespace StendenClickerGame.ViewModels
 				AbilitieDescription = "Je vijand sparkelt uit elkaar!",
 				IsOffCooldown = true,
 				Image = "Assets/koffie.png",
-				OnExecute = new RelayCommand(JanWaterAbilityClick)
 			};
+			JanAbility.OnExecute = new RelayFunctionCommand<Abilities>(JanWaterAbilityClick, JanAbility);
 
 			AbilitiesList = new ObservableCollection<Abilities>()
 			{
-				GerjanAbility ,
-				SjihAbility,
+				GerjanAbility,
+				SjiAbility,
 				JanAbility
 			};
 		}
 
-		private void JanWaterAbilityClick()
+		private async void JanWaterAbilityClick(Abilities SelfContext)
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += JanWaterAbility;
+			SelfContext.IsOffCooldown = false;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			await Task.Delay(300000);
+			SelfContext.IsOffCooldown = true;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
 		}
 
 		private void JanWaterAbility(object sender, EventArgs e)
@@ -65,14 +71,16 @@ namespace StendenClickerGame.ViewModels
 			CurrencyTrayViewModel.OnClickAbilityProcess -= JanWaterAbility;
 		}
 
-		private async void SjiKoffieAbilityClickAsync()
+		private async void SjiKoffieAbilityClick(Abilities SelfContext)
 		{
-			await Task.Run(async () => //Task.Run automatically unwraps nested Task types!
-			{
-				CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
-				await Task.Delay(5000);
-				CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
-			});
+			SelfContext.IsOffCooldown = false;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
+			CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
+			await Task.Delay(5000);
+			CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
+			await Task.Delay(115000);
+			SelfContext.IsOffCooldown = true;
+			SelfContext.NotifyPropertyChanged("IsOffCooldown");
 		}
 
 		private void SjiKoffieAbility(object sender, EventArgs e)
@@ -85,7 +93,7 @@ namespace StendenClickerGame.ViewModels
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 			SelfContext.IsOffCooldown = false;
 			SelfContext.NotifyPropertyChanged("IsOffCooldown");			
-			await Task.Delay(5000);
+			await Task.Delay(150000);
 			SelfContext.IsOffCooldown = true;
 			SelfContext.NotifyPropertyChanged("IsOffCooldown");
 		}
