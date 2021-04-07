@@ -202,7 +202,7 @@ namespace StendenClickerGame.ViewModels
 				CurrencyPool.ReleaseCurrency((Currency)o);
 			};
 
-			coin.SetAutoRemove(5000);
+			coin.SetAutoRemove(1000);
 
 			CurrencyInView.Add(coin);
 		}

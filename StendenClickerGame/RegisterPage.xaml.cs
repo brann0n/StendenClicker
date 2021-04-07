@@ -64,33 +64,33 @@ namespace StendenClickerGame
 			}
 		}
 
-		private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
-		{
-			if (!string.IsNullOrEmpty(UsernameTextBox.Text))
-			{
-				//todo: check if the username has already been taken (although it doenst require to be unique, for searching friends it might be usefull)
-				//MainPageViewModel context = (MainPageViewModel)this.DataContext;
-				if (await beforeContextPlayerHandler.IsUsernameAvailable(UsernameTextBox.Text))
-				{
-					try
-					{
-						await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());
-
+        private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrEmpty(UsernameTextBox.Text))
+            {
+                if (await beforeContextPlayerHandler.IsUsernameAvailable(UsernameTextBox.Text))
+                {
+                    try
+                    {
+                        await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());
 						CreateDataContext();
-						this.Frame.Navigate(typeof(MainPage), this.DataContext);
-					}
-					catch (Exception)
-					{
-						//show this error to the user.
-					}
-				}
-				else
-				{
-					//give popup that username is already taken
-				}
-			}
-			//show a red label with the message that they need to enter a username.
-		}
+                        this.Frame.Navigate(typeof(MainPage), this.DataContext);
+                    }
+                    catch (Exception)
+                    {
+                        //show this error to the user.
+                    }
+                }
+                else
+                {
+                    feedbackText.Text = "Deze gebruikers naam is al in gebruik";  //give popup that username is already taken
+                }
+            }
+            else
+            {
+                feedbackText.Text = "Er moet een gruikers naaw worden ingevuld";
+            }
+        }
 
 		private void CreateDataContext()
 		{
