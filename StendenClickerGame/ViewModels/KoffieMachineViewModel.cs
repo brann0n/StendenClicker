@@ -135,7 +135,7 @@ namespace StendenClickerGame.ViewModels
 			for (int i = 0; i < amountOfTicks; i++)
 			{
 				int percentage = (int)(i / amountOfTicks * 100d);
-				TimeSpan ts = TimeSpan.FromSeconds((int)amountOfTicks - i);
+				TimeSpan ts = TimeSpan.FromSeconds(((int)amountOfTicks - i)/20);
 				SelfContext.CooldownPercentage = percentage;
 				SelfContext.CooldownTime = ts;
 				SelfContext.NotifyPropertyChanged("CooldownPercentage");
