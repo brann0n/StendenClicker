@@ -118,23 +118,6 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private async void DeleteFriendShip(Player player)
-		{
-			List<Player> Friends = new List<Player> { MultiplayerHubProxy.Instance.CurrentPlayer, player };
-
-			var response = await RestHelper.GetRequestAsync("api/player/DeleteFriendship");
-			if (response.StatusCode == System.Net.HttpStatusCode.OK)
-			{
-				//friend has been added, update friendlist at the top:
-				await UpdateFriendships(MultiplayerHubProxy.Instance.CurrentPlayer.UserId.ToString());
-				ObservableSearchPlayerList.Clear();
-			}
-			else
-			{
-				//show prompt to user that deleting friend failed.
-			}
-		}
-
 		protected async Task UpdateFriendships(string userguid)
 		{
 			//empty the list.
@@ -168,11 +151,16 @@ namespace StendenClickerGame.ViewModels
 							await MultiplayerHubProxy.Instance.SendInvite(f.PlayerGuid);
 						}),
 
-						DeleteFriend = new RelayCommand(async() =>
-						{
-							await MultiplayerHubProxy.Instance.SendInvite(f.PlayerGuid);
-						})
 					};
+
+					friendUI.DeleteFriend = new RelayCommand(async () =>
+					{
+						//when clicked remove the object from the list, then send a delete request to the server, then update the list with a refresh
+						//this also means that if the remove failed, the server will reload the account info.
+						ObservableFriendship.Remove(friendUI);
+						await MultiplayerHubProxy.Instance.PlayerContext.DeleteFriendship(f.PlayerGuid, userguid);
+						await UpdateFriendships(MultiplayerHubProxy.Instance.CurrentPlayer.UserId.ToString());
+					});
 
 					ObservableFriendship.Add(friendUI);
 				}

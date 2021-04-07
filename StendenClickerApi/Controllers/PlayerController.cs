@@ -173,8 +173,8 @@ namespace StendenClickerApi.Controllers
             if (Player.IsPlayerObjectEmpty(friend1) && Player.IsPlayerObjectEmpty(friend2)) return new HttpStatusCodeResult(500, "Player objects didnt validate.");
 
             Friendship friendship = db.Friendships
-                    .Where(n => n.Player1 == friend1 || n.Player2 == friend1)
-                    .Where(n => n.Player1 == friend2 || n.Player2 == friend2)
+                    .Where(n => n.Player1.PlayerId == friend1.PlayerId|| n.Player2.PlayerId == friend1.PlayerId)
+                    .Where(n => n.Player1.PlayerId == friend2.PlayerId || n.Player2.PlayerId == friend2.PlayerId)
                     .FirstOrDefault();
 
             if(friendship == null)
