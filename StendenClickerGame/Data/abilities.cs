@@ -19,6 +19,8 @@ namespace StendenClickerGame.Data
 		public bool IsCooldownProgressEnabled { get => !IsOffCooldown; }
 		public int CooldownPercentage { get; set; }
 
+		public TimeSpan CooldownTime { get; set; }
+
 		public ICommand OnExecute { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
