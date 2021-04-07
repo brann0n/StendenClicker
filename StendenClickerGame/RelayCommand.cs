@@ -81,13 +81,22 @@ namespace StendenClickerGame
     public class RelayFunctionCommand<T> : ICommand
 	{
         private readonly Action<T> _execute;
-        private readonly T _data;
+        private T _data;
         private readonly Func<bool> _canExecute;
 
         /// <summary>
         /// Raised when RaiseCanExecuteChanged is called.
         /// </summary>
         public event EventHandler CanExecuteChanged;
+
+        /// <summary>
+        /// Creates a new command that can always execute.
+        /// </summary>
+        /// <param name="execute">The execution logic.</param>
+        public RelayFunctionCommand(Action<T> execute)
+            : this(execute, default, null)
+        {
+        }
 
         /// <summary>
         /// Creates a new command that can always execute.
@@ -142,5 +151,10 @@ namespace StendenClickerGame
         {
             CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public void SetContextData(T data)
+		{
+            _data = data;
+		}
     }
 }

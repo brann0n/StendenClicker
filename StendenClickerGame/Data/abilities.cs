@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace StendenClickerGame.Data
 {
-	public class Abilities
+	public class Abilities : INotifyPropertyChanged
 	{
 		public string AbilitieName { get; set; }
 		public string AbilitieDescription { get; set; }
@@ -15,5 +17,16 @@ namespace StendenClickerGame.Data
 		public string Image { get; set; }
 
 		public ICommand OnExecute { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
+
+		/// <summary>
+		/// The important notifier method of changed properties. This function should be called whenever you want to inform other classes that some property has changed.
+		/// </summary>
+		/// <param name="propertyName">The name of the updated property. Leaving this blank will fill in the name of the calling property.</param>
+		public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
+		{
+			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+		}
 	}
 }

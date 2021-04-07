@@ -49,7 +49,7 @@ namespace StendenClicker.Library
                 file = await installedLocation.CreateFileAsync(filename);
             }
 
-            await FileIO .WriteTextAsync(file, JsonConvert.SerializeObject(data));
+            await FileIO.WriteTextAsync(file, JsonConvert.SerializeObject(data));
         }
 
         public static async Task RemoveFile(string filename)
