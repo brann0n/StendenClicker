@@ -22,10 +22,9 @@ namespace StendenClickerGame.ViewModels
 				AbilitieName = "Gerjan's Tarwesmoothie",
 				AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss! (Stackable)",
 				IsOffCooldown = true,
-				Image = "Assets/koffie.png",
-				OnExecute = new RelayFunctionCommand<Abilities>(GerjanSmoothieAbilityClick)
+				Image = "Assets/koffie.png"
 			};
-			((RelayFunctionCommand<Abilities>)GerjanAbility.OnExecute).SetContextData(GerjanAbility);
+			GerjanAbility.OnExecute = new RelayFunctionCommand<Abilities>(GerjanSmoothieAbilityClick, GerjanAbility);
 
 			var SjihAbility = new Abilities
 			{
