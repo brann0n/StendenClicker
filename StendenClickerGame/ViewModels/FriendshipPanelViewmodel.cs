@@ -16,13 +16,13 @@ namespace StendenClickerGame.ViewModels
 {
 	public class FriendshipPanelViewmodel : ViewModelBase
 	{
-		//todo: create a button to refresh the friendlist
 		//todo: create a button to leave a joined session
 		//todo: create a button to remove a friend from your list.
 		public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
 
+		public ICommand RefreshFriendList { get; set; }
 		public ICommand SearchFriendsCommand { get; set; }
 		public string FriendSearchbar { get; set; }
 
@@ -33,6 +33,7 @@ namespace StendenClickerGame.ViewModels
 			ObservablePendingInvites = new ObservableCollection<InviteModel>();
 
 			SearchFriendsCommand = new RelayCommand(SearchFriends);
+			RefreshFriendList = new RelayCommand(UpdateFriendsInUI);
 		}
 
 		public async void AddPendingInvite(InviteModel invite)
@@ -117,6 +118,23 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
+		private async void DeleteFriendShip(Player player)
+		{
+			List<Player> Friends = new List<Player> { MultiplayerHubProxy.Instance.CurrentPlayer, player };
+
+			var response = await RestHelper.GetRequestAsync("");
+			if (response.StatusCode == System.Net.HttpStatusCode.OK)
+			{
+				//friend has been added, update friendlist at the top:
+				await UpdateFriendships(MultiplayerHubProxy.Instance.CurrentPlayer.UserId.ToString());
+				ObservableSearchPlayerList.Clear();
+			}
+			else
+			{
+				//show prompt to user that adding friend failed.
+			}
+		}
+
 		protected async Task UpdateFriendships(string userguid)
 		{
 			//empty the list.
@@ -148,6 +166,11 @@ namespace StendenClickerGame.ViewModels
 						InviteCommand = new RelayCommand(async () =>
 						{
 							await MultiplayerHubProxy.Instance.SendInvite(f.PlayerGuid);
+						}),
+
+						DeleteFriend = new RelayCommand(async() =>
+						{
+							await MultiplayerHubProxy.Instance.SendInvite(f.PlayerGuid);
 						})
 					};
 
@@ -157,6 +180,11 @@ namespace StendenClickerGame.ViewModels
 
 				NotifyPropertyChanged("ObservableFriendship");
 			}
+		}
+
+		public async void UpdateFriendsInUI()
+		{
+			await UpdateFriendships(MultiplayerHubProxy.Instance.CurrentPlayer.UserId.ToString());
 		}
 
 		public async void InitializeFriendship(string userguid) => await UpdateFriendships(userguid);
