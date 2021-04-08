@@ -19,7 +19,6 @@
 		<customui:SmallBase64ImageScaler x:Key="SmallBase64ImageScaler"/>
 	</Page.Resources>
 
-
 	<!-- MainGrid -->
 	<Grid Background="#2EAAB6">
 		<Grid.ColumnDefinitions>
@@ -334,8 +333,8 @@
 				<RowDefinition Height="10.5*"/>
 			</Grid.RowDefinitions>
 			<!--Background koffiemachine met gradiant-->
-			<Border CornerRadius="5" Margin="10,20,10,20">
-				<Grid Grid.Row="0">
+			<Border Grid.Row="0" CornerRadius="5" Margin="10,20,10,20">
+				<Grid >
 					<Grid.Background>
 						<media:RadialGradientBrush MappingMode="RelativeToBoundingBox" InterpolationSpace="Auto">
 							<GradientStop Color="#6A6A6A" Offset="1"/>
@@ -377,11 +376,11 @@
 											<!-- Ability Progressbar -->
 											<Grid Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 												<Border CornerRadius="5">
-                                                    <Grid>
-                                                        <ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Red" Visibility="{Binding IsCooldownProgressEnabled, Mode=OneWay}"/>
-                                                        <TextBlock Text="{Binding CooldownTime}" Visibility="{Binding IsCooldownProgressEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-                                                    </Grid>
-                                                </Border>
+													<Grid>
+														<ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Red" Visibility="{Binding IsCooldownProgressEnabled, Mode=OneWay}"/>
+														<TextBlock Text="{Binding CooldownTime}" Visibility="{Binding IsCooldownProgressEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+													</Grid>
+												</Border>
 											</Grid>
 										</Grid>
 									</Button>
@@ -395,6 +394,16 @@
 							</ListView.ItemContainerStyle>
 						</ListView>
 					</Grid>
+				</Grid>
+			</Border>
+			<Border Grid.Row="1" CornerRadius="5" Margin="10,0,10,20"><!--Margin="10,0,10,20"-->
+				<Grid >
+					<!-- Music Player-->
+					<MediaElement x:Name="mediaElement" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" AreTransportControlsEnabled="True" AutoPlay="True">
+						<MediaElement.TransportControls>
+							<MediaTransportControls IsFullWindowButtonVisible="False" IsZoomButtonVisible="False" IsRepeatEnabled="True" />
+						</MediaElement.TransportControls>
+					</MediaElement>
 				</Grid>
 			</Border>
 		</Grid>
