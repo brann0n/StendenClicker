@@ -152,7 +152,7 @@ namespace StendenClickerApi.Hubs
 				SessionExtensions.UpdatePlayers(key, sessionPlayers);
 				SessionExtensions.UpdateLevel(key, a);
 
-				await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a);
+				await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a, PlayersInSession.Count != 1);
 			}
 
 			return SessionIsValid;
@@ -174,7 +174,7 @@ namespace StendenClickerApi.Hubs
 
 				SessionExtensions.UpdatePlayers(key, sessionPlayers);
 				SessionExtensions.UpdateLevel(key, a);
-				await Clients.Groups(PlayersInSession).receiveNormalMonsterBroadcast(sessionPlayers, a);
+				await Clients.Groups(PlayersInSession).receiveNormalMonsterBroadcast(sessionPlayers, a, PlayersInSession.Count != 1);
 			}
 
 			return SessionIsValid;
