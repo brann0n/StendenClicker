@@ -76,10 +76,53 @@ public async Task SetPlayerStateAsync(Player player)
 
 * <h3>Observer</h3>
 
-Binnen de StendenClicker game zal ereen optie zijn om samen met andere spelers de strijd aan te gaan met monsters die de studenten door de jaren heen mentaal te lijf zijn gegaan. Om alle gebruikers dezelfde informatie te tonen over de status van hun online game,zal er gebruik worden gemaakt van het observer design pattern. De observer design pattern zorgt ervoor dat als er een object van status veranderd, alle afhankelijke objecten hiervan op de hoogte worden gebracht en automatisch worden bijgewerkt. Doormiddel  van de methode ‘INotifyPropertyChanged’ van de ViewModel worden de eigendommen van de objecten bijgewerkt. Voor de communicatie tussen Client en de Server wordt gebruikt gemaakt van SignalR.
+Binnen de StendenClicker game zal er een optie zijn om samen met andere spelers de strijd aan te gaan met monsters die de studenten door de jaren heen mentaal te lijf zijn gegaan. Om alle gebruikers dezelfde informatie te tonen over de status van hun online game, zal er gebruik worden gemaakt van het observer design pattern. De observer design pattern zorgt ervoor dat als er een object van status veranderd, alle afhankelijke objecten hiervan op de hoogte worden gebracht en automatisch worden bijgewerkt. Doormiddel  van de methode ‘INotifyPropertyChanged’ van de ViewModel worden de eigendommen van de objecten bijgewerkt. Voor de communicatie tussen Client en de Server wordt gebruikt gemaakt van SignalR.
 
-* Singleton
-Connectie met de server
+In de onderstaande code is de broadcaster van een boss sessie te zien. Deze vrijwel hetzelfde als een normal sessie, echter moeten deze worden gescheiden zodat er twee pipelines
+kunnen worden gegenereerd. De code is te vinden in StendenClickerApi onder Hubs in het bestand: [MultiplayerHub.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerApi/Hubs/MultiplayerHub.cs).
+
+```C#
+[HubMethodName("broadcastSessionBoss")]
+		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
+		{
+			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
+
+			bool SessionIsValid = SessionExtensions.ContainsKey(key);
+
+			if (SessionIsValid)
+			{
+				List<string> PlayersInSession = sessionPlayers.Select(n => n.UserId.ToString()).ToList();
+
+				SessionExtensions.UpdatePlayers(key, sessionPlayers);
+				SessionExtensions.UpdateLevel(key, a);
+
+				await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a);
+			}
+			return SessionIsValid;
+		}
+```
+Hierna kan de observer in StendenClickerGame onder HubProxy in bestand [MultiplayerHubProxy.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/HubProxy/MultiplayerHubProxy.cs), de broadcast observen. Dat gebeurt in de onderstaande code.
+
+```C#
+MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
+					MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
+					MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
+					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
+					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
+```
+
+* <h3>Singleton</h3>
+
+Voor de connectie met de server wordt een singleton gebruik. Dit is gedaan zodat er niet meerdere connecties kunnen worden gemaakt. Bij de StendenClicker is dat de [MultiplayerHubProxy.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/HubProxy/MultiplayerHubProxy.cs), te vinden onder StendenClickerGame in HubProxy.
+
+```C#
+private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() =>
+		{
+			MultiplayerHubProxy proxy = new MultiplayerHubProxy();
+			proxy.InitProxyAsync(ServerURL);
+			return proxy;
+		});
+```
 
 <h2>C# Threading</h2>
 
