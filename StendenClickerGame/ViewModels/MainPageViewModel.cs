@@ -65,7 +65,7 @@ namespace StendenClickerGame.ViewModels
 
 
 				HeroListObject heroListObject;
-				PlayerHero heroObject = CurrentPlayer.Heroes.FirstOrDefault(n => n.Hero.HeroName == h.HeroName);
+				PlayerHero heroObject = CurrentPlayer.Heroes?.FirstOrDefault(n => n.Hero.HeroName == h.HeroName);
 
 				if (heroObject != null)
 				{
