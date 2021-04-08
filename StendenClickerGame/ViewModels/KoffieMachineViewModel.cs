@@ -28,7 +28,7 @@ namespace StendenClickerGame.ViewModels
 			var SjiAbility = new Abilities
 			{
 				AbilitieName = "Sji's Power Koffie",
-				AbilitieDescription = "Dubbel de caffeïne, Dubbel de damage! (5s)",
+				AbilitieDescription = "Dubbel de caffeïne (+1 Damage multi, 5s)",
 				IsOffCooldown = true,
 				Image = "Assets/koffie.png"
 			};
@@ -43,13 +43,69 @@ namespace StendenClickerGame.ViewModels
 				Image = "Assets/koffie.png",
 			};
 			JanAbility.OnExecute = new RelayFunctionCommand<Abilities>(JanWaterAbilityClick, JanAbility);
+			
+			var MiguelAbility = new Abilities
+			{
+				AbilitieName = "Miguel's Bubbel Thee",
+				AbilitieDescription = "Kalmerende thee voor extra focus (+2 Damage multi, 10s)",
+				IsOffCooldown = true,
+				Image = "Assets/koffie.png",
+			};
+			MiguelAbility.OnExecute = new RelayFunctionCommand<Abilities>(MiguelTheeAbilityClick, MiguelAbility);
+
+			var MartijnAbility = new Abilities
+			{
+				AbilitieName = "Martijn's Puur Suikerwater",
+				AbilitieDescription = "WOOOOOOOOOOOOOO (+4 Damage multi, 15s)",
+				IsOffCooldown = true,
+				Image = "Assets/koffie.png",
+			};
+			MartijnAbility.OnExecute = new RelayFunctionCommand<Abilities>(MartijnSportAbilityClick, MartijnAbility);
 
 			AbilitiesList = new ObservableCollection<Abilities>()
 			{
 				GerjanAbility,
 				SjiAbility,
-				JanAbility
+				JanAbility,
+				MiguelAbility,
+				MartijnAbility
 			};
+		}
+
+        private async void MartijnSportAbilityClick(Abilities SelfContext)
+        {
+			ContextSetAbilityEnabled(SelfContext);
+
+			CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
+
+			await ContextDelayProgressbarEmpty(SelfContext, 15000);
+			CurrencyTrayViewModel.OnClickAbilityProcess -= MartijnSportAbility;
+			await ContextDelayProgressbarFill(SelfContext, 285000);
+
+			ContextSetAbilityDisabled(SelfContext);
+		}
+
+        private void MartijnSportAbility(object sender, EventArgs e)
+        {
+			CurrencyTrayViewModel.AbilityMultiplier += 4;
+		}
+
+        private async void MiguelTheeAbilityClick(Abilities SelfContext)
+		{
+			ContextSetAbilityEnabled(SelfContext);
+
+			CurrencyTrayViewModel.OnClickAbilityProcess += MiguelTheeAbility;
+
+			await ContextDelayProgressbarEmpty(SelfContext, 10000);
+			CurrencyTrayViewModel.OnClickAbilityProcess -= MiguelTheeAbility;
+			await ContextDelayProgressbarFill(SelfContext, 230000);
+
+			ContextSetAbilityDisabled(SelfContext);
+		}
+
+		private void MiguelTheeAbility(object sender, EventArgs e)
+		{
+			CurrencyTrayViewModel.AbilityMultiplier += 2;
 		}
 
 		private async void JanWaterAbilityClick(Abilities SelfContext)
@@ -86,7 +142,7 @@ namespace StendenClickerGame.ViewModels
 
 		private void SjiKoffieAbility(object sender, EventArgs e)
 		{
-			CurrencyTrayViewModel.AbilityMultiplier = 2;
+			CurrencyTrayViewModel.AbilityMultiplier += 1;
 		}
 
 		private async void GerjanSmoothieAbilityClick(Abilities SelfContext)
