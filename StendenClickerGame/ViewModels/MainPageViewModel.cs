@@ -67,7 +67,7 @@ namespace StendenClickerGame.ViewModels
 				{
 					//hero has been bought, add code that performs a hero level upgrade.
 					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked };
-					heroListObject.OnHeroButtonClicked = new RelayCommand(() => 
+					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
 						heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
@@ -76,13 +76,13 @@ namespace StendenClickerGame.ViewModels
 				else
 				{
 					//hero has not been bought yet, add code that allows you to buy this hero.
-					heroListObject = new HeroListObject { Hero = h , HeroUnlocked = isLevelUnlocked };
-					heroListObject.OnHeroButtonClicked = new RelayCommand(() => 
+					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked };
+					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
 
 						//create a new heroes object:
-						CurrentPlayer.Heroes.Add(new PlayerHero {Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
+						CurrentPlayer.Heroes.Add(new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
 					});
 				}
 
@@ -118,7 +118,7 @@ namespace StendenClickerGame.ViewModels
 
 		private void UpdateHeroList()
 		{
-			foreach(HeroListObject item in HeroList)
+			foreach (HeroListObject item in HeroList)
 			{
 				int levelNeededForUnlock = (item.Hero.Id * 5);
 				item.HeroUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= item.Hero.Id;
@@ -139,19 +139,19 @@ namespace StendenClickerGame.ViewModels
 			bool allowLevelUpdate = false;
 			MultiPlayerSession session = (MultiPlayerSession)sender;
 			//todo: check if the session is already loaded.
-			foreach (Player player in CurrencyTray.CurrentSession.CurrentPlayerList)
-			{	
-				if (!session.CurrentPlayerList.Select(n => n.UserId).Contains(player.UserId)) 
+			foreach (Player player in  session.CurrentPlayerList)
+			{
+				if (!CurrencyTray.CurrentSession.CurrentPlayerList.Select(n => n.UserId).Contains(player.UserId))
 				{
 					allowPlayerlistUpdate = true;
 				}
-				if (player.UserId != CurrentPlayer.UserId) 
+				if (player.UserId == CurrentPlayer.UserId)
 				{
-					if (player.State.MonstersDefeated != CurrentPlayer.State.MonstersDefeated)
+					if (CurrentPlayer.State.MonstersDefeated < player.State.MonstersDefeated)
 					{
 						allowLevelUpdate = true;
 					}
-					else if(player.State.BossesDefeated != CurrentPlayer.State.BossesDefeated)
+					else if (CurrentPlayer.State.BossesDefeated < player.State.BossesDefeated)
 					{
 						allowLevelUpdate = true;
 					}
@@ -163,8 +163,8 @@ namespace StendenClickerGame.ViewModels
 				CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
 				NotifyPropertyChanged("CurrencyTray");
 			}
-			if (allowPlayerlistUpdate) 
-			{ 
+			if (allowPlayerlistUpdate)
+			{
 				CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
 				NotifyPropertyChanged("CurrentPlayers");
 			}
