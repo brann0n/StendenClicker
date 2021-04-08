@@ -32,7 +32,14 @@ namespace StendenClickerApi.Controllers
             }
 
             //player.Heroes.First().Upgrades.First()
-
+            foreach(var item in player.Heroes)
+			{
+                item.Hero.HeroAsset = null;
+                foreach(var item2 in item.Upgrades)
+				{
+                    item2.Hero.HeroAsset = null;
+				}
+			}
             return new JsonStringResult(player);
         }
 

@@ -23,7 +23,7 @@ namespace StendenClicker.Library.PlayerControls
 				Heroes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Hero>>("heroes-asset-data.json");
 			}
 		}
-
+		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Base64Image { get; set; }
 		public int HeroLevel { get; set; }
@@ -40,6 +40,7 @@ namespace StendenClicker.Library.PlayerControls
 		{
 			return new Hero
 			{
+				Id = hero.HeroId,
 				Base64Image = hero.HeroAsset.Base64Image,
 				Name = hero.HeroName,
 				HeroLevel = 0,

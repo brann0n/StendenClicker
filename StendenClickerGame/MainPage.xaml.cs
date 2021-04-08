@@ -66,7 +66,7 @@ namespace StendenClickerGame
                 {
                     var stream = await file.OpenReadAsync();
                     mediaElement.SetSource(stream, file.ContentType);
-                    mediaElement.Volume = 0.2;
+                    mediaElement.Volume = 0.15;
                 }
             }
         }
@@ -76,7 +76,6 @@ namespace StendenClickerGame
             //this code-behind is needed to perform delayed loading of elements without stutter
             var ViewModelContext = e.Parameter as MainPageViewModel;
             this.DataContext = ViewModelContext;
-            ViewModelContext.LoadHeroes();
         }
 
         private void ButtonFriend_OnClick(object sender, RoutedEventArgs e)
