@@ -201,14 +201,19 @@ namespace StendenClickerApi.Hubs
 		{
 			Player player = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 
+			var Session = SessionExtensions.GetSessionByAnyClientId(UserGuid);
 
+			if (Session != null)
+			{
+				MultiPlayerSession MultiPlayerSession = SessionExtensions.Get(UserGuid);
+				List<PlayerObject> sessionMembers = new List<PlayerObject>();
+				sessionMembers.AddRange(MultiPlayerSession.CurrentPlayerList);
+				sessionMembers.Remove(sessionMembers.FirstOrDefault(n => n.UserId.ToString() == UserGuid));
 
-			SessionExtensions.Remove(UserGuid);
+				SessionExtensions.UpdatePlayers(Session.hostPlayerId, sessionMembers);
+			}
 			
-			//get sessionid from player
-			//remove that player from session in db
-			//remove plyer in session signalR
-
+			//add function to update is for all users
 		}
 	}
 }

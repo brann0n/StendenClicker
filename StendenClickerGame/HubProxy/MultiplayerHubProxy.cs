@@ -218,11 +218,6 @@ namespace StendenClickerGame.Multiplayer
 				}
 			});
 		}
-
-		public async Task leaveSession()
-		{
-			await MultiPlayerHub.Invoke<bool>("leaveSession");
-		}
 	}
 }
 

@@ -683,5 +683,25 @@
 				</Border>
 			</Popup>
 		</RelativePanel>
-	</Grid>
+
+        <RelativePanel Name="panelUpdateInfo" Grid.Column="2" VerticalAlignment="Bottom" Margin="20">
+            <Popup Name="popupUpdateInfo" IsOpen="false"  IsLightDismissEnabled="True" RelativePanel.AlignRightWithPanel="True" HorizontalAlignment="Right">
+                <Popup.ChildTransitions>
+                    <TransitionCollection>
+                        <PaneThemeTransition Edge="Right"/>
+                    </TransitionCollection>
+                </Popup.ChildTransitions>
+                <Border CornerRadius="5" Visibility="Visible">
+                    <Grid Background="#2E7988" Grid.Column="0" Width="400" Height="150">
+                        <Grid Name="UpdateInfoGrid" Width="300" HorizontalAlignment="Center">
+                            <StackPanel Grid.Row="2" Margin="0,10,0,0">
+                                <TextBlock Foreground="White" HorizontalAlignment="Center" FontSize="22" FontWeight="bold" Margin="0,5,0,0"/>
+                                <TextBlock Foreground="White" HorizontalAlignment="Center" Margin="0,5,0,0"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+            </Popup>
+        </RelativePanel>
+    </Grid>
 </Page>
