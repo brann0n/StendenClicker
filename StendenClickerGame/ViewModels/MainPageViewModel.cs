@@ -116,13 +116,39 @@ namespace StendenClickerGame.ViewModels
 		/// <param name="e"></param>
 		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
 		{
+			bool allowPlayerlistUpdate = false;
+			bool allowLevelUpdate = false;
 			MultiPlayerSession session = (MultiPlayerSession)sender;
 			//todo: check if the session is already loaded.
-			CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
-			CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
+			foreach (Player player in CurrencyTray.CurrentSession.CurrentPlayerList)
+			{	
+				if (!session.CurrentPlayerList.Select(n => n.UserId).Contains(player.UserId)) 
+				{
+					allowPlayerlistUpdate = true;
+				}
+				if (player.UserId != CurrentPlayer.UserId) 
+				{
+					if (player.State.MonstersDefeated != CurrentPlayer.State.MonstersDefeated)
+					{
+						allowLevelUpdate = true;
+					}
+					else if(player.State.BossesDefeated != CurrentPlayer.State.BossesDefeated)
+					{
+						allowLevelUpdate = true;
+					}
+				}
+			}
 
-			NotifyPropertyChanged("CurrentPlayers");
-			NotifyPropertyChanged("CurrencyTray");
+			if (allowLevelUpdate)
+			{
+				CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
+				NotifyPropertyChanged("CurrencyTray");
+			}
+			if (allowPlayerlistUpdate) 
+			{ 
+				CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
+				NotifyPropertyChanged("CurrentPlayers");
+			}
 		}
 
 		private void MpProxy_OnInviteReceived(object sender, EventArgs e)
