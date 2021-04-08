@@ -376,11 +376,11 @@
 											<!-- Ability Progressbar -->
 											<Grid Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 												<Border CornerRadius="5">
-													<Grid>
-														<ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Red" Visibility="{Binding IsCooldownProgressEnabled, Mode=OneWay}"/>
-														<TextBlock Text="{Binding CooldownTime}" Visibility="{Binding IsCooldownProgressEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
-													</Grid>
-												</Border>
+                                                    <Grid Visibility="{Binding IsCooldownProgressEnabled, Mode=OneWay}">
+                                                        <ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Red"/>
+                                                        <TextBlock Text="{Binding CooldownTime}" Visibility="{Binding IsCooldownTimerEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
+                                                    </Grid>
+                                                </Border>
 											</Grid>
 										</Grid>
 									</Button>

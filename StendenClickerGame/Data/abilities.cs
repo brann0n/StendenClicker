@@ -17,6 +17,7 @@ namespace StendenClickerGame.Data
 		public string Image { get; set; }
 
 		public bool IsCooldownProgressEnabled { get => !IsOffCooldown; }
+		public bool IsCooldownTimerEnabled { get; set; } = true;
 		public int CooldownPercentage { get; set; }
 
 		public TimeSpan CooldownTime { get; set; }

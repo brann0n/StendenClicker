@@ -195,6 +195,12 @@ namespace StendenClickerApi.Hubs
 
 			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel { UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
+
+		[HubMethodName("leaveSession")]
+		public async Task leaveSession(string targetPlayer)
+		{
+			Player host = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
+		}
 	}
 }
 
