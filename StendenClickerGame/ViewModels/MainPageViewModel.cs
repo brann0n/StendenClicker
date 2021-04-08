@@ -117,7 +117,7 @@ namespace StendenClickerGame.ViewModels
 		private void MpProxy_OnSessionUpdateReceived(object sender, EventArgs e)
 		{
 			MultiPlayerSession session = (MultiPlayerSession)sender;
-
+			//todo: check if the session is already loaded.
 			CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
 			CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
 
