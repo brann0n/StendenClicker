@@ -171,6 +171,9 @@ batchclicks op te halen en daarna uit te rekenen hoeveel keer er in totaal is ge
 
 * Delegates
 
+<h2> Database Structuur </2>
+
+![Alt Text](https://github.com/brann0n/StendenClicker/blob/master/docs/Capture.PNG)
 
 <h2> Werking van de Stenden Clicker Game</h2>
 
