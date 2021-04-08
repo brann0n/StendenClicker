@@ -129,7 +129,22 @@ private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<Multiplaye
 De volgende onderdelen van de code gebruiken threading:
 
 * Async and Await
-Webrequests
+Door de gehele applicatie wordt Async en Await gebruikt wanneer nodig. Het beste voorbeeld van het gebruik hiervan is bij de abilities. Deze zijn te vinden in StendenClickerGame, ViewModels in [KoffieMachineViewModel.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/ViewModels/KoffieMachineViewModel.cs). Elke ability krijgt een cooldown die wordt await totdat deze weer geactiveerd mag worden. 
+
+```C#
+private async void MartijnSportAbilityClick(Abilities SelfContext)
+        {
+			ContextSetAbilityEnabled(SelfContext);
+
+			CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
+
+			await ContextDelayProgressbarEmpty(SelfContext, 15000);
+			CurrencyTrayViewModel.OnClickAbilityProcess -= MartijnSportAbility;
+			await ContextDelayProgressbarFill(SelfContext, 285000);
+
+			ContextSetAbilityDisabled(SelfContext);
+		}
+```
 
 * Task en Multitasking
 
@@ -152,4 +167,13 @@ batchclicks op te halen en daarna uit te rekenen hoeveel keer er in totaal is ge
 (images, welke monsters)op te slaan in database. Deze worden gedownload wanneer de app voor het eerst wordt opgestart en zal gebeuren met LINQ.
 
 * Locking
+
+
 * Delegates
+
+
+<2> Werking van de Stenden Clicker Game</2>
+
+Voor het gebruik van de game moet er een account aan worden gemaakt. Wanneer er een account is aangemaakt wordt het spel opgestart op de plek waar de speler voor het 
+laatst is gebleven. Vanuit hier kan de speler, zoals de naam al suggereert, op de monsters en bosses klikken om levels te verslaan. Het doel van het spel is om zo veel mogelijk
+levels te verslaan. Op den duur worden monsters en bosses steeds moeilijker om te verslaan, maar hier kunnen upgrades en hero's je helpen. Deze zorgen ervoor dat de speler meer schade toe dient.
