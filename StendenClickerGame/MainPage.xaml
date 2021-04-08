@@ -281,7 +281,7 @@
 								</Button.Resources>
 							</Button>
 
-							<Button Margin="0,0,10,0" Padding="1" Foreground="White" Background="Transparent" HorizontalAlignment="Right" Content="Leave sessie">
+							<Button Margin="0,0,10,0" Padding="1" Foreground="White" Background="Transparent" HorizontalAlignment="Right" Content="Leave sessie" Command="{Binding test1}">
 								<Button.Resources>
 									<ResourceDictionary>
 										<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />

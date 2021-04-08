@@ -25,11 +25,11 @@ namespace StendenClickerGame.Multiplayer
 #endif
 
 		//Singleton Variables
-		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() => 
+		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() =>
 		{
 			MultiplayerHubProxy proxy = new MultiplayerHubProxy();
 			proxy.InitProxyAsync(ServerURL);
-			return proxy; 
+			return proxy;
 		});
 
 		public static MultiplayerHubProxy Instance { get { return instance.Value; } }
@@ -66,7 +66,7 @@ namespace StendenClickerGame.Multiplayer
 		public MultiplayerHubProxy()
 		{
 			PlayerContext = new ApiPlayerHandler();
-			LevelGenerator = new LevelGenerator();		
+			LevelGenerator = new LevelGenerator();
 		}
 
 		private async void InitProxyAsync(string serverUrl)
@@ -105,7 +105,7 @@ namespace StendenClickerGame.Multiplayer
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
 				await BroadcastSessionToServer();
 			});
-			
+
 			InitializeComplete?.Invoke(null, null);
 		}
 
@@ -143,7 +143,7 @@ namespace StendenClickerGame.Multiplayer
 			{
 				OnSessionUpdateReceived?.Invoke(session, null);
 			});
-								
+
 		}
 
 		private void requestClickBatches()
@@ -157,7 +157,7 @@ namespace StendenClickerGame.Multiplayer
 
 		public async Task BroadcastSessionToServer()
 		{
-			if(SessionContext.CurrentLevel.Scene is BossScene)
+			if (SessionContext.CurrentLevel.Scene is BossScene)
 			{
 				BossGamePlatform p = new BossGamePlatform();
 				p.Monster = (StendenClicker.Library.AbstractMonster.Boss)SessionContext.CurrentLevel.Monster;
@@ -171,7 +171,7 @@ namespace StendenClickerGame.Multiplayer
 				p.Monster = (StendenClicker.Library.AbstractMonster.Normal)SessionContext.CurrentLevel.Monster;
 				p.Scene = (NormalScene)SessionContext.CurrentLevel.Scene;
 
-				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) => 
+				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) =>
 				{
 					bool success = task.Result;
 				});
@@ -204,7 +204,7 @@ namespace StendenClickerGame.Multiplayer
 
 		public async Task JoinFriend(string friendId)
 		{
-			await MultiPlayerHub.Invoke<bool>("joinFriend", friendId).ContinueWith((task) => 
+			await MultiPlayerHub.Invoke<bool>("joinFriend", friendId).ContinueWith((task) =>
 			{
 				//check if joining the session succeded.
 				bool success = task.Result;
@@ -218,7 +218,11 @@ namespace StendenClickerGame.Multiplayer
 				}
 			});
 		}
-	}
 
+		public async Task leaveSession()
+		{
+			await MultiPlayerHub.Invoke<bool>("leaveSession");
+		}
+	}
 }
 

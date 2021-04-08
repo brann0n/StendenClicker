@@ -117,5 +117,6 @@ namespace StendenClickerGame.ViewModels
 		{
 			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}
+
 	}
 }
