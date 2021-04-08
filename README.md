@@ -19,7 +19,7 @@ De volgende Design Patterns zijn verwerkt:
 
 * <h3>Abstract Factory</h3>
 
-De abstract factory maakt scenes, platforms en monsters aan. Deze zijn te vinden onder: StendenClicker.Library. De code voor de factory ziet er als volgt uit:
+De abstract factory maakt scenes, platforms en monsters aan. Deze zijn te vinden onder: StendenClicker.Library. De code voor de factory ziet er als volgt uit (voorbeeld: [IAbstractScene.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/AbstractScene/IAbstractScene.cs)):
 ```C#
 public interface IAbstractScene
 	{
@@ -35,7 +35,7 @@ Afhankelijk van wat er wordt opgehaald, komt de scene er op een bepaalde manier 
 * <h3>Object Pool Design</h3>
 
 De StendenClicker maakt gebruik van een object pool design voor het aanmaken en opslaan van coins. Deze kunnen vervolgens worden hergebruikt om recources te besparen.
-In StendenClicker.Library/CurrencyObjects staat ReusableCurrencyPool.cs. Hier is te zien hoe coins worden 
+In StendenClicker.Library/CurrencyObjects staat [ReusableCurrencyPool.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/CurrencyObjects/ReusableCurrencyPool.cs). Hier is te zien hoe coins worden 
 aangemaakt wanneer er niet genoeg van zijn en worden opgeslagen voor hergebruik.
 
 ```C#
@@ -48,16 +48,35 @@ private int PoolSizeEC { get { return Reusables.Where(uwu => uwu is EuropeanCred
 Om ervoor te zorgen dat de pool niet oneindig groot wordt is er een limiet op gezet.
 ```C#
 public const int PoolSizeSC_MAX = 50;
-public const int PoolSizeEC_MAX = 20;
+public const int PoolSizeEC_MAX = 3;
 ```
 
-* Momento
+* <h3>Momento</h3>
 
+Het “Player” object wordt omgezet in JSON-data. Deze data worden vervolgens als String opgeslagen in de database door de ApiPlayerHandler. Het ViewModel weet wanneer de data  moet worden opgeslagen. Wanneer er op een fysieke knop wordt geklikt of wanneer de game wordt afgesloten zal de data worden opgeslagen. Via de getPlayerState van de ApiPlayerHandler kan de actie worden teruggedraaid. Dit is waar de design pattern memento van toepassing is. Memento zorgt ervoor dat een object weer terug kan veranderen naar  zijn eerdere staat. Wanneer de speler het spel weer opstart kunnende opgeslagen gegevens gemakkelijk weer worden teruggezet. 
 
+In de onderstaande code wordt de huidige player state opgeslagen na elke monster die verslagen wordt. Deze is te vinden in StendenClicker.Library onder Playercontrols in de file
+[ApiPlayerHandler.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/PlayerControls/ApiPlayerHandler.cs)
 ```C#
+public async Task SetPlayerStateAsync(Player player)
+			state = player;
+			Models.DatabaseModels.Player dbPlayer = player;
+			var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
+			if (response.StatusCode == HttpStatusCode.OK)
+			{
+				await LocalPlayerData.SaveLocalPlayerData(state);
+			}
+			else
+			{
+				await LocalPlayerData.SaveLocalPlayerData(state);
+				throw new Exception($"Couldn't set the player state... Api error: [{response.StatusCode}] {response.ErrorMessage}");
+			}
+		}
 ```
 
-* Observer
+* <h3>Observer</h3>
+
+Binnen de StendenClicker game zal ereen optie zijn om samen met andere spelers de strijd aan te gaan met monsters die de studenten door de jaren heen mentaal te lijf zijn gegaan. Om alle gebruikers dezelfde informatie te tonen over de status van hun online game,zal er gebruik worden gemaakt van het observer design pattern. De observer design pattern zorgt ervoor dat als er een object van status veranderd, alle afhankelijke objecten hiervan op de hoogte worden gebracht en automatisch worden bijgewerkt. Doormiddel  van de methode ‘INotifyPropertyChanged’ van de ViewModel worden de eigendommen van de objecten bijgewerkt. Voor de communicatie tussen Client en de Server wordt gebruikt gemaakt van SignalR.
 
 * Singleton
 Connectie met de server
