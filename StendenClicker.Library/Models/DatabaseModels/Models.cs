@@ -106,7 +106,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 				MonstersDefeated = player.State.MonstersDefeated,
 				SparkCoins = player.Wallet.SparkCoin,
 				EuropeanCredits = player.Wallet.EuropeanCredit,
-				//todo: add heroes here.
+				Heroes = player.Heroes
 			};
 		}
 

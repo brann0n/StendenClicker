@@ -59,11 +59,11 @@ namespace StendenClickerApi.Controllers
 				{
 					Hero = h,
 					HeroUpgradeLevel = _heroInformation.HeroUpgradeLevel,
-					SpecialUpgradeLevel = _heroInformation.SpecialUpgradeLevel					
+					SpecialUpgradeLevel = _heroInformation.SpecialUpgradeLevel
 				};
 				List<Upgrade> upgrades = new List<Upgrade>();
 
-				foreach(var item in _heroInformation.Upgrades)
+				foreach (var item in _heroInformation.Upgrades)
 				{
 					Upgrade up = new Upgrade
 					{
@@ -98,7 +98,56 @@ namespace StendenClickerApi.Controllers
 			dbPlayer.SparkCoins = player.SparkCoins;
 			dbPlayer.EuropeanCredits = player.EuropeanCredits;
 
-			//todo: loop over the available heroes, and add them to the db.HeroPlayer table
+			//go through the provided heroes, if you cant find it you create it.
+			foreach (PlayerHero givenPlayerHero in player.Heroes)
+			{
+				if (givenPlayerHero.Player == null)
+				{
+					givenPlayerHero.Player = dbPlayer;
+				}
+
+				List<Upgrade> Upgrades = new List<Upgrade>();
+
+				foreach(var upgrade in givenPlayerHero.Upgrades)
+				{
+					Upgrades.Add(db.Upgrades.FirstOrDefault(n => n.UpgradeId == upgrade.UpgradeId));
+				}
+				
+				//see if you can find it in the database:
+				var fndPH = db.PlayerHeroes.Where(n => n.Player.PlayerGuid == player.PlayerGuid).FirstOrDefault(m => m.Hero.HeroName == givenPlayerHero.Hero.HeroName);
+				if (fndPH == null)
+				{
+					//i didnt buy this yet... create the object:
+					if (givenPlayerHero.Hero == null)
+					{
+						//this is bad ayy	
+						continue;	
+					}
+					else
+					{
+						givenPlayerHero.Hero = db.Heroes.FirstOrDefault(n => n.HeroId == givenPlayerHero.Hero.HeroId);
+					}
+					//now add that object.
+					givenPlayerHero.Upgrades = Upgrades;
+
+					db.PlayerHeroes.Add(givenPlayerHero);
+				}
+				else
+				{
+					//found -> do an update :))))
+					fndPH.HeroUpgradeLevel = givenPlayerHero.HeroUpgradeLevel;
+					fndPH.SpecialUpgradeLevel = givenPlayerHero.SpecialUpgradeLevel;
+					
+					foreach(var upgrade in givenPlayerHero.Upgrades)
+					{
+						if (!fndPH.Upgrades.Contains(upgrade))
+						{
+							fndPH.Upgrades.Add(db.Upgrades.FirstOrDefault(n => n.UpgradeId == upgrade.UpgradeId));
+						}
+					}
+				}
+				
+			}
 
 			await db.SaveChangesAsync();
 

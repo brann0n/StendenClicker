@@ -56,6 +56,8 @@ namespace StendenClickerGame.ViewModels
 
 		public void LoadHeroes()
 		{
+			HeroList.Clear();
+
 			foreach (StendenClicker.Library.Models.DatabaseModels.Hero h in Hero.Heroes)
 			{
 				//todo: add in player specific information from the list.
@@ -86,10 +88,19 @@ namespace StendenClickerGame.ViewModels
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						if (PerformTransaction(heroListObject))
+						{
 							//create a new heroes object:
-							CurrentPlayer.Heroes.Add(new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
+							var playerHeroNew = new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 };
+							heroListObject.PlayerHeroInformation = playerHeroNew;
+							CurrentPlayer.Heroes.Add(playerHeroNew);
 
+							
+						}
+						
 						UpdateHeroList();
+						LoadHeroes();
+
+
 					});
 				}
 
