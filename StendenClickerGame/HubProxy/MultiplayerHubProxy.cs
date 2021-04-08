@@ -91,8 +91,8 @@ namespace StendenClickerGame.Multiplayer
 				{
 					//connected:
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
-					MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
-					MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
+					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
+					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
@@ -116,21 +116,23 @@ namespace StendenClickerGame.Multiplayer
 			OnInviteReceived?.Invoke(invite, null);
 		}
 
-		private async void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl)
+		private async void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
 				CurrentPlayerList = players,
-				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene }
+				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
+				ForceUpdate = force
 			};
 			updateSession(session);
 		}
-		private async void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl)
+		private async void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
 				CurrentPlayerList = players,
-				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene }
+				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
+				ForceUpdate = force
 			};
 			updateSession(session);
 		}
@@ -143,7 +145,6 @@ namespace StendenClickerGame.Multiplayer
 			{
 				OnSessionUpdateReceived?.Invoke(session, null);
 			});
-
 		}
 
 		private void requestClickBatches()

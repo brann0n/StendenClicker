@@ -139,31 +139,31 @@ namespace StendenClickerGame.ViewModels
 			bool allowLevelUpdate = false;
 			MultiPlayerSession session = (MultiPlayerSession)sender;
 			//todo: check if the session is already loaded.
-			foreach (Player player in  session.CurrentPlayerList)
-			{
-				if (!CurrencyTray.CurrentSession.CurrentPlayerList.Select(n => n.UserId).Contains(player.UserId))
-				{
-					allowPlayerlistUpdate = true;
-				}
-				if (player.UserId == CurrentPlayer.UserId)
-				{
-					if (CurrentPlayer.State.MonstersDefeated < player.State.MonstersDefeated)
-					{
-						allowLevelUpdate = true;
-					}
-					else if (CurrentPlayer.State.BossesDefeated < player.State.BossesDefeated)
-					{
-						allowLevelUpdate = true;
-					}
-				}
-			}
+			//foreach (Player player in  session.CurrentPlayerList)
+			//{
+			//	if (!CurrencyTray.CurrentSession.CurrentPlayerList.Select(n => n.UserId).Contains(player.UserId))
+			//	{
+			//		allowPlayerlistUpdate = true;
+			//	}
+			//	if (player.UserId == CurrentPlayer.UserId)
+			//	{
+			//		if (CurrentPlayer.State.MonstersDefeated < player.State.MonstersDefeated)
+			//		{
+			//			allowLevelUpdate = true;
+			//		}
+			//		else if (CurrentPlayer.State.BossesDefeated < player.State.BossesDefeated)
+			//		{
+			//			allowLevelUpdate = true;
+			//		}
+			//	}
+			//}
 
-			if (allowLevelUpdate)
+			if (session.ForceUpdate)//(allowLevelUpdate)
 			{
 				CurrencyTray.CurrentSession.CurrentLevel = session.CurrentLevel;
 				NotifyPropertyChanged("CurrencyTray");
 			}
-			if (allowPlayerlistUpdate)
+			if (session.ForceUpdate)//(allowPlayerlistUpdate)
 			{
 				CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
 				NotifyPropertyChanged("CurrentPlayers");
