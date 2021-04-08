@@ -14,7 +14,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		private int PoolSizeEC { get { return Reusables.Where(uwu => uwu is EuropeanCredit).Count(); } }
 		
 		public const int PoolSizeSC_MAX = 50;
-		public const int PoolSizeEC_MAX = 20;
+		public const int PoolSizeEC_MAX = 3;
 
 		private ReusableCurrencyPool()
 		{
