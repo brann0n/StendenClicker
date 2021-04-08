@@ -52,28 +52,47 @@ namespace StendenClickerGame.ViewModels
 
 		public void LoadHeroes()
 		{
-			foreach (Hero h in Hero.Heroes)
+			foreach (StendenClicker.Library.Models.DatabaseModels.Hero h in Hero.Heroes)
 			{
 				//todo: add in player specific information from the list.
 
-				int levelNeededForUnlock = (h.Id * 5);
-				bool isLevelUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= h.Id;
+				int levelNeededForUnlock = (h.HeroId * 5);
+				bool isLevelUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= h.HeroId;
 
 
 				HeroListObject heroListObject;
-				PlayerHero heroObject = CurrentPlayer.Heroes.FirstOrDefault(n => n.Hero.HeroName == h.Name);
+				PlayerHero heroObject = CurrentPlayer.Heroes.FirstOrDefault(n => n.Hero.HeroName == h.HeroName);
 
 				if (heroObject != null)
 				{
+					//hero has been bought, add code that performs a hero level upgrade.
 					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked };
+					heroListObject.OnHeroButtonClicked = new RelayCommand(() => 
+					{
+						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
+						heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
+					});
 				}
 				else
 				{
+					//hero has not been bought yet, add code that allows you to buy this hero.
 					heroListObject = new HeroListObject { Hero = h , HeroUnlocked = isLevelUnlocked };
+					heroListObject.OnHeroButtonClicked = new RelayCommand(() => 
+					{
+						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
+
+						//create a new heroes object:
+						CurrentPlayer.Heroes.Add(new PlayerHero {Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
+					});
 				}
 
 				HeroList.Add(heroListObject); //auto locks all heroes
 			}
+		}
+
+		private void PerformTransaction(HeroListObject transactableObject)
+		{
+
 		}
 
 		public void CheckContextVariables()

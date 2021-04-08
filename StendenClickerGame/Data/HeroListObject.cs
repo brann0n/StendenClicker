@@ -7,6 +7,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using HeroObject = StendenClicker.Library.PlayerControls.Hero;
 
 namespace StendenClickerGame.Data
@@ -20,6 +21,10 @@ namespace StendenClickerGame.Data
 		public bool HeroBought { get => PlayerHeroInformation != null; } //if true the buy button should change into upgrade button.
 
 		public double OpacityEnabled { get => HeroUnlocked ? 1 : 0.3; }
+
+		public int NextUpgradePrice { get; set; } = 1000;
+
+		public ICommand OnHeroButtonClicked { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

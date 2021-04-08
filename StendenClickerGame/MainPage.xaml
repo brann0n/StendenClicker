@@ -113,7 +113,7 @@
 												</Grid.ColumnDefinitions>
 												<!-- Koop dan Button-->
 												<Grid Grid.Column="0" >
-													<Button Padding="25,10,25,10" BorderThickness="0" Margin="0,0,0,5" VerticalAlignment="Bottom">
+													<Button Padding="25,10,25,10" BorderThickness="0" Margin="0,0,0,5" VerticalAlignment="Bottom" Command="{Binding OnHeroButtonClicked}">
 														<Button.Background>
 															<ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
 														</Button.Background>
@@ -130,7 +130,7 @@
 																		<Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
 																	</Canvas>
 																</Viewbox>
-																<TextBlock Foreground="White" Text="{Binding Hero.Price}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal">108K</TextBlock>
+																<TextBlock Foreground="White" Text="{Binding NextUpgradePrice}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal"/>
 															</Grid>
 														</RelativePanel>
 													</Button>
