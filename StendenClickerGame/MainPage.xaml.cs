@@ -76,7 +76,6 @@ namespace StendenClickerGame
             //this code-behind is needed to perform delayed loading of elements without stutter
             var ViewModelContext = e.Parameter as MainPageViewModel;
             this.DataContext = ViewModelContext;
-            ViewModelContext.LoadHeroes();
         }
 
         private void ButtonFriend_OnClick(object sender, RoutedEventArgs e)

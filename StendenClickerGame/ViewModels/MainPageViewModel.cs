@@ -16,6 +16,7 @@ using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using PlayerHero = StendenClicker.Library.Models.DatabaseModels.PlayerHero;
 
 namespace StendenClickerGame.ViewModels
 {
@@ -32,10 +33,10 @@ namespace StendenClickerGame.ViewModels
 		public KoffieMachineViewModel KoffieMachine { get; set; }
 		public FriendshipPanelViewmodel Friends { get; set; }
 
-		public ObservableCollection<Hero> HeroList { get; set; }
+		public ObservableCollection<HeroListObject> HeroList { get; set; }
 
 		public List<Player> CurrentPlayers { get => mpProxy?.getContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
-
+		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 		public MainPageViewModel()
 		{
 			//sub viewmodels
@@ -44,7 +45,7 @@ namespace StendenClickerGame.ViewModels
 			Friends = new FriendshipPanelViewmodel();
 
 			//Herolist
-			HeroList = new ObservableCollection<Hero>();
+			HeroList = new ObservableCollection<HeroListObject>();
 
 			CheckContextVariables();
 		}
@@ -54,7 +55,24 @@ namespace StendenClickerGame.ViewModels
 			foreach (Hero h in Hero.Heroes)
 			{
 				//todo: add in player specific information from the list.
-				HeroList.Add(h);
+
+				int levelNeededForUnlock = (h.Id * 5);
+				bool isLevelUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= h.Id;
+
+
+				HeroListObject heroListObject;
+				PlayerHero heroObject = CurrentPlayer.Heroes.FirstOrDefault(n => n.Hero.HeroName == h.Name);
+
+				if (heroObject != null)
+				{
+					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked };
+				}
+				else
+				{
+					heroListObject = new HeroListObject { Hero = h , HeroUnlocked = isLevelUnlocked };
+				}
+
+				HeroList.Add(heroListObject); //auto locks all heroes
 			}
 		}
 
@@ -74,6 +92,21 @@ namespace StendenClickerGame.ViewModels
 		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
 		{
 			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
+
+			//unlock any new heroes perhaps.
+			UpdateHeroList();
+		}
+
+		private void UpdateHeroList()
+		{
+			foreach(HeroListObject item in HeroList)
+			{
+				int levelNeededForUnlock = (item.Hero.Id * 5);
+				item.HeroUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= item.Hero.Id;
+				item.NotifyPropertyChanged("HeroUnlocked");
+				item.NotifyPropertyChanged("OpacityEnabled");
+				item.NotifyPropertyChanged("HeroBought");
+			}
 		}
 
 		/// <summary>
@@ -97,10 +130,13 @@ namespace StendenClickerGame.ViewModels
 			Friends.AddPendingInvite((InviteModel)sender);
 		}
 
-		private async void MpProxy_InitializeComplete(object sender, EventArgs e)
+		private void MpProxy_InitializeComplete(object sender, EventArgs e)
 		{
 			NotifyPropertyChanged("CurrencyTray");
 			Friends.InitializeFriendship(mpProxy.CurrentPlayer.UserId.ToString());
+
+			//render the heroes with player context.
+			LoadHeroes();
 		}
 
 		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()
