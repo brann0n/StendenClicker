@@ -33,6 +33,10 @@ namespace StendenClickerGame.ViewModels
 		public KoffieMachineViewModel KoffieMachine { get; set; }
 		public FriendshipPanelViewmodel Friends { get; set; }
 
+		public bool popupShow { get; set; }
+		public string popupTitle { get; set; }
+		public string popupDescription { get; set; }
+
 		public ObservableCollection<HeroListObject> HeroList { get; set; }
 
 		public List<Player> CurrentPlayers { get => mpProxy?.getContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
@@ -144,12 +148,48 @@ namespace StendenClickerGame.ViewModels
 			return CurrencyTray.GetBatchedClick();
 		}
 
-		private void MpProxy_OnConnectionStateChanged(StateChange state)
+		private async void MpProxy_OnConnectionStateChanged(StateChange state)
 		{
-			//todo: handle state changes, if it cant connect there might not be an internet connection
+			popupShow = true;
+
+			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
+			{
+				switch(state.NewState)
+                {
+					case ConnectionState.Connected:
+						popupTitle = state.NewState.ToString() + "!";
+						popupDescription = "You are connected! We will now steal your end assesments";
+						break;
+					case ConnectionState.Connecting:
+						popupTitle = state.NewState.ToString() + "...";
+						popupDescription = "The game is connecting to the online services";
+						break;
+					case ConnectionState.Disconnected:
+						popupTitle = state.NewState.ToString();
+						popupDescription = "You are disconnected. Maybe you're better of this way...";
+						break;
+					case ConnectionState.Reconnecting:
+						popupTitle = state.NewState.ToString() + "...";
+						popupDescription = "Holdup... We are reconnecting you to the beautiful NHL-Stenden Servers";
+						break;
+					default:
+						popupTitle = "Initializing...";
+						popupDescription = "Your super fast internet is making a connection to the online services";
+						break;
+                }
+
+				NotifyPropertyChanged("popupShow");
+				NotifyPropertyChanged("popupTitle");
+				NotifyPropertyChanged("popupDescription");
+				await Task.Delay(5000);
+				popupShow = false;
+				NotifyPropertyChanged("popupShow");
+
+			});
 		}
 
-		public async Task<Player> GetPlayerContextAsync()
+        public async Task<Player> GetPlayerContextAsync()
 		{
 			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}
