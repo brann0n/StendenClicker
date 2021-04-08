@@ -99,8 +99,7 @@ namespace StendenClickerGame.ViewModels
 				NotifyPropertyChanged("MonsterHealthPercentage");
 
 				if (CurrentMonster.IsDefeated())
-				{
-					OnMonsterDefeated?.Invoke(null,null);
+				{					
 					//get the rewards for this monster and generate a new level
 					var rewards = CurrentMonster.GetReward();
 					for (ulong i = 0; i < rewards.SparkCoin; i++)
@@ -121,6 +120,7 @@ namespace StendenClickerGame.ViewModels
 
 					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
 					RenderLevel();
+					OnMonsterDefeated?.Invoke(null, null);
 				}
 			}
 		}

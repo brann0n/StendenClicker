@@ -66,7 +66,7 @@ namespace StendenClickerGame
                 {
                     var stream = await file.OpenReadAsync();
                     mediaElement.SetSource(stream, file.ContentType);
-                    mediaElement.Volume = 0.2;
+                    mediaElement.Volume = 0.15;
                 }
             }
         }
