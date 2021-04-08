@@ -197,9 +197,18 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("leaveSession")]
-		public async Task leaveSession(string targetPlayer)
+		public async Task leaveSession()
 		{
-			Player host = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);
+			Player player = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
+
+
+
+			SessionExtensions.Remove(UserGuid);
+			
+			//get sessionid from player
+			//remove that player from session in db
+			//remove plyer in session signalR
+
 		}
 	}
 }
