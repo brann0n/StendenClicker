@@ -58,7 +58,7 @@ namespace StendenClickerGame.ViewModels
 
 			ContextSetAbilityEnabled(SelfContext);
 
-			await ContextDelayProgressbar(SelfContext, 300000);
+			await ContextDelayProgressbarFill(SelfContext, 300000);
 
 			ContextSetAbilityDisabled(SelfContext);
 		}
@@ -76,9 +76,10 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityEnabled(SelfContext);
 
 			CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
-			await Task.Delay(5000);
+
+			await ContextDelayProgressbarEmpty(SelfContext, 5000);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
-			await ContextDelayProgressbar(SelfContext, 115000);
+			await ContextDelayProgressbarFill(SelfContext, 115000);
 
 			ContextSetAbilityDisabled(SelfContext);
 		}
@@ -94,7 +95,7 @@ namespace StendenClickerGame.ViewModels
 
 			ContextSetAbilityEnabled(SelfContext);	
 			
-			await ContextDelayProgressbar(SelfContext, 5000);
+			await ContextDelayProgressbarFill(SelfContext, 150000);
 
 			ContextSetAbilityDisabled(SelfContext);
 		}		
@@ -127,7 +128,7 @@ namespace StendenClickerGame.ViewModels
 			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
 		}
 
-		private async Task ContextDelayProgressbar(Abilities SelfContext, int delayTime)
+		private async Task ContextDelayProgressbarFill(Abilities SelfContext, int delayTime)
 		{
 			//devide delaytime by 500 to update the bar every half a second
 			double amountOfTicks = delayTime / 100d;
@@ -141,6 +142,23 @@ namespace StendenClickerGame.ViewModels
 				SelfContext.NotifyPropertyChanged("CooldownTime");
 				await Task.Delay(100);
 			}
+		}
+
+		private async Task ContextDelayProgressbarEmpty(Abilities SelfContext, int delayTime)
+		{
+			//devide delaytime by 500 to update the bar every half a second
+			double amountOfTicks = delayTime / 100d;
+			SelfContext.IsCooldownTimerEnabled = false;
+			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
+			for (int i = (int)amountOfTicks; i >= 0; i--)
+			{
+				int percentage = (int)(i / amountOfTicks * 100d);
+				SelfContext.CooldownPercentage = percentage;
+				SelfContext.NotifyPropertyChanged("CooldownPercentage");
+				await Task.Delay(100);
+			}
+			SelfContext.IsCooldownTimerEnabled = true;
+			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
 		}
 	}
 }

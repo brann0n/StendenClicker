@@ -17,7 +17,6 @@ namespace StendenClickerGame.ViewModels
 	public class FriendshipPanelViewmodel : ViewModelBase
 	{
 		//todo: create a button to leave a joined session
-		//todo: create a button to remove a friend from your list.
 		public ObservableCollection<FriendshipListObject> ObservableFriendship { get; }
 		public ObservableCollection<SearchPlayerObject> ObservableSearchPlayerList { get; }
 		public ObservableCollection<InviteModel> ObservablePendingInvites { get; }
