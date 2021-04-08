@@ -14,7 +14,7 @@ namespace StendenClicker.Library.PlayerControls
 		{
 			var response = await RestHelper.GetRequestAsync("api/Assets/heroes");
 			Heroes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Hero>>(response.Content);
-			if (Heroes != null)
+			if (Heroes != null && Heroes?.Count != 0)
 			{
 				await LocalPlayerData.SaveLocalData(Heroes, "heroes-asset-data.json");
 			}
@@ -41,7 +41,7 @@ namespace StendenClicker.Library.PlayerControls
 			return new Hero
 			{
 				Id = hero.HeroId,
-				Base64Image = hero.HeroAsset.Base64Image,
+				Base64Image = hero.HeroAsset?.Base64Image,
 				Name = hero.HeroName,
 				HeroLevel = 0,
 				Price = hero.HeroCost,

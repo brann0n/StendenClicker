@@ -118,11 +118,11 @@ namespace StendenClickerApi.Hubs
 
 							if (session.CurrentLevel is NormalGamePlatform)
 							{
-								await Clients.Groups(targetClients).receiveNormalMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel);
+								await Clients.Groups(targetClients).receiveNormalMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel, targetClients.Count != 1);
 							}
 							else
 							{
-								await Clients.Groups(targetClients).receiveBossMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel);
+								await Clients.Groups(targetClients).receiveBossMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel, targetClients.Count != 1);
 							}
 
 							

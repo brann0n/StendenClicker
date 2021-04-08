@@ -23,7 +23,7 @@ namespace StendenClicker.Library.AbstractMonster
 		{
             var response = await RestHelper.GetRequestAsync("api/Assets/bosses");
             Bosses = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Boss>>(response.Content);
-            if (Bosses != null)
+            if (Bosses != null && Bosses?.Count != 0)
             {
                 await LocalPlayerData.SaveLocalData(Bosses, "bosses-asset-data.json");
             }

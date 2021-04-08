@@ -19,7 +19,7 @@ namespace StendenClicker.Library.AbstractScene
 			{
                 var response = await RestHelper.GetRequestAsync("api/Assets/scenes");
                 NormalScenes = RestHelper.ConvertJsonToObject<List<Models.DatabaseModels.Scene>>(response.Content);
-                if (NormalScenes != null)
+                if (NormalScenes != null && NormalScenes?.Count != 0)
                 {
                     await LocalPlayerData.SaveLocalData(NormalScenes, "normal-scenes-asset-data.json");
                 }

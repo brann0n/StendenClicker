@@ -70,23 +70,26 @@ namespace StendenClickerGame.ViewModels
 				if (heroObject != null)
 				{
 					//hero has been bought, add code that performs a hero level upgrade.
-					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked };
+					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePrice = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
-						heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
+						if (PerformTransaction(heroListObject))
+							heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
+
+						UpdateHeroList();
 					});
 				}
 				else
 				{
 					//hero has not been bought yet, add code that allows you to buy this hero.
-					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked };
+					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePrice = h.HeroCost };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						CurrentPlayer.Wallet.SparkCoin -= (ulong)heroListObject.NextUpgradePrice;
+						if (PerformTransaction(heroListObject))
+							//create a new heroes object:
+							CurrentPlayer.Heroes.Add(new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
 
-						//create a new heroes object:
-						CurrentPlayer.Heroes.Add(new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 });
+						UpdateHeroList();
 					});
 				}
 
@@ -94,9 +97,15 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private void PerformTransaction(HeroListObject transactableObject)
+		private bool PerformTransaction(HeroListObject transactableObject)
 		{
-
+			if(CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePrice)
+			{
+				CurrentPlayer.Wallet.SparkCoin -= (ulong)transactableObject.NextUpgradePrice;
+				NotifyPropertyChanged("CurrencyTray");
+				return true;
+			}
+			return false;
 		}
 
 		public void CheckContextVariables()
@@ -126,9 +135,22 @@ namespace StendenClickerGame.ViewModels
 			{
 				int levelNeededForUnlock = (item.Hero.Id * 5);
 				item.HeroUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= item.Hero.Id;
+
+				//recalculate price:
+				if (item.HeroBought)
+				{
+					item.NextUpgradePrice = (int)Math.Pow(item.Hero.Price * item.PlayerHeroInformation.HeroUpgradeLevel, 2);
+				}
+				else
+				{
+					item.NextUpgradePrice = item.Hero.Price;
+				}
+
 				item.NotifyPropertyChanged("HeroUnlocked");
 				item.NotifyPropertyChanged("OpacityEnabled");
 				item.NotifyPropertyChanged("HeroBought");
+				item.NotifyPropertyChanged("NextUpgradePrice");
+				item.NotifyPropertyChanged("PlayerHeroInformation");
 			}
 		}
 
@@ -200,8 +222,8 @@ namespace StendenClickerGame.ViewModels
 			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
 			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
 			{
-				switch(state.NewState)
-                {
+				switch (state.NewState)
+				{
 					case ConnectionState.Connected:
 						popupTitle = state.NewState.ToString() + "!";
 						popupDescription = "You are connected! We will now steal your end assesments";
@@ -222,7 +244,7 @@ namespace StendenClickerGame.ViewModels
 						popupTitle = "Initializing...";
 						popupDescription = "Your super fast internet is making a connection to the online services";
 						break;
-                }
+				}
 
 				NotifyPropertyChanged("popupShow");
 				NotifyPropertyChanged("popupTitle");
@@ -234,7 +256,7 @@ namespace StendenClickerGame.ViewModels
 			});
 		}
 
-        public async Task<Player> GetPlayerContextAsync()
+		public async Task<Player> GetPlayerContextAsync()
 		{
 			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}

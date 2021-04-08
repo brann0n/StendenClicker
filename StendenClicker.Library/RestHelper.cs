@@ -10,7 +10,12 @@ namespace StendenClicker.Library
 {
     public class RestHelper
     {
-        private static readonly string BaseUrl = "https://stendenclicker.serverict.nl/";
+
+#if DEBUG
+		private const string BaseUrl = "http://localhost:50420/";
+#else
+        private const string BaseUrl = "https://stendenclicker.serverict.nl/";
+#endif
 
         public static async Task<IRestResponse> GetRequestAsync(string url)
         {
