@@ -22,12 +22,12 @@ De volgende Design Patterns zijn verwerkt:
 De abstract factory maakt scenes, platforms en monsters aan. Deze zijn te vinden onder: StendenClicker.Library. De code voor de factory ziet er als volgt uit (voorbeeld: [IAbstractScene.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/AbstractScene/IAbstractScene.cs)):
 ```C#
 public interface IAbstractScene
-	{
-		public int CurrentMonster { get; set; }
-		public int MonsterCount { get; set; }
-		public string Background { get; set; }
-		public string Name { get; set; }
-	}
+{
+	public int CurrentMonster { get; set; }
+	public int MonsterCount { get; set; }
+	public string Background { get; set; }
+	public string Name { get; set; }
+}
 ```
 Hier is te zien hoe een scene wordt gemaakt aan de hand van een aantal fields die worden opgehaald en geset. 
 Afhankelijk van wat er wordt opgehaald, komt de scene er op een bepaalde manier uit te zien.
@@ -59,19 +59,19 @@ In de onderstaande code wordt de huidige player state opgeslagen na elke monster
 [ApiPlayerHandler.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/PlayerControls/ApiPlayerHandler.cs)
 ```C#
 public async Task SetPlayerStateAsync(Player player)
-			state = player;
-			Models.DatabaseModels.Player dbPlayer = player;
-			var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
-			if (response.StatusCode == HttpStatusCode.OK)
-			{
-				await LocalPlayerData.SaveLocalPlayerData(state);
-			}
-			else
-			{
-				await LocalPlayerData.SaveLocalPlayerData(state);
-				throw new Exception($"Couldn't set the player state... Api error: [{response.StatusCode}] {response.ErrorMessage}");
-			}
-		}
+state = player;
+Models.DatabaseModels.Player dbPlayer = player;
+var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
+	if (response.StatusCode == HttpStatusCode.OK)
+	{
+		await LocalPlayerData.SaveLocalPlayerData(state);
+	}
+	else
+	{
+		await LocalPlayerData.SaveLocalPlayerData(state);
+		throw new Exception($"Couldn't set the player state... Api error: [{response.StatusCode}] {response.ErrorMessage}");
+	}
+}
 ```
 
 * <h3>Observer</h3>
@@ -83,32 +83,32 @@ kunnen worden gegenereerd. De code is te vinden in StendenClickerApi onder Hubs 
 
 ```C#
 [HubMethodName("broadcastSessionBoss")]
-		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
-		{
-			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
+public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
+{
+	if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
 
-			bool SessionIsValid = SessionExtensions.ContainsKey(key);
+	bool SessionIsValid = SessionExtensions.ContainsKey(key);
 
-			if (SessionIsValid)
-			{
-				List<string> PlayersInSession = sessionPlayers.Select(n => n.UserId.ToString()).ToList();
+	if (SessionIsValid)
+	{
+		List<string> PlayersInSession = sessionPlayers.Select(n => n.UserId.ToString()).ToList();
 
-				SessionExtensions.UpdatePlayers(key, sessionPlayers);
-				SessionExtensions.UpdateLevel(key, a);
+		SessionExtensions.UpdatePlayers(key, sessionPlayers);
+		SessionExtensions.UpdateLevel(key, a);
 
-				await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a);
-			}
-			return SessionIsValid;
-		}
+		await Clients.Groups(PlayersInSession).receiveBossMonsterBroadcast(sessionPlayers, a);
+	}
+	return SessionIsValid;
+}
 ```
 Hierna kan de observer in StendenClickerGame onder HubProxy in bestand [MultiplayerHubProxy.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/HubProxy/MultiplayerHubProxy.cs), de broadcast observen. Dat gebeurt in de onderstaande code.
 
 ```C#
 MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
-					MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
-					MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
-					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
-					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
+	MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
+MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
+MultiPlayerHub.On("requestClickBatch", requestClickBatches);
+MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 ```
 
 * <h3>Singleton</h3>
@@ -128,25 +128,26 @@ private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<Multiplaye
 
 De volgende onderdelen van de code gebruiken threading:
 
-* Async and Await
+* <h3>Async and Await</h3>
+
 Door de gehele applicatie wordt Async en Await gebruikt wanneer nodig. Het beste voorbeeld van het gebruik hiervan is bij de abilities. Deze zijn te vinden in StendenClickerGame, ViewModels in [KoffieMachineViewModel.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/ViewModels/KoffieMachineViewModel.cs). Elke ability krijgt een cooldown die wordt await totdat deze weer geactiveerd mag worden. 
 
 ```C#
 private async void MartijnSportAbilityClick(Abilities SelfContext)
-        {
-			ContextSetAbilityEnabled(SelfContext);
+{
+	ContextSetAbilityEnabled(SelfContext);
 
-			CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
+	CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
 
-			await ContextDelayProgressbarEmpty(SelfContext, 15000);
-			CurrencyTrayViewModel.OnClickAbilityProcess -= MartijnSportAbility;
-			await ContextDelayProgressbarFill(SelfContext, 285000);
+	await ContextDelayProgressbarEmpty(SelfContext, 15000);
+	CurrencyTrayViewModel.OnClickAbilityProcess -= MartijnSportAbility;
+	await ContextDelayProgressbarFill(SelfContext, 285000);
 
-			ContextSetAbilityDisabled(SelfContext);
-		}
+	ContextSetAbilityDisabled(SelfContext);
+}
 ```
 
-* Task en Multitasking
+* <h3>Task en Multitasking</h3>
 
 Binnen de applicatie en WebAPI wordt gebruik gemaakt van Tasks in een async patroon. Dit komt omdat het SignalR framework geïmplementeerd is, dit 
 framework werkt goed samen met Tasks. SignalR kan doormiddel van Tasks garanderen dat een functie uitgevoerd is aan de server of client kant. 
@@ -159,20 +160,23 @@ In de UI vande applicatie zal voor de OnHover events gebruik gemaakt worden van 
 Server side moet er worden gewacht totdat alle clickbatches van de players ontvangen zijn. Hiervoor wordt een await gebruikt. 
 Wanneer alle batches binnen zijn worden deze uitgevoerd en zullen de kliks worden verwerktop de monsters. 
 
-* LINQ/PLINQ
+* <h3>LINQ/PLINQ</h3>
 
 Voor het ophalenen wegschrijven van data wordt gebruik gemaakt van LINQen PLINQ. Player data zal worden weggeschreven en opgehaald met LINQ. 
 Naast het Player object worden alle click batches per seconde opgeslagen, hiervoorwordt ook LINQ toegepast. PLINQ wordt gebruikt om de 
 batchclicks op te halen en daarna uit te rekenen hoeveel keer er in totaal is geklikt. Om de app compact te houden is ervoor gekozen om environment variables
 (images, welke monsters)op te slaan in database. Deze worden gedownload wanneer de app voor het eerst wordt opgestart en zal gebeuren met LINQ.
 
-* Locking
+* <h3>Locking</h3>
 
 
-* Delegates
+* <h3>Delegates</h3>
 
+<h2> Database Structuur </2>
 
-<2> Werking van de Stenden Clicker Game</2>
+![Alt Text](https://github.com/brann0n/StendenClicker/blob/master/docs/Capture.PNG)
+
+<h2> Werking van de Stenden Clicker Game</h2>
 
 Voor het gebruik van de game moet er een account aan worden gemaakt. Wanneer er een account is aangemaakt wordt het spel opgestart op de plek waar de speler voor het 
 laatst is gebleven. Vanuit hier kan de speler, zoals de naam al suggereert, op de monsters en bosses klikken om levels te verslaan. Het doel van het spel is om zo veel mogelijk
