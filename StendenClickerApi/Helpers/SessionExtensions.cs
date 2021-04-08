@@ -58,5 +58,18 @@ namespace StendenClickerApi.Helpers
 			lock (AccessLock)
 				return Sessions.ContainsKey(key);
 		}
+
+		public static MultiPlayerSession GetSessionByAnyClientId(string key)
+		{
+			lock (AccessLock)
+			{
+				var session = Sessions.Values.Where(n => n.CurrentPlayerList.FirstOrDefault(m => m.UserId.ToString().Equals(key)) != null);
+				if (session.Count() == 1)
+				{
+					return session.First();
+				}
+				else return null;
+			}
+		}
 	}
 }

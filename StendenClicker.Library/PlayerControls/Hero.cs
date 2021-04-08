@@ -44,7 +44,7 @@ namespace StendenClicker.Library.PlayerControls
 				Name = hero.HeroName,
 				HeroLevel = 0,
 				Price = hero.HeroCost,
-				Upgrades = hero.Upgrades?.ToList()
+				Upgrades = hero.Upgrades?.ToList() //todo: this is null, fill in these fields with a seperate web call to upgrades.
 			};
 		}
 	}
