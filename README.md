@@ -128,7 +128,8 @@ private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<Multiplaye
 
 De volgende onderdelen van de code gebruiken threading:
 
-* Async and Await
+* <h3>Async and Await</h3>
+
 Door de gehele applicatie wordt Async en Await gebruikt wanneer nodig. Het beste voorbeeld van het gebruik hiervan is bij de abilities. Deze zijn te vinden in StendenClickerGame, ViewModels in [KoffieMachineViewModel.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerGame/ViewModels/KoffieMachineViewModel.cs). Elke ability krijgt een cooldown die wordt await totdat deze weer geactiveerd mag worden. 
 
 ```C#
@@ -146,7 +147,7 @@ private async void MartijnSportAbilityClick(Abilities SelfContext)
 }
 ```
 
-* Task en Multitasking
+* <h3>Task en Multitasking</h3>
 
 Binnen de applicatie en WebAPI wordt gebruik gemaakt van Tasks in een async patroon. Dit komt omdat het SignalR framework geïmplementeerd is, dit 
 framework werkt goed samen met Tasks. SignalR kan doormiddel van Tasks garanderen dat een functie uitgevoerd is aan de server of client kant. 
@@ -159,17 +160,17 @@ In de UI vande applicatie zal voor de OnHover events gebruik gemaakt worden van 
 Server side moet er worden gewacht totdat alle clickbatches van de players ontvangen zijn. Hiervoor wordt een await gebruikt. 
 Wanneer alle batches binnen zijn worden deze uitgevoerd en zullen de kliks worden verwerktop de monsters. 
 
-* LINQ/PLINQ
+* <h3>LINQ/PLINQ</h3>
 
 Voor het ophalenen wegschrijven van data wordt gebruik gemaakt van LINQen PLINQ. Player data zal worden weggeschreven en opgehaald met LINQ. 
 Naast het Player object worden alle click batches per seconde opgeslagen, hiervoorwordt ook LINQ toegepast. PLINQ wordt gebruikt om de 
 batchclicks op te halen en daarna uit te rekenen hoeveel keer er in totaal is geklikt. Om de app compact te houden is ervoor gekozen om environment variables
 (images, welke monsters)op te slaan in database. Deze worden gedownload wanneer de app voor het eerst wordt opgestart en zal gebeuren met LINQ.
 
-* Locking
+* <h3>Locking</h3>
 
 
-* Delegates
+* <h3>Delegates</h3>
 
 <h2> Database Structuur </2>
 
