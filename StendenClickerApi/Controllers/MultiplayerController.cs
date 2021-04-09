@@ -42,10 +42,11 @@ namespace StendenClickerApi.Controllers
 
 				tasklist.Add(currsession.hostPlayerId, () =>
 				{
-					MultiPlayerSession currsession1 = currsession;
-					if (SessionExtensions.ContainsKey(currsession1.hostPlayerId))
+					if (SessionExtensions.ContainsKey(currsession.hostPlayerId))
 					{
-						var clientList = currsession1.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
+						MultiPlayerSession currentActualSession = SessionExtensions.Get(currsession.hostPlayerId);
+
+						var clientList = currentActualSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
 
 						IHubContext multiplayerHub = GlobalHost.ConnectionManager.GetHubContext<MultiplayerHub>();
 						multiplayerHub.Clients.Groups(clientList).broadcastYourClicks();
@@ -53,7 +54,7 @@ namespace StendenClickerApi.Controllers
 					else
 					{
 						//remove this session.
-						RemoveSession(currsession1.hostPlayerId);
+						RemoveSession(currsession.hostPlayerId);
 					}
 				});
 			}
