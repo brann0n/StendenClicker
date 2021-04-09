@@ -31,7 +31,7 @@ namespace StendenClickerGame.ViewModels
 		}
 
 		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
-
+		
 		private int _width { get; set; } = 1920;
 		private int _height { get; set; } = 1080;
 		public int WindowHeight { get => _height; set { _height = value; NotifyPropertyChanged(); } }
@@ -49,6 +49,8 @@ namespace StendenClickerGame.ViewModels
 
 		public List<Player> CurrentPlayers { get => mpProxy?.getContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
 		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
+
+		private DateTime LastSavedAfterDefeated { get; set; }
 		public MainPageViewModel()
 		{
 			//sub viewmodels
@@ -169,8 +171,13 @@ namespace StendenClickerGame.ViewModels
 
 		private void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
 		{
-			//doSave
-			DoSave();
+			if((DateTime.Now - LastSavedAfterDefeated).TotalSeconds > 1)
+			{
+				//doSave
+				DoSave();
+				LastSavedAfterDefeated = DateTime.Now;
+			}
+			
 
 			//unlock any new heroes perhaps.
 			UpdateHeroList();
