@@ -219,6 +219,8 @@ namespace StendenClickerGame.ViewModels
 				CurrencyTray.CurrentSession.CurrentPlayerList = session.CurrentPlayerList;
 				NotifyPropertyChanged("CurrentPlayers");
 			}
+
+			LoadHeroes();
 		}
 
 		private void MpProxy_OnInviteReceived(object sender, EventArgs e)
