@@ -684,8 +684,24 @@
 					<Grid Background="#2E7988" Grid.Column="0" Width="{Binding ElementName=popupUitleg, Path=Width}" Height="{Binding ElementName=popupUitleg, Path=Height}">
 						<Grid Name="UitegGrid" Width="400" HorizontalAlignment="Center">
 							<StackPanel Grid.Row="2" Margin="0,40,0,0">
-								<TextBlock Foreground="White">Uitleg</TextBlock>
-							</StackPanel>
+                                <TextBlock Foreground="White" FontSize="22" FontWeight="bold">Uitleg</TextBlock>
+                                <TextBlock Foreground="White">
+                                    Het spel is erg simpel: klik op de monsters om ze te verslaan!<LineBreak/> 
+                                    Maar des te meer monsters je verslaat, des te moeilijker het <LineBreak/> 
+                                    wordt! Elke 5 monsters komt er ook nog een ENG boss monster <LineBreak/> 
+                                    die veel meer health hebben dan je normale monsters! tijd om <LineBreak/> 
+                                    dus harder te klikken!<LineBreak/> 
+                                    Gebruik de Sparkcoins die de monsters droppen om sterke <LineBreak/>
+                                    heroes in te huren en je damage op peil te houden zodat de <LineBreak/>
+                                    monsters je niks kunnen doen!<LineBreak/> 
+                                    Vergeet ook niet gebruik te maken van de heerlijke <LineBreak/> 
+                                    versnaperingen die de heroes aan je koffiezetapparaat <LineBreak/> 
+                                    toevoegen om je damage nog verder te kunnen verhogen!<LineBreak/>
+									Wordt het toch te veel? Nodig je vrienden uit en <LineBreak/>
+									vecht samen in deze oneindige stroom van monsters, <LineBreak/>
+                                    Bosses en plezier!
+                                </TextBlock>
+                            </StackPanel>
 						</Grid>
 					</Grid>
 				</Border>
