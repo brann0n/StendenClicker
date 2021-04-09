@@ -169,8 +169,8 @@ namespace StendenClickerGame.ViewModels
 					MonsterClickProcessor(damageToDo);
 					break;
 				}
-				totalDamageToProcess -= damageForCurrentMonster;
-				MonsterClickProcessor(damageForCurrentMonster);
+				totalDamageToProcess -= damageToDo;
+				MonsterClickProcessor(damageToDo);
 			}
 		}
 
