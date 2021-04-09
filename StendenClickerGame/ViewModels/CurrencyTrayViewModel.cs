@@ -159,18 +159,24 @@ namespace StendenClickerGame.ViewModels
 		public void ProcessMultiplayerDamage(BatchedClick damage)
 		{
 			int totalDamageToProcess = damage.getClicks();
-
-			while (totalDamageToProcess > 0)
+			if (CurrentMonster.GetHealth() >= totalDamageToProcess)
 			{
-				int damageForCurrentMonster = CurrentMonster.GetHealth();
-				int damageToDo = totalDamageToProcess - damageForCurrentMonster;
-				if (damageToDo <= 0)
+				MonsterClickProcessor(totalDamageToProcess);
+			}
+			else
+			{
+				while (totalDamageToProcess > 0)
 				{
+					int damageForCurrentMonster = CurrentMonster.GetHealth();
+					int damageToDo = totalDamageToProcess - damageForCurrentMonster;
+					if (damageToDo <= 0)
+					{
+						MonsterClickProcessor(damageToDo);
+						break;
+					}
+					totalDamageToProcess -= damageToDo;
 					MonsterClickProcessor(damageToDo);
-					break;
 				}
-				totalDamageToProcess -= damageToDo;
-				MonsterClickProcessor(damageToDo);
 			}
 		}
 
