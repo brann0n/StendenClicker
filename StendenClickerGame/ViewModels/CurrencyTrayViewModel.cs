@@ -150,9 +150,9 @@ namespace StendenClickerGame.ViewModels
 					//UpdatePlayerStatsAfterMonsterDefeat(false, true);
 				}
 
-				//build a new level from the current player list, in singleplayer mode that list contains 1 player.
+				//build a new level from the current player list, in singleplayer mode that list contains 1 player.			
+				RenderLevel();
 				OnMonsterDefeated?.Invoke(CurrentMonster, null);
-				RenderLevel();				
 			}
 		}
 
