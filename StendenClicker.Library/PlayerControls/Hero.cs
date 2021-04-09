@@ -26,6 +26,7 @@ namespace StendenClicker.Library.PlayerControls
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Base64Image { get; set; }
+		public string HeroInformation { get; set; }
 		public int HeroLevel { get; set; }
 		public int Price { get; set; }
 
@@ -45,6 +46,7 @@ namespace StendenClicker.Library.PlayerControls
 				Name = hero.HeroName,
 				HeroLevel = 0,
 				Price = hero.HeroCost,
+				HeroInformation = hero.HeroInformation,
 				Upgrades = hero.Upgrades?.ToList() //todo: this is null, fill in these fields with a seperate web call to upgrades.
 			};
 		}
