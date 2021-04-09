@@ -2,7 +2,7 @@
 
 In opdracht van NHL Stenden is er vanuit de vakken Design Patterns en C# Threading een eindopdracht gemaakt door de projectgroep genaamd 
 “Stenden Clicker”. Er is besloten de eindopdrachten van de vakken te combineren welke samen 6EC waard zijn. Het project is gebaseerd op een clicker game. 
-Er is een mogelijkheid zijn om met meerdere spelers tegelijk te spelen.
+Er zal een mogelijkheid zijn om met meerdere spelers tegelijk te spelen.
 
 Dit project is opgezet en is ontwikkeld door:
 
@@ -15,7 +15,7 @@ Dit project is opgezet en is ontwikkeld door:
 
 <h2>Design Patterns</h2>
 
-De volgende Design Patterns zijn verwerkt:
+De volgende Design Patterns zijn verwerkt in het project:
 
 * <h3>Abstract Factory</h3>
 
@@ -53,7 +53,7 @@ public const int PoolSizeEC_MAX = 3;
 
 * <h3>Momento</h3>
 
-Het “Player” object wordt omgezet in JSON-data. Deze data worden vervolgens als String opgeslagen in de database door de ApiPlayerHandler. Het ViewModel weet wanneer de data  moet worden opgeslagen. Wanneer er op een fysieke knop wordt geklikt of wanneer de game wordt afgesloten zal de data worden opgeslagen. Via de getPlayerState van de ApiPlayerHandler kan de actie worden teruggedraaid. Dit is waar de design pattern memento van toepassing is. Memento zorgt ervoor dat een object weer terug kan veranderen naar  zijn eerdere staat. Wanneer de speler het spel weer opstart kunnende opgeslagen gegevens gemakkelijk weer worden teruggezet. 
+Het “Player” object wordt omgezet in JSON-data. Deze data worden vervolgens als String opgeslagen in de database door de ApiPlayerHandler. De ViewModel weet wanneer de data  moet worden opgeslagen. Wanneer er op een fysieke knop wordt geklikt of wanneer de game wordt afgesloten zal de data worden opgeslagen. Via de getPlayerState van de ApiPlayerHandler kan de actie worden teruggedraaid. Dit is waar de design pattern memento van toepassing is. Memento zorgt ervoor dat een object weer terug kan veranderen naar  zijn eerdere staat. Wanneer de speler het spel weer opstart kunnende opgeslagen gegevens gemakkelijk weer worden teruggezet. 
 
 In de onderstaande code wordt de huidige player state opgeslagen na elke monster die verslagen wordt. Deze is te vinden in StendenClicker.Library onder Playercontrols in de file
 [ApiPlayerHandler.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/PlayerControls/ApiPlayerHandler.cs)
@@ -77,7 +77,7 @@ public async Task SetPlayerStateAsync(Player player)
 
 * <h3>Observer</h3>
 
-Binnen de StendenClicker game zal er een optie zijn om samen met andere spelers de strijd aan te gaan met monsters die de studenten door de jaren heen mentaal te lijf zijn gegaan. Om alle gebruikers dezelfde informatie te tonen over de status van hun online game, zal er gebruik worden gemaakt van het observer design pattern. De observer design pattern zorgt ervoor dat als er een object van status veranderd, alle afhankelijke objecten hiervan op de hoogte worden gebracht en automatisch worden bijgewerkt. Doormiddel  van de methode ‘INotifyPropertyChanged’ van de ViewModel worden de eigendommen van de objecten bijgewerkt. Voor de communicatie tussen Client en de Server wordt gebruikt gemaakt van SignalR.
+Binnen de StendenClicker game zal er een optie zijn om samen met andere spelers de strijd aan te gaan met monsters die de studenten door de jaren heen mentaal te lijf zijn gegaan. Om alle gebruikers dezelfde informatie te tonen over de status van hun online game, zal er gebruik worden gemaakt van het observer design pattern. De observer design pattern zorgt ervoor dat als er een object van status veranderd, alle afhankelijke objecten hiervan op de hoogte worden gebracht en automatisch worden bijgewerkt. Doormiddel  van de methode ‘INotifyPropertyChanged’ van de ViewModel worden de eigendommen van de objecten bijgewerkt. Voor de communicatie tussen Client en de Server wordt gebruik gemaakt van SignalR.
 
 In de onderstaande code is de broadcaster van een boss sessie te zien. Deze vrijwel hetzelfde als een normal sessie, echter moeten deze worden gescheiden zodat er twee pipelines
 kunnen worden gegenereerd. De code is te vinden in StendenClickerApi onder Hubs in het bestand: [MultiplayerHub.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClickerApi/Hubs/MultiplayerHub.cs).
@@ -156,14 +156,14 @@ Als bepaalde functies niet het await keyword bevatten dan is het niet mogelijk o
 De Tasks zullen automatisch gebruik gaan maken van de Thread Pool in .NET. Mochten er functies uitgevoerd moeten worden waar geen Tasks voor beschikbaar 
 zijn kunnen deze met de ThreadPool.QueueUserWorkItem functie alsnog op de ThreadPool uitgevoerd worden. 
 
-In de UI vande applicatie zal voor de OnHover events gebruik gemaakt worden van delegates, deze zullen taken uitvoeren die los staan van de UI Thread. 
+In de UI van de applicatie zal voor de OnHover events gebruik gemaakt worden van delegates, deze zullen taken uitvoeren die los staan van de UI Thread. 
 
 Server side moet er worden gewacht totdat alle clickbatches van de players ontvangen zijn. Hiervoor wordt een await gebruikt. 
-Wanneer alle batches binnen zijn worden deze uitgevoerd en zullen de kliks worden verwerktop de monsters. 
+Wanneer alle batches binnen zijn worden deze uitgevoerd en zullen de kliks worden verwerkt op de monsters. 
 
 * <h3>Locking</h3>
 
-Wanneer een sessie wordt gestart is het belangrijk dat er maar een sessie runt op een thead. Om ervoor te zorgen dat dit gebeurt wordt er gebruik gemaakt van thread locking. 
+Wanneer een sessie wordt gestart is het belangrijk dat er maar één sessie runt op een thead. Om ervoor te zorgen dat dit gebeurt wordt er gebruik gemaakt van thread locking. 
 ```C#
 public static MultiPlayerSession GetSessionByAnyClientId(string key)
 {
