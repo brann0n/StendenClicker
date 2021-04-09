@@ -245,10 +245,21 @@ namespace StendenClickerApi.Database
 
 		public static implicit operator StendenClicker.Library.Models.DatabaseModels.PlayerHero(PlayerHero p)
 		{
+			List<StendenClicker.Library.Models.DatabaseModels.Upgrade> upgrades = new List<StendenClicker.Library.Models.DatabaseModels.Upgrade>();
+
+			foreach (var item in p.Upgrades)
+			{
+				upgrades.Add(item);
+			}
+
 			return new StendenClicker.Library.Models.DatabaseModels.PlayerHero 
 			{
 				Hero = p.Hero,
-				
+				HeroUpgradeLevel = p.HeroUpgradeLevel,
+				Player = null,
+				PlayerHeroId = p.PlayerHeroId,
+				SpecialUpgradeLevel = p.SpecialUpgradeLevel,
+				Upgrades = upgrades
 			};
 		}
 	}

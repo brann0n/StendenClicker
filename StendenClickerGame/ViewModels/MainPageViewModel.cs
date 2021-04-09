@@ -76,7 +76,6 @@ namespace StendenClickerGame.ViewModels
 
 				if (heroObject != null)
 				{
-					
 					//hero has been bought, add code that performs a hero level upgrade.
 					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
@@ -98,7 +97,6 @@ namespace StendenClickerGame.ViewModels
 
 					//	UpdateHeroList();
 					//});
-
 				}
 				else
 				{
