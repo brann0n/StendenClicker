@@ -195,6 +195,6 @@ var location = coin.dropCoordinates(new StendenClicker.Library.Point {X = 15, Y 
 
 <h2> Werking van de Stenden Clicker Game</h2>
 
-Voor het gebruik van de game moet er een account aan worden gemaakt. Wanneer er een account is aangemaakt wordt het spel opgestart op de plek waar de speler voor het 
+Om het spel op te starten moet de CPU op x86 worden gezet. Voor het gebruik van de game moet er een account aan worden gemaakt. Wanneer er een account is aangemaakt wordt het spel opgestart op de plek waar de speler voor het 
 laatst is gebleven. Vanuit hier kan de speler, zoals de naam al suggereert, op de monsters en bosses klikken om levels te verslaan. Het doel van het spel is om zo veel mogelijk
 levels te verslaan. Op den duur worden monsters en bosses steeds moeilijker om te verslaan, maar hier kunnen upgrades en hero's je helpen. Deze zorgen ervoor dat de speler meer schade toe dient.
