@@ -39,7 +39,7 @@ namespace StendenClickerApi.Hubs
 				//tell the client that it can subscribe to the batched click function so the server can periodically receive its clicks.
 				MultiPlayerSession session = new MultiPlayerSession()
 				{
-					hostPlayerId = p.PlayerGuid,
+					HostPlayerId = p.PlayerGuid,
 					CurrentPlayerList = new List<StendenClicker.Library.PlayerControls.Player> { p }
 				};
 
@@ -101,7 +101,7 @@ namespace StendenClickerApi.Hubs
 						List<PlayerObject> sessionMembers = new List<PlayerObject>();
 						sessionMembers.AddRange(FriendMultiPlayerSession.CurrentPlayerList);
 						sessionMembers.Add(player);
-						SessionExtensions.UpdatePlayers(FriendMultiPlayerSession.hostPlayerId, sessionMembers);
+						SessionExtensions.UpdatePlayers(FriendMultiPlayerSession.HostPlayerId, sessionMembers);
 
 						if (SessionExtensions.ContainsKey(UserGuid))
 						{

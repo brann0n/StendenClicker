@@ -40,11 +40,11 @@ namespace StendenClickerApi.Controllers
 			{
 				MultiPlayerSession currsession = SessionExtensions.Get(sessionguid);
 
-				tasklist.Add(currsession.hostPlayerId, () =>
+				tasklist.Add(currsession.HostPlayerId, () =>
 				{
-					if (SessionExtensions.ContainsKey(currsession.hostPlayerId))
+					if (SessionExtensions.ContainsKey(currsession.HostPlayerId))
 					{
-						MultiPlayerSession currentActualSession = SessionExtensions.Get(currsession.hostPlayerId);
+						MultiPlayerSession currentActualSession = SessionExtensions.Get(currsession.HostPlayerId);
 
 						var clientList = currentActualSession.CurrentPlayerList.Select(n => n.UserId.ToString()).ToList();
 
@@ -54,7 +54,7 @@ namespace StendenClickerApi.Controllers
 					else
 					{
 						//remove this session.
-						RemoveSession(currsession.hostPlayerId);
+						RemoveSession(currsession.HostPlayerId);
 					}
 				});
 			}

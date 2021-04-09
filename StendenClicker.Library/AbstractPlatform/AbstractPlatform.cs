@@ -13,8 +13,8 @@ namespace StendenClicker.Library.AbstractPlatform
 			CurrentPlayerState = state;
 		}
 
-		public abstract IAbstractMonster getMonster();
+		public abstract IAbstractMonster GetMonster();
 
-		public abstract IAbstractScene getScene();
+		public abstract IAbstractScene GetScene();
 	}
 }

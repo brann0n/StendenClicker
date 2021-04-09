@@ -90,7 +90,7 @@ namespace StendenClickerGame.CustomUI
 			Coins.Add(coin, NewCoinButton);
 			Children.Add(NewCoinButton);
 
-			var location = coin.dropCoordinates(new StendenClicker.Library.Point {X = 15, Y = 3 });
+			var location = coin.DropCoordinates(new StendenClicker.Library.Point {X = 15, Y = 3 });
 			Grid.SetColumn(NewCoinButton, location.X);
 			Grid.SetRow(NewCoinButton, location.Y);
 		}

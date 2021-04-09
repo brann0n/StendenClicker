@@ -8,12 +8,12 @@ namespace StendenClicker.Library.AbstractPlatform
 	{
 		public NormalLevel(PlayerState state) : base(state) { }
 
-		public override IAbstractMonster getMonster()
+		public override IAbstractMonster GetMonster()
 		{
 			return new Normal(CurrentPlayerState);
 		}
 
-		public override IAbstractScene getScene()
+		public override IAbstractScene GetScene()
 		{
 			return new NormalScene(CurrentPlayerState);
 		}

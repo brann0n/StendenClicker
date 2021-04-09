@@ -99,7 +99,7 @@ namespace StendenClickerGame.Multiplayer
 				}
 
 				//for now render a new level anyways.
-				SessionContext = new MultiPlayerSession { CurrentPlayerList = new List<Player> { pl }, hostPlayerId = CurrentPlayerGuid };
+				SessionContext = new MultiPlayerSession { CurrentPlayerList = new List<Player> { pl }, HostPlayerId = CurrentPlayerGuid };
 				SessionContext.CurrentLevel = LevelGenerator.BuildLevel(SessionContext.CurrentPlayerList);
 				await BroadcastSessionToServer();
 			});
@@ -182,7 +182,7 @@ namespace StendenClickerGame.Multiplayer
 					Scene = (BossScene)SessionContext.CurrentLevel.Scene
 				};
 
-				await MultiPlayerHub.Invoke("broadcastSessionBoss", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p);
+				await MultiPlayerHub.Invoke("broadcastSessionBoss", SessionContext.HostPlayerId, SessionContext.CurrentPlayerList, p);
 			}
 			else
 			{
@@ -192,7 +192,7 @@ namespace StendenClickerGame.Multiplayer
 					Scene = (NormalScene)SessionContext.CurrentLevel.Scene
 				};
 
-				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) =>
+				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.HostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) =>
 				{
 					bool success = task.Result;
 				});

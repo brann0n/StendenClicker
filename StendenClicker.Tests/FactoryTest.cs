@@ -34,7 +34,7 @@ namespace StendenClicker.Tests
 			{
 				players.Add(new Player
 				{
-					deviceId = $"{i}",
+					DeviceId = $"{i}",
 					State = new PlayerState { MonstersDefeated = stateNumber },
 					UserId = Guid.NewGuid(),
 					Username = $"Test{i}",

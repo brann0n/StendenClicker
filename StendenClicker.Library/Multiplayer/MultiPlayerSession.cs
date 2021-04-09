@@ -14,10 +14,7 @@ namespace StendenClicker.Library.Multiplayer
 		private GamePlatform _currentLevel;
 		public GamePlatform CurrentLevel { get { return _currentLevel; } set { _currentLevel = value; NotifyPropertyChanged(); } }
 		public bool ForceUpdate { get; set; } = false;
-		public string hostPlayerId { get; set; }
-		public int maxPlayers { get; set; }
-		public int monstersDefeated { get; set; }
-		public int bossesDefeated { get; set; }
+		public string HostPlayerId { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 

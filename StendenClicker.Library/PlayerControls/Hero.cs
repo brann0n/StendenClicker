@@ -8,7 +8,6 @@ namespace StendenClicker.Library.PlayerControls
 	public class Hero
 	{
 		public static List<Models.DatabaseModels.Hero> Heroes;
-		private static int InternalBossCount { get { return Heroes.Count; } }
 
 		public static async Task Initialize()
 		{

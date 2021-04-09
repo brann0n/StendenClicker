@@ -93,7 +93,7 @@ namespace StendenClickerGame.ViewModels
 				AbilityMultiplier = 1;
 				OnClickAbilityProcess?.Invoke(CurrentLevel, Clicks);
 
-				int damage = 100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier;
+				int damage = 100 * CurrentPlayer.GetDamageFactor() * AbilityMultiplier;
 				//storing it for server processing.
 
 				if (CurrentMonster.GetHealth() >= damage)

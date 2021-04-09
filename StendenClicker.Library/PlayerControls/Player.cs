@@ -20,7 +20,7 @@ namespace StendenClicker.Library.PlayerControls
 		/// <summary>
 		/// This is the physical ID of your device (not MAC)
 		/// </summary>
-		public string deviceId { get; set; }
+		public string DeviceId { get; set; }
 
 		public PlayerState State { get; set; }
 
@@ -34,7 +34,7 @@ namespace StendenClicker.Library.PlayerControls
 
 			if (string.IsNullOrEmpty(player.Username)) return true;
 
-			if (string.IsNullOrEmpty(player.deviceId)) return true;
+			if (string.IsNullOrEmpty(player.DeviceId)) return true;
 
 			return false;
 		}
@@ -43,7 +43,7 @@ namespace StendenClicker.Library.PlayerControls
 		{
 			return new Player
 			{
-				deviceId = player.DeviceId,
+				DeviceId = player.DeviceId,
 				Username = player.PlayerName,
 				UserId = Guid.Parse(player.PlayerGuid),
 				State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
@@ -51,7 +51,7 @@ namespace StendenClicker.Library.PlayerControls
 				Heroes = player.Heroes.ToList()
 			};
 		}
-		public int getDamageFactor()
+		public int GetDamageFactor()
 		{
 			return 1 + Heroes.Sum(n => n.HeroUpgradeLevel);
 		}

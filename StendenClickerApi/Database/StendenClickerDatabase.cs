@@ -217,7 +217,7 @@ namespace StendenClickerApi.Database
 
 			return new StendenClicker.Library.PlayerControls.Player
 			{
-				deviceId = player.DeviceId,
+				DeviceId = player.DeviceId,
 				Username = player.PlayerName,
 				UserId = Guid.Parse(player.PlayerGuid),
 				State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },

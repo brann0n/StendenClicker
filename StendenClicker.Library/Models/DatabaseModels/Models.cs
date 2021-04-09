@@ -87,7 +87,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		{
 			return new Player
 			{
-				DeviceId = player.deviceId,
+				DeviceId = player.DeviceId,
 				PlayerGuid = player.UserId.ToString(),
 				PlayerName = player.Username,
 				BossesDefreated = player.State.BossesDefeated,

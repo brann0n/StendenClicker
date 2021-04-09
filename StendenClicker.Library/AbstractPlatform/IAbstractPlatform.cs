@@ -5,8 +5,8 @@ namespace StendenClicker.Library.AbstractPlatform
 {
 	public interface IAbstractPlatform
 	{
-		IAbstractMonster getMonster();
+		IAbstractMonster GetMonster();
 
-		IAbstractScene getScene();
+		IAbstractScene GetScene();
 	}
 }

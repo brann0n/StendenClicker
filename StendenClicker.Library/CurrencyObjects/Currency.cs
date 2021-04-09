@@ -23,7 +23,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		/// </summary>
 		/// <param name="windowSize">the x,y size of the grid you want to place this object inside of.</param>
 		/// <returns>Random coordinates that lie inside the specified size</returns>
-		public Point dropCoordinates(Point windowSize)
+		public Point DropCoordinates(Point windowSize)
 		{
 			Random r = new Random();
 			return new Point { X = r.Next(0, windowSize.X), Y = r.Next(0, windowSize.Y) };
@@ -87,7 +87,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		/// <summary>
 		/// Sets the autoremove with a randomized timer
 		/// </summary>
-		public async void SetAutoRemove()
+		public void SetAutoRemove()
 		{
 			Random r = new Random();
 			SetAutoRemove(r.Next(4000, 6000));

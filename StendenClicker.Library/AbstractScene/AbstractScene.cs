@@ -13,8 +13,11 @@ namespace StendenClicker.Library.AbstractScene
 		public int MonsterCount { get => _monsterCount; set => _monsterCount = value; }
 		public string Background { get => _background; set => _background = value; }
 		public string Name { get => _name; set => _name = value; }
+		public PlayerState State { get; }
 
 		public AbstractScene(PlayerState state)
-		{ }
+		{
+			State = state;
+		}
 	}
 }

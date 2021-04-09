@@ -179,7 +179,7 @@ namespace StendenClickerGame.ViewModels
 				LastSavedAfterDefeated = DateTime.Now;
 			}
 
-			if(CurrencyTray.CurrentSession.hostPlayerId == CurrentPlayer.UserId.ToString())
+			if(CurrencyTray.CurrentSession.HostPlayerId == CurrentPlayer.UserId.ToString())
 			{
 				await mpProxy.BroadcastSessionToServer();
 			}
