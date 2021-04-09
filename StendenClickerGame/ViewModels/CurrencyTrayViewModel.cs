@@ -12,7 +12,6 @@ using System.Windows.Input;
 
 namespace StendenClickerGame.ViewModels
 {
-
 	public class CurrencyTrayViewModel : ViewModelBase
 	{
 		//event handlers
@@ -20,6 +19,7 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyRemoved;
 
 		public delegate void OnClickAbilityProcessHandler(GamePlatform platform, BatchedClick clicks);
+
 		//click eventhandler
 		public static event OnClickAbilityProcessHandler OnClickAbilityProcess;
 		public static int AbilityMultiplier;
@@ -52,6 +52,7 @@ namespace StendenClickerGame.ViewModels
 		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 		public PlayerCurrency Wallet { get { return CurrentPlayer?.Wallet; } }
 
+		//clicks collection
 		private BatchedClick Clicks;
 
 		public CurrencyTrayViewModel()
@@ -80,18 +81,14 @@ namespace StendenClickerGame.ViewModels
 		/// </summary>
 		public void MonsterClicked()
 		{
-			//todo: check if some of this stuff can run async to speed up the game.
 			//check if there is a monster to click on:
 			if (CurrentMonster != null)
 			{
-
 				//execute pending abilities
 				AbilityMultiplier = 1;
 				OnClickAbilityProcess?.Invoke(CurrentLevel, Clicks);
 
 				int damage = 100 * CurrentPlayer.GetDamageFactor() * AbilityMultiplier;
-				//storing it for server processing.
-
 				if (CurrentMonster.GetHealth() >= damage)
 				{
 					Clicks.AddDamage(damage);
@@ -110,13 +107,12 @@ namespace StendenClickerGame.ViewModels
 							MonsterClickProcessor(damage);
 							break;
 						}
+
 						damage -= damageToDo;
 						Clicks.AddDamage(damageToDo);
 						MonsterClickProcessor(damageToDo);
 					}
 				}
-
-
 			}
 		}
 
@@ -165,6 +161,7 @@ namespace StendenClickerGame.ViewModels
 						MonsterClickProcessor(damageToDo);
 						break;
 					}
+
 					totalDamageToProcess -= damageToDo;
 					MonsterClickProcessor(damageToDo);
 				}
@@ -176,6 +173,7 @@ namespace StendenClickerGame.ViewModels
 			foreach (Player player in CurrentSession.CurrentPlayerList)
 			{
 				if (MonsterDefeated)
+				{
 					if (CurrentMonster is Boss)
 					{
 						player.State.BossesDefeated++;
@@ -184,6 +182,7 @@ namespace StendenClickerGame.ViewModels
 					{
 						player.State.MonstersDefeated++;
 					}
+				}
 			}
 		}
 
@@ -260,6 +259,4 @@ namespace StendenClickerGame.ViewModels
 			return oldClicks;
 		}
 	}
-
 }
-

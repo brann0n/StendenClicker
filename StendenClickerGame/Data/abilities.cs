@@ -14,15 +14,11 @@ namespace StendenClickerGame.Data
 		public string AbilitieDescription { get; set; }
 		public bool IsOffCooldown { get; set; }
 		public string Image { get; set; }
-
-		public Windows.UI.Xaml.Media.SolidColorBrush Foreground { get; set; }
-
+		public SolidColorBrush Foreground { get; set; }
 		public bool IsCooldownProgressEnabled { get => !IsOffCooldown; }
 		public bool IsCooldownTimerEnabled { get; set; } = true;
 		public int CooldownPercentage { get; set; }
-
 		public TimeSpan CooldownTime { get; set; }
-
 		public ICommand OnExecute { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;

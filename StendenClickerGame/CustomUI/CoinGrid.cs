@@ -12,19 +12,19 @@ namespace StendenClickerGame.CustomUI
 {
 	public class CoinGrid : Grid
 	{
-		public readonly DependencyProperty CurrenciesProperty =
-			DependencyProperty.RegisterAttached("Currencies", typeof(CustomCoinList<Currency>), typeof(CoinGrid), new PropertyMetadata(default(CustomCoinList<Currency>), OnTypeChanged));
+		public readonly DependencyProperty CurrenciesProperty = DependencyProperty.RegisterAttached("Currencies",
+				typeof(CustomCoinList<Currency>),
+				typeof(CoinGrid),
+				new PropertyMetadata(default(CustomCoinList<Currency>), OnTypeChanged));
 
 		public CustomCoinList<Currency> Currencies
 		{
 			get
 			{
-				//CheckEvents();
 				return (CustomCoinList<Currency>)GetValue(CurrenciesProperty);
 			}
 			set
 			{
-				//CheckEvents();
 				SetValue(CurrenciesProperty, value);
 			}
 		}
@@ -88,8 +88,8 @@ namespace StendenClickerGame.CustomUI
 			Children.Add(NewCoinButton);
 
 			var location = coin.DropCoordinates(new StendenClicker.Library.Point { X = 15, Y = 3 });
-			Grid.SetColumn(NewCoinButton, location.X);
-			Grid.SetRow(NewCoinButton, location.Y);
+			SetColumn(NewCoinButton, location.X);
+			SetRow(NewCoinButton, location.Y);
 		}
 
 		public void Remove(Currency currency)

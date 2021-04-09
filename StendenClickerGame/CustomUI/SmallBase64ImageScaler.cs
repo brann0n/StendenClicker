@@ -31,7 +31,6 @@ namespace StendenClickerGame.CustomUI
 			}
 			catch (Exception)
 			{
-
 				throw;
 			}
 			return image;

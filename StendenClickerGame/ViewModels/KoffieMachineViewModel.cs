@@ -2,11 +2,7 @@ using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClickerGame.Data;
-using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
-using Windows.UI;
-using Windows.UI.Xaml.Media;
 
 namespace StendenClickerGame.ViewModels
 {

@@ -15,12 +15,7 @@ namespace StendenClickerGame.Multiplayer
 {
 	public class MultiplayerHubProxy
 	{
-
-#if !DEBUG
-		private const string ServerURL = "http://localhost:50420/signalr";
-#else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
-#endif
 
 		//Singleton Variables
 		private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() =>
@@ -83,7 +78,6 @@ namespace StendenClickerGame.Multiplayer
 				{
 					OnConnectionError?.Invoke(task.Exception);
 					//could also be unauthorized due to no correct userguid
-					//if this happens go into offline mode and load the most recent player information. then render a level out of that.
 				}
 				else
 				{
@@ -126,6 +120,7 @@ namespace StendenClickerGame.Multiplayer
 				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
 				ForceUpdate = force
 			};
+
 			UpdateSession(session);
 		}
 
@@ -137,6 +132,7 @@ namespace StendenClickerGame.Multiplayer
 				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
 				ForceUpdate = force
 			};
+
 			UpdateSession(session);
 		}
 
@@ -218,4 +214,3 @@ namespace StendenClickerGame.Multiplayer
 		}
 	}
 }
-
