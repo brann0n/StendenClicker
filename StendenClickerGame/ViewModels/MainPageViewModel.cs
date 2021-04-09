@@ -17,34 +17,34 @@ namespace StendenClickerGame.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
+		//static event for memento
 		private static event EventHandler OnRequestSave;
 
-		public static void DoSave()
-		{
-			OnRequestSave?.Invoke(null, null);
-		}
-
-		public MultiplayerHubProxy MpProxy { get { return MultiplayerHubProxy.Instance; } }
-
+		//window properties for binding a fixed width and height
 		private int PrivateWidth { get; set; } = 1920;
 		private int PrivateHeight { get; set; } = 1080;
 		public int WindowHeight { get => PrivateHeight; set { PrivateHeight = value; NotifyPropertyChanged(); } }
 		public int WindowWidth { get => PrivateWidth; set { PrivateWidth = value; NotifyPropertyChanged(); } }
 
+		//viewmodels
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public KoffieMachineViewModel KoffieMachine { get; set; }
 		public FriendshipPanelViewmodel Friends { get; set; }
 
+		//pop-up variables
 		public bool PopupShow { get; set; }
 		public string PopupTitle { get; set; }
 		public string PopupDescription { get; set; }
 
 		public ObservableCollection<HeroListObject> HeroList { get; set; }
 
+		//context fields
 		public List<Player> CurrentPlayers { get => MpProxy?.GetContext()?.CurrentPlayerList.Where(n => n.UserId != MpProxy?.CurrentPlayer.UserId).ToList(); }
 		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
+		public MultiplayerHubProxy MpProxy { get { return MultiplayerHubProxy.Instance; } }
 
-		private DateTime LastSavedAfterDefeated { get; set; }
+		private DateTime LastMementoSavedTime { get; set; }
+
 		public MainPageViewModel()
 		{
 			//sub viewmodels
@@ -58,7 +58,12 @@ namespace StendenClickerGame.ViewModels
 			CheckContextVariables();
 		}
 
-		public void LoadHeroes()
+		public static void DoSave()
+		{
+			OnRequestSave?.Invoke(null, null);
+		}
+
+		private void LoadHeroes()
 		{
 			HeroList.Clear();
 
@@ -76,23 +81,11 @@ namespace StendenClickerGame.ViewModels
 					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2) };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						if (PerformTransaction(heroListObject, "spark"))
+						if (PerformTransaction(heroListObject))
 							heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
 
-						UpdateHeroList();
+						UpdateHeroListAndSave();
 					});
-
-					foreach (var u in h.Upgrades)
-					{
-
-					}
-					//heroListObject.OnHeroButtonClickSpecialUpgrade = new RelayCommand(() =>
-					//{
-					//	if (PerformTransaction(heroListObject, "EC"))
-					//		heroListObject.PlayerHeroInformation.SpecialUpgradeLevel++;
-
-					//	UpdateHeroList();
-					//});
 				}
 				else
 				{
@@ -100,17 +93,15 @@ namespace StendenClickerGame.ViewModels
 					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = h.HeroCost };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						if (PerformTransaction(heroListObject, "spark"))
+						if (PerformTransaction(heroListObject))
 						{
 							//create a new heroes object:
 							var playerHeroNew = new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 };
 							heroListObject.PlayerHeroInformation = playerHeroNew;
 							CurrentPlayer.Heroes.Add(playerHeroNew);
-
-
 						}
 
-						UpdateHeroList();
+						UpdateHeroListAndSave();
 						LoadHeroes();
 					});
 				}
@@ -119,43 +110,33 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private bool PerformTransaction(HeroListObject transactableObject, string coin)
+		private bool PerformTransaction(HeroListObject transactableObject)
 		{
-			if (CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePriceSparkCoins && coin == "spark")
+			if (CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePriceSparkCoins)
 			{
 				CurrentPlayer.Wallet.SparkCoin -= (ulong)transactableObject.NextUpgradePriceSparkCoins;
 				NotifyPropertyChanged("CurrencyTray");
 				return true;
 			}
-			//else if(CurrentPlayer.Wallet.EuropeanCredit >= (ulong)transactableObject.UpgradePriceEuropeanCredits && coin == "EC")
-			//{
-			//	CurrentPlayer.Wallet.EuropeanCredit -= (ulong)transactableObject.UpgradePriceEuropeanCredits;
-			//	NotifyPropertyChanged("CurrencyTray");
-			//	return true;
-			//}
 
 			return false;
 		}
 
-		public void CheckContextVariables()
+		private void CheckContextVariables()
 		{
 			//multiplayer connection
 			MpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			MpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
 			MpProxy.OnBatchesReceived += MpProxy_OnBatchesReceived;
 			MpProxy.InitializeComplete += MpProxy_InitializeComplete;
-
 			MpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
 			MpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
 
+			//currency tray
 			CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
 
+			//memento logic
 			OnRequestSave += MainPageViewModel_OnRequestSave;
-		}
-
-		private void MpProxy_OnBatchesReceived(object sender, EventArgs e)
-		{
-			CurrencyTray.ProcessMultiplayerDamage((BatchedClick)sender);
 		}
 
 		private async void MainPageViewModel_OnRequestSave(object sender, EventArgs e)
@@ -165,23 +146,16 @@ namespace StendenClickerGame.ViewModels
 
 		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
 		{
-			if ((DateTime.Now - LastSavedAfterDefeated).TotalSeconds > 1)
-			{
-				//doSave
-				DoSave();
-				LastSavedAfterDefeated = DateTime.Now;
-			}
-
 			if (CurrencyTray.CurrentSession.HostPlayerId == CurrentPlayer.UserId.ToString())
 			{
 				await MpProxy.BroadcastSessionToServer();
 			}
 
-			//unlock any new heroes perhaps.
-			UpdateHeroList();
+			//update the hero list, new heroes may be unlocked or upgraded, also perform a save.
+			UpdateHeroListAndSave();
 		}
 
-		private void UpdateHeroList()
+		private void UpdateHeroListAndSave()
 		{
 			foreach (HeroListObject item in HeroList)
 			{
@@ -198,7 +172,6 @@ namespace StendenClickerGame.ViewModels
 					item.NextUpgradePriceSparkCoins = item.Hero.Price;
 				}
 
-
 				item.NotifyPropertyChanged("HeroUnlocked");
 				item.NotifyPropertyChanged("OpacityEnabled");
 				item.NotifyPropertyChanged("HeroBought");
@@ -206,6 +179,19 @@ namespace StendenClickerGame.ViewModels
 				item.NotifyPropertyChanged("PlayerHeroInformation");
 				item.NotifyPropertyChanged("UpgradePriceEuropeanCredits");
 			}
+
+			//perform a save for the memento design pattern.
+			if ((DateTime.Now - LastMementoSavedTime).TotalSeconds > 2)
+			{
+				//doSave
+				DoSave();
+				LastMementoSavedTime = DateTime.Now;
+			}
+		}
+
+		private void MpProxy_OnBatchesReceived(object sender, EventArgs e)
+		{
+			CurrencyTray.ProcessMultiplayerDamage((BatchedClick)sender);
 		}
 
 		/// <summary>
@@ -242,7 +228,7 @@ namespace StendenClickerGame.ViewModels
 			LoadHeroes();
 		}
 
-		private StendenClicker.Library.Batches.BatchedClick MpProxy_OnRequireBatches()
+		private BatchedClick MpProxy_OnRequireBatches()
 		{
 			return CurrencyTray.GetBatchedClick();
 		}
@@ -284,14 +270,7 @@ namespace StendenClickerGame.ViewModels
 				await Task.Delay(5000);
 				PopupShow = false;
 				NotifyPropertyChanged("popupShow");
-
 			});
 		}
-
-		public async Task<Player> GetPlayerContextAsync()
-		{
-			return await MpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
-		}
-
 	}
 }

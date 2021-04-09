@@ -14,6 +14,7 @@ namespace StendenClickerGame.ViewModels
 	{
 		private static ObservableCollection<Abilities> StaticAbilitiesList { get; set; }
 		public ObservableCollection<Abilities> AbilitiesList { get => StaticAbilitiesList; set => StaticAbilitiesList = value; }
+
 		public KoffieMachineViewModel()
 		{
 			var GerjanAbility = new Abilities
@@ -33,7 +34,6 @@ namespace StendenClickerGame.ViewModels
 				Image = "Assets/koffie.png"
 			};
 			SjiAbility.OnExecute = new RelayFunctionCommand<Abilities>(SjiKoffieAbilityClick, SjiAbility);
-
 
 			var JanAbility = new Abilities
 			{
@@ -74,15 +74,15 @@ namespace StendenClickerGame.ViewModels
 
 		private async void MartijnSportAbilityClick(Abilities SelfContext)
 		{
-			ContextSetAbilityEnabled(SelfContext);
+			SelfContext.ContextSetAbilityEnabled();
 
 			CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
 
-			await ContextDelayProgressbarEmpty(SelfContext, 15000);
+			await SelfContext.ContextDelayProgressbarEmpty(15000);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= MartijnSportAbility;
-			await ContextDelayProgressbarFill(SelfContext, 285000);
+			await SelfContext.ContextDelayProgressbarFill(285000);
 
-			ContextSetAbilityDisabled(SelfContext);
+			SelfContext.ContextSetAbilityDisabled();
 		}
 
 		private void MartijnSportAbility(GamePlatform sender, BatchedClick e)
@@ -92,15 +92,15 @@ namespace StendenClickerGame.ViewModels
 
 		private async void MiguelTheeAbilityClick(Abilities SelfContext)
 		{
-			ContextSetAbilityEnabled(SelfContext);
+			SelfContext.ContextSetAbilityEnabled();
 
 			CurrencyTrayViewModel.OnClickAbilityProcess += MiguelTheeAbility;
 
-			await ContextDelayProgressbarEmpty(SelfContext, 10000);
+			await SelfContext.ContextDelayProgressbarEmpty(10000);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= MiguelTheeAbility;
-			await ContextDelayProgressbarFill(SelfContext, 230000);
+			await SelfContext.ContextDelayProgressbarFill(230000);
 
-			ContextSetAbilityDisabled(SelfContext);
+			SelfContext.ContextSetAbilityDisabled();
 		}
 
 		private void MiguelTheeAbility(GamePlatform sender, BatchedClick e)
@@ -112,34 +112,34 @@ namespace StendenClickerGame.ViewModels
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += JanWaterAbility;
 
-			ContextSetAbilityEnabled(SelfContext);
+			SelfContext.ContextSetAbilityEnabled();
 
-			await ContextDelayProgressbarFill(SelfContext, 300000);
+			await SelfContext.ContextDelayProgressbarFill(300000);
 
-			ContextSetAbilityDisabled(SelfContext);
+			SelfContext.ContextSetAbilityDisabled();
 		}
 
 		private void JanWaterAbility(GamePlatform sender, BatchedClick e)
 		{
 			GamePlatform platform = (GamePlatform)sender;
 			AbstractMonster m = (AbstractMonster)platform.Monster;
-			int d = m.GetHealth();
-			m.DoDamage(d);
-			e.AddDamage(d);
+			int Damage = m.GetHealth();
+			m.DoDamage(Damage);
+			e.AddDamage(Damage);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= JanWaterAbility;
 		}
 
 		private async void SjiKoffieAbilityClick(Abilities SelfContext)
 		{
-			ContextSetAbilityEnabled(SelfContext);
+			SelfContext.ContextSetAbilityEnabled();
 
 			CurrencyTrayViewModel.OnClickAbilityProcess += SjiKoffieAbility;
 
-			await ContextDelayProgressbarEmpty(SelfContext, 5000);
+			await SelfContext.ContextDelayProgressbarEmpty(5000);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= SjiKoffieAbility;
-			await ContextDelayProgressbarFill(SelfContext, 115000);
+			await SelfContext.ContextDelayProgressbarFill(115000);
 
-			ContextSetAbilityDisabled(SelfContext);
+			SelfContext.ContextSetAbilityDisabled();
 		}
 
 		private void SjiKoffieAbility(GamePlatform sender, BatchedClick e)
@@ -151,11 +151,11 @@ namespace StendenClickerGame.ViewModels
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 
-			ContextSetAbilityEnabled(SelfContext);
+			SelfContext.ContextSetAbilityEnabled();
 
-			await ContextDelayProgressbarFill(SelfContext, 150000);
+			await SelfContext.ContextDelayProgressbarFill(150000);
 
-			ContextSetAbilityDisabled(SelfContext);
+			SelfContext.ContextSetAbilityDisabled();
 		}
 
 		private void GerjanSmoothieAbility(GamePlatform sender, BatchedClick e)
@@ -169,58 +169,6 @@ namespace StendenClickerGame.ViewModels
 				m.DoDamage(m.Health / 2);
 				CurrencyTrayViewModel.OnClickAbilityProcess -= GerjanSmoothieAbility;
 			}
-		}
-
-
-		private void ContextSetAbilityEnabled(Abilities SelfContext)
-		{
-			SelfContext.IsOffCooldown = false;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
-			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
-		}
-
-		private void ContextSetAbilityDisabled(Abilities SelfContext)
-		{
-			SelfContext.IsOffCooldown = true;
-			SelfContext.NotifyPropertyChanged("IsOffCooldown");
-			SelfContext.NotifyPropertyChanged("IsCooldownProgressEnabled");
-		}
-
-		private async Task ContextDelayProgressbarFill(Abilities SelfContext, int delayTime)
-		{
-			//devide delaytime by 500 to update the bar every half a second
-			double amountOfTicks = delayTime / 100d;
-			SelfContext.Foreground = new SolidColorBrush(Colors.Silver);
-			SelfContext.NotifyPropertyChanged("foreground");
-			for (int i = 0; i < amountOfTicks; i++)
-			{
-				int percentage = (int)(i / amountOfTicks * 100d);
-				TimeSpan ts = TimeSpan.FromSeconds(Math.Ceiling((amountOfTicks - i) / 10));
-				SelfContext.CooldownPercentage = percentage;
-				SelfContext.CooldownTime = ts;
-				SelfContext.NotifyPropertyChanged("CooldownPercentage");
-				SelfContext.NotifyPropertyChanged("CooldownTime");
-				await Task.Delay(100);
-			}
-		}
-
-		private async Task ContextDelayProgressbarEmpty(Abilities SelfContext, int delayTime)
-		{
-			//devide delaytime by 500 to update the bar every half a second
-			double amountOfTicks = delayTime / 100d;
-			SelfContext.IsCooldownTimerEnabled = false;
-			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
-			SelfContext.Foreground = new SolidColorBrush(Colors.Red);
-			SelfContext.NotifyPropertyChanged("foreground");
-			for (int i = (int)amountOfTicks; i >= 0; i--)
-			{
-				int percentage = (int)(i / amountOfTicks * 100d);
-				SelfContext.CooldownPercentage = percentage;
-				SelfContext.NotifyPropertyChanged("CooldownPercentage");
-				await Task.Delay(100);
-			}
-			SelfContext.IsCooldownTimerEnabled = true;
-			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
 		}
 	}
 }

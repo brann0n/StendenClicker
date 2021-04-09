@@ -67,6 +67,7 @@ namespace StendenClickerGame
 					catch (Exception)
 					{
 						//show this error to the user.
+						feedbackText.Text = "Er is een probleem opgetreden tijdens het aanmaken van uw account";
 					}
 				}
 				else
