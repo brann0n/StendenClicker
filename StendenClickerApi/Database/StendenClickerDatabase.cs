@@ -276,9 +276,11 @@ namespace StendenClickerApi.Database
 		//many-to-many-to-many-to-many? yes.
 		public int MultiPlayerSessionId { get; set; }
 		public virtual Player Player1 { get; set; }
+#nullable enable
 		public virtual Player? Player2 { get; set; }
 		public virtual Player? Player3 { get; set; }
 		public virtual Player? Player4 { get; set; }
+#nullable disable
 	}
 
 	public class Scene

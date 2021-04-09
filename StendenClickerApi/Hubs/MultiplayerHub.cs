@@ -80,7 +80,8 @@ namespace StendenClickerApi.Hubs
 		/// </summary>
 		/// <param name="FriendId"></param>
 		/// <returns></returns>
-		public async Task<bool> joinFriend(string FriendId)
+		[HubMethodName("joinFriend")]
+		public async Task<bool> JoinFriend(string FriendId)
 		{
 			bool SessionExists = SessionExtensions.ContainsKey(FriendId);
 			if (SessionExists)
@@ -129,7 +130,7 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("broadcastSessionBoss")]
-		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
+		public async Task<bool> BroadcastSession(string key, List<PlayerObject> sessionPlayers, BossGamePlatform a)
 		{
 			//verifys that only the host can broadcast
 			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
@@ -152,7 +153,7 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("broadcastSessionNormal")]
-		public async Task<bool> broadcastSession(string key, List<PlayerObject> sessionPlayers, NormalGamePlatform a)
+		public async Task<bool> BroadcastSessionNormal(string key, List<PlayerObject> sessionPlayers, NormalGamePlatform a)
 		{
 			//verifys that only the host can broadcast
 			if (key != UserGuid) throw new Exception("Session doesnt match the current userguid");
@@ -174,7 +175,7 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("uploadBatchedClicks")]
-		public async Task uploadBatchedClicks(BatchedClick batchItem)
+		public async Task UploadBatchedClicks(BatchedClick batchItem)
 		{
 			//send these received clicks to the other clients.
 			MultiPlayerSession session = SessionExtensions.GetSessionByAnyClientId(UserGuid);
@@ -192,7 +193,7 @@ namespace StendenClickerApi.Hubs
 		}
 
 		[HubMethodName("sendInvite")]
-		public async Task sendInvite(string targetPlayer)
+		public async Task SendInvite(string targetPlayer)
 		{
 			//get the target player his connection id.
 			Player TargetPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == targetPlayer);

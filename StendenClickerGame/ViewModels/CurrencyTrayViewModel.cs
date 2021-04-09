@@ -50,7 +50,7 @@ namespace StendenClickerGame.ViewModels
 
 		//Context variables
 		public GamePlatform CurrentLevel { get { return CurrentSession?.CurrentLevel; } }
-		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.getContext(); } }
+		public MultiPlayerSession CurrentSession { get { return MultiplayerHubProxy.Instance?.GetContext(); } }
 		public AbstractMonster CurrentMonster { get { return (AbstractMonster)CurrentLevel?.Monster; } }
 		public AbstractScene CurrentScene { get { return (AbstractScene)CurrentLevel?.Scene; } }
 		public Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }

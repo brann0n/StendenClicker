@@ -29,7 +29,7 @@ namespace StendenClickerGame
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private SystemMediaTransportControls systemControls;
+        private readonly SystemMediaTransportControls systemControls;
 
         public MainPage()
         {

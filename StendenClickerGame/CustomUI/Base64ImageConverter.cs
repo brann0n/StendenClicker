@@ -96,7 +96,7 @@ namespace StendenClickerGame.CustomUI
 
 
         // Gets the result of the task. Returns the default value of TResult if the task has not completed successfully.
-        public TResult Result { get { return (Task.Status == TaskStatus.RanToCompletion) ? Task.Result : default(TResult); } }
+        public TResult Result { get { return (Task.Status == TaskStatus.RanToCompletion) ? Task.Result : default; } }
 
         // Gets whether the task has completed.
         public bool IsCompleted { get { return Task.IsCompleted; } }

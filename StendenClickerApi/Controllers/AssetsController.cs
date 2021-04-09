@@ -13,7 +13,7 @@ namespace StendenClickerApi.Controllers
     [RoutePrefix("api/Assets")]
     public class AssetsController : Controller
     {
-        StendenClickerDatabase db = new StendenClickerDatabase();
+        private readonly StendenClickerDatabase db = new StendenClickerDatabase();
 
         //GET: api/Assets/GetMonsters
         [Route("Monsters")]

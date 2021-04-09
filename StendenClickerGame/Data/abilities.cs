@@ -16,7 +16,7 @@ namespace StendenClickerGame.Data
 		public bool IsOffCooldown { get; set; }
 		public string Image { get; set; }
 
-		public Windows.UI.Xaml.Media.SolidColorBrush foreground { get; set; }
+		public Windows.UI.Xaml.Media.SolidColorBrush Foreground { get; set; }
 
 		public bool IsCooldownProgressEnabled { get => !IsOffCooldown; }
 		public bool IsCooldownTimerEnabled { get; set; } = true;

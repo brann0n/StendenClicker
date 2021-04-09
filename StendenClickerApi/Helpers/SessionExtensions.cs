@@ -16,7 +16,7 @@ namespace StendenClickerApi.Helpers
 	{
 		private static readonly Dictionary<string, MultiPlayerSession> Sessions = new Dictionary<string, MultiPlayerSession>();
 
-		private static object AccessLock = new object();
+		private static readonly object AccessLock = new object();
 
 		public static List<MultiPlayerSession> Get()
 		{

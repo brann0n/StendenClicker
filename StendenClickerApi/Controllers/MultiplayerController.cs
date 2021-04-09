@@ -18,16 +18,16 @@ namespace StendenClickerApi.Controllers
 	public class MultiplayerController : Controller
 	{
 
-		private static Dictionary<string, Action> tasklist = new Dictionary<string, Action>();
+		private static readonly Dictionary<string, Action> TaskList = new Dictionary<string, Action>();
 
 		/// <summary>
 		/// Call this function when you want to perform actions per session.
 		/// </summary>
 		public static async Task RunTasks()
 		{
-			if(tasklist.Count != 0)
+			if(TaskList.Count != 0)
 			{
-				Parallel.Invoke(tasklist.Values.ToArray());				
+				Parallel.Invoke(TaskList.Values.ToArray());				
 			}
 
 			await Task.Yield();
@@ -40,7 +40,7 @@ namespace StendenClickerApi.Controllers
 			{
 				MultiPlayerSession currsession = SessionExtensions.Get(sessionguid);
 
-				tasklist.Add(currsession.HostPlayerId, () =>
+				TaskList.Add(currsession.HostPlayerId, () =>
 				{
 					if (SessionExtensions.ContainsKey(currsession.HostPlayerId))
 					{
@@ -71,7 +71,7 @@ namespace StendenClickerApi.Controllers
 		{
 			if (SessionExtensions.ContainsKey(sessionguid))
 			{
-				tasklist.Remove(sessionguid);
+				TaskList.Remove(sessionguid);
 				return new HttpStatusCodeResult(HttpStatusCode.OK, "Multiplayer session was removed from the tasklist.");
 			}
 			return new HttpStatusCodeResult(HttpStatusCode.NotFound, "Session not found.");

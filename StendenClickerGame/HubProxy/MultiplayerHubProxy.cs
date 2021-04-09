@@ -90,12 +90,12 @@ namespace StendenClickerGame.Multiplayer
 				else
 				{
 					//connected:
-					MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
-					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
-					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
-					MultiPlayerHub.On("broadcastYourClicks", requestClickBatches);
-					MultiPlayerHub.On<BatchedClick>("receiveUploadedBatchClicks", receiveUploadedBatchClicks);
-					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
+					MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => UpdateSession(sessionObject));
+					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", ReceiveNormalMonsterBroadcast);
+					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", ReceiveBossMonsterBroadcast);
+					MultiPlayerHub.On("broadcastYourClicks", RequestClickBatches);
+					MultiPlayerHub.On<BatchedClick>("receiveUploadedBatchClicks", ReceiveUploadedBatchClicks);
+					MultiPlayerHub.On<InviteModel>("receiveInvite", ReceiveInvite);
 				}
 
 				//for now render a new level anyways.
@@ -114,13 +114,13 @@ namespace StendenClickerGame.Multiplayer
 		}
 
 		#region ServerInvokableMethods
-		private void receiveInvite(InviteModel invite)
+		private void ReceiveInvite(InviteModel invite)
 		{
 			//update the UI
 			OnInviteReceived?.Invoke(invite, null);
 		}
 
-		private void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl, bool force)
+		private void ReceiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
@@ -128,10 +128,10 @@ namespace StendenClickerGame.Multiplayer
 				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
 				ForceUpdate = force
 			};
-			updateSession(session);
+			UpdateSession(session);
 		}
 
-		private void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl, bool force)
+		private void ReceiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
@@ -139,10 +139,10 @@ namespace StendenClickerGame.Multiplayer
 				CurrentLevel = new GamePlatform() { Monster = pl.Monster, Scene = pl.Scene },
 				ForceUpdate = force
 			};
-			updateSession(session);
+			UpdateSession(session);
 		}
 
-		private async void updateSession(MultiPlayerSession session)
+		private async void UpdateSession(MultiPlayerSession session)
 		{
 			//got a session update from the server. this happens when someone joins your session, or you are playing the game.
 			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
@@ -152,7 +152,7 @@ namespace StendenClickerGame.Multiplayer
 			});
 		}
 
-		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage)
+		private async void ReceiveUploadedBatchClicks(BatchedClick CollectedDamage)
 		{
 			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
 			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
@@ -161,7 +161,7 @@ namespace StendenClickerGame.Multiplayer
 			});		
 		}
 
-		private void requestClickBatches()
+		private void RequestClickBatches()
 		{
 			BatchedClick clicks = OnRequireBatches?.Invoke();
 			if (clicks.GetDamage() > 0)
@@ -174,12 +174,12 @@ namespace StendenClickerGame.Multiplayer
 
 		public async Task BroadcastSessionToServer()
 		{
-			if (SessionContext.CurrentLevel.Scene is BossScene)
+			if (SessionContext.CurrentLevel.Scene is BossScene scene)
 			{
 				BossGamePlatform p = new BossGamePlatform
 				{
 					Monster = (StendenClicker.Library.AbstractMonster.Boss)SessionContext.CurrentLevel.Monster,
-					Scene = (BossScene)SessionContext.CurrentLevel.Scene
+					Scene = scene
 				};
 
 				await MultiPlayerHub.Invoke("broadcastSessionBoss", SessionContext.HostPlayerId, SessionContext.CurrentPlayerList, p);
@@ -199,7 +199,7 @@ namespace StendenClickerGame.Multiplayer
 			}
 		}
 
-		public MultiPlayerSession getContext()
+		public MultiPlayerSession GetContext()
 		{
 			return SessionContext;
 		}

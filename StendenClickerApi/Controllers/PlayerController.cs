@@ -13,7 +13,7 @@ namespace StendenClickerApi.Controllers
 	[RoutePrefix("api/player")]
 	public class PlayerController : Controller
 	{
-		StendenClickerDatabase db = new StendenClickerDatabase();
+		readonly StendenClickerDatabase db = new StendenClickerDatabase();
 
 		/// <summary>
 		/// Endpoint that allows you to retrieve the player information
@@ -229,9 +229,11 @@ namespace StendenClickerApi.Controllers
 
 			if (Player.IsPlayerObjectEmpty(friend1) && Player.IsPlayerObjectEmpty(friend2)) return new HttpStatusCodeResult(500, "Player objects didnt validate.");
 
-			Friendship friendship = new Friendship();
-			friendship.Player1 = friend1;
-			friendship.Player2 = friend2;
+			Friendship friendship = new Friendship
+			{
+				Player1 = friend1,
+				Player2 = friend2
+			};
 
 			db.Friendships.Add(friendship);
 			await db.SaveChangesAsync();

@@ -9,7 +9,7 @@ namespace StendenClickerGame.Data
 {
     public class Coins
     {
-        public Point point { get; set; }
+        public Point Point { get; set; }
         public String CurrencyName { get; set; }
         public String Image { get; set; }
 

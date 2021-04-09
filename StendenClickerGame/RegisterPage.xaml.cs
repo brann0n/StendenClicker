@@ -27,7 +27,7 @@ namespace StendenClickerGame
 	/// </summary>
 	public sealed partial class RegisterPage : Page
 	{
-		ApiPlayerHandler beforeContextPlayerHandler;
+		readonly ApiPlayerHandler beforeContextPlayerHandler;
 		public RegisterPage()
 		{
 			this.InitializeComponent();

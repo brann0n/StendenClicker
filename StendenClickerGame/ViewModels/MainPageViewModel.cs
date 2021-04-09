@@ -48,7 +48,7 @@ namespace StendenClickerGame.ViewModels
 
 		public ObservableCollection<HeroListObject> HeroList { get; set; }
 
-		public List<Player> CurrentPlayers { get => mpProxy?.getContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
+		public List<Player> CurrentPlayers { get => mpProxy?.GetContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
 		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 
 		private DateTime LastSavedAfterDefeated { get; set; }

@@ -28,7 +28,6 @@ namespace StendenClickerApi.Helpers
 
         protected override bool AuthorizeCore(HttpContextBase httpContext)
         {
-            string ip = httpContext.Request.UserHostAddress;
             if(httpContext.Request.Headers["API_KEY"] != null)
 			{
                 string apiKey = httpContext.Request.Headers["API_KEY"];
@@ -48,7 +47,7 @@ namespace StendenClickerApi.Helpers
 
 	public class UserGUIDSecurityAttribute : Microsoft.AspNet.SignalR.AuthorizeAttribute
 	{
-        StendenClickerDatabase db = new StendenClickerDatabase();
+		readonly StendenClickerDatabase db = new StendenClickerDatabase();
 
 		public override bool AuthorizeHubConnection(HubDescriptor hubDescriptor, Microsoft.AspNet.SignalR.IRequest request)
 		{

@@ -193,7 +193,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			//devide delaytime by 500 to update the bar every half a second
 			double amountOfTicks = delayTime / 100d;
-			SelfContext.foreground = new SolidColorBrush(Colors.Silver);
+			SelfContext.Foreground = new SolidColorBrush(Colors.Silver);
 			SelfContext.NotifyPropertyChanged("foreground");
 			for (int i = 0; i < amountOfTicks; i++)
 			{
@@ -213,7 +213,7 @@ namespace StendenClickerGame.ViewModels
 			double amountOfTicks = delayTime / 100d;
 			SelfContext.IsCooldownTimerEnabled = false;
 			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
-			SelfContext.foreground = new SolidColorBrush(Colors.Red);
+			SelfContext.Foreground = new SolidColorBrush(Colors.Red);
 			SelfContext.NotifyPropertyChanged("foreground");
 			for (int i = (int)amountOfTicks; i >= 0; i--)
 			{
