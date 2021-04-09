@@ -70,12 +70,7 @@ namespace StendenClicker.Library.PlayerControls
 
         public int getDamageFactor()
         {
-            int AllHeroLevels = 0;
-            foreach (PlayerHero Hero in Heroes)
-            {
-               AllHeroLevels += Hero.HeroUpgradeLevel;
-            }
-            return 1 + AllHeroLevels;
+            return 1 + Heroes.Sum(n => n.HeroUpgradeLevel);
         }
     }
 }

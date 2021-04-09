@@ -94,9 +94,15 @@ namespace StendenClickerGame.ViewModels
 				OnClickAbilityProcess?.Invoke(CurrentLevel, Clicks);
 
 				int damage = 100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier;
-				Clicks.addClick(damage); //storing it for server processing.
+				//storing it for server processing.
 
-				MonsterClickProcessor(damage);
+				while (damage >= 0)
+				{
+					int damageForCurrentMonster = CurrentMonster.GetHealth();
+					damage -= damageForCurrentMonster;
+					Clicks.addClick(damageForCurrentMonster);
+					MonsterClickProcessor(damageForCurrentMonster);
+				}
 			}
 		}
 
@@ -136,7 +142,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			int totalDamageToProcess = damage.getClicks();
 
-			while(totalDamageToProcess > 0)
+			while(totalDamageToProcess >= 0)
 			{
 				int damageForCurrentMonster = CurrentMonster.GetHealth();
 				totalDamageToProcess -= damageForCurrentMonster;
