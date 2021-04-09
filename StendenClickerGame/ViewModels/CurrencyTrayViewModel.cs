@@ -96,13 +96,31 @@ namespace StendenClickerGame.ViewModels
 				int damage = 100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier;
 				//storing it for server processing.
 
-				while (damage >= 0)
+				if (CurrentMonster.GetHealth() >= damage)
 				{
-					int damageForCurrentMonster = CurrentMonster.GetHealth();
-					damage -= damageForCurrentMonster;
-					Clicks.addClick(damageForCurrentMonster);
-					MonsterClickProcessor(damageForCurrentMonster);
+					Clicks.addClick(damage);
+					MonsterClickProcessor(damage);
 				}
+				else
+				{
+					while(damage > 0)
+					{
+						int CurrentMonsterHealth = CurrentMonster.GetHealth();
+						int damageToDo = damage - CurrentMonsterHealth;
+						if (damageToDo <= 0)
+						{
+							//to process the last bits of damage without the loop
+							Clicks.addClick(damage);
+							MonsterClickProcessor(damage);
+							break;
+						}
+						damage -= damageToDo;
+						Clicks.addClick(damageToDo);
+						MonsterClickProcessor(damageToDo);
+					}
+				}
+
+
 			}
 		}
 
@@ -142,7 +160,7 @@ namespace StendenClickerGame.ViewModels
 		{
 			int totalDamageToProcess = damage.getClicks();
 
-			while(totalDamageToProcess >= 0)
+			while (totalDamageToProcess > 0)
 			{
 				int damageForCurrentMonster = CurrentMonster.GetHealth();
 				totalDamageToProcess -= damageForCurrentMonster;
