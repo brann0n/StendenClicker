@@ -1,12 +1,10 @@
 using Newtonsoft.Json;
 using StendenClicker.Library.Models;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
 
 namespace StendenClickerApi.Database
 {
@@ -210,7 +208,7 @@ namespace StendenClickerApi.Database
 		{
 			List<StendenClicker.Library.Models.DatabaseModels.PlayerHero> heroes = new List<StendenClicker.Library.Models.DatabaseModels.PlayerHero>();
 
-			foreach(var item in player.Heroes)
+			foreach (var item in player.Heroes)
 			{
 				heroes.Add(item);
 			}
@@ -252,7 +250,7 @@ namespace StendenClickerApi.Database
 				upgrades.Add(item);
 			}
 
-			return new StendenClicker.Library.Models.DatabaseModels.PlayerHero 
+			return new StendenClicker.Library.Models.DatabaseModels.PlayerHero
 			{
 				Hero = p.Hero,
 				HeroUpgradeLevel = p.HeroUpgradeLevel,

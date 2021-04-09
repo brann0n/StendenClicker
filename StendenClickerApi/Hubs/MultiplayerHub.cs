@@ -1,16 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 using Microsoft.AspNet.SignalR.Hubs;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
-using StendenClicker.Library.Multiplayer;
 using StendenClickerApi.Database;
 using StendenClickerApi.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using MultiPlayerSession = StendenClicker.Library.Multiplayer.MultiPlayerSession;
 using PlayerObject = StendenClicker.Library.PlayerControls.Player;
 

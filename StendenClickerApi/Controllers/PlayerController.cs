@@ -2,10 +2,8 @@
 using StendenClickerApi.Helpers;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity.Migrations;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace StendenClickerApi.Controllers
@@ -108,11 +106,11 @@ namespace StendenClickerApi.Controllers
 
 				List<Upgrade> Upgrades = new List<Upgrade>();
 
-				foreach(var upgrade in givenPlayerHero.Upgrades)
+				foreach (var upgrade in givenPlayerHero.Upgrades)
 				{
 					Upgrades.Add(db.Upgrades.FirstOrDefault(n => n.UpgradeId == upgrade.UpgradeId));
 				}
-				
+
 				//see if you can find it in the database:
 				var fndPH = db.PlayerHeroes.Where(n => n.Player.PlayerGuid == player.PlayerGuid).FirstOrDefault(m => m.Hero.HeroName == givenPlayerHero.Hero.HeroName);
 				if (fndPH == null)
@@ -121,7 +119,7 @@ namespace StendenClickerApi.Controllers
 					if (givenPlayerHero.Hero == null)
 					{
 						//this is bad ayy	
-						continue;	
+						continue;
 					}
 					else
 					{
@@ -137,8 +135,8 @@ namespace StendenClickerApi.Controllers
 					//found -> do an update :))))
 					fndPH.HeroUpgradeLevel = givenPlayerHero.HeroUpgradeLevel;
 					fndPH.SpecialUpgradeLevel = givenPlayerHero.SpecialUpgradeLevel;
-					
-					foreach(var upgrade in givenPlayerHero.Upgrades)
+
+					foreach (var upgrade in givenPlayerHero.Upgrades)
 					{
 						if (!fndPH.Upgrades.Contains(upgrade))
 						{
@@ -146,7 +144,7 @@ namespace StendenClickerApi.Controllers
 						}
 					}
 				}
-				
+
 			}
 
 			await db.SaveChangesAsync();

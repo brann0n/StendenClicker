@@ -4,7 +4,6 @@ using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
 namespace StendenClickerApi.Helpers
 {
@@ -43,7 +42,7 @@ namespace StendenClickerApi.Helpers
 
 		public static void Add(string key, MultiPlayerSession Session)
 		{
-			Session.CurrentPlayerList.Add(new Player {UserId = Guid.Empty });
+			Session.CurrentPlayerList.Add(new Player { UserId = Guid.Empty });
 			lock (AccessLock)
 				Sessions.Add(key, Session);
 		}
