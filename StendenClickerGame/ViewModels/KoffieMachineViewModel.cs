@@ -7,6 +7,8 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
+using Windows.UI;
+using Windows.UI.Xaml.Media;
 
 namespace StendenClickerGame.ViewModels
 {
@@ -19,7 +21,7 @@ namespace StendenClickerGame.ViewModels
 			var GerjanAbility = new Abilities
 			{
 				AbilitieName = "Gerjan's Tarwesmoothie",
-				AbilitieDescription = "Bezorgt een harde klap aan de volgende Boss! (Stackable)",
+				AbilitieDescription = "Deze hakt er hard in voor de volgende Boss! (Stackable)",
 				IsOffCooldown = true,
 				Image = "Assets/koffie.png"
 			};
@@ -188,6 +190,8 @@ namespace StendenClickerGame.ViewModels
 		{
 			//devide delaytime by 500 to update the bar every half a second
 			double amountOfTicks = delayTime / 100d;
+			SelfContext.foreground = new SolidColorBrush(Colors.Silver);
+			SelfContext.NotifyPropertyChanged("foreground");
 			for (int i = 0; i < amountOfTicks; i++)
 			{
 				int percentage = (int)(i / amountOfTicks * 100d);
@@ -206,6 +210,8 @@ namespace StendenClickerGame.ViewModels
 			double amountOfTicks = delayTime / 100d;
 			SelfContext.IsCooldownTimerEnabled = false;
 			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
+			SelfContext.foreground = new SolidColorBrush(Colors.Red);
+			SelfContext.NotifyPropertyChanged("foreground");
 			for (int i = (int)amountOfTicks; i >= 0; i--)
 			{
 				int percentage = (int)(i / amountOfTicks * 100d);
