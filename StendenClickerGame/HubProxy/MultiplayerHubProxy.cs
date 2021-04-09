@@ -18,7 +18,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if !DEBUG
+#if DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -95,7 +95,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
 					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 					MultiPlayerHub.On("broadcastYourClicks", requestClickBatches);
-					MultiPlayerHub.On<BatchedClick, string>("receiveUploadedBatchClicks", receiveUploadedBatchClicks);
+					MultiPlayerHub.On<BatchedClick>("receiveUploadedBatchClicks", receiveUploadedBatchClicks);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 				}
 
@@ -152,7 +152,7 @@ namespace StendenClickerGame.Multiplayer
 			});
 		}
 
-		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage, string DamageFrom)
+		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage)
 		{
 			OnBatchesReceived?.Invoke(CollectedDamage, null);
 		}

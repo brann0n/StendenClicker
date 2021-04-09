@@ -94,56 +94,56 @@ namespace StendenClickerApi.Hubs
 				{
 					Player player = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 
-					//create a new player object: 
-					Player p = new Player
-					{
-						BossesDefreated = player.BossesDefreated,
-						DeviceId = player.DeviceId,
-						EuropeanCredits = player.EuropeanCredits,
-						MonstersDefeated = player.MonstersDefeated,
-						PlayerGuid = player.PlayerGuid,
-						PlayerId = player.PlayerId,
-						PlayerName = player.PlayerName,
-						SparkCoins = player.SparkCoins,
-						__EuropeanCredits = player.__EuropeanCredits,
-						__SparkCoins = player.__SparkCoins
-					};
+					////create a new player object: 
+					//Player p = new Player
+					//{
+					//	BossesDefreated = player.BossesDefreated,
+					//	DeviceId = player.DeviceId,
+					//	EuropeanCredits = player.EuropeanCredits,
+					//	MonstersDefeated = player.MonstersDefeated,
+					//	PlayerGuid = player.PlayerGuid,
+					//	PlayerId = player.PlayerId,
+					//	PlayerName = player.PlayerName,
+					//	SparkCoins = player.SparkCoins,
+					//	__EuropeanCredits = player.__EuropeanCredits,
+					//	__SparkCoins = player.__SparkCoins
+					//};
 
-					foreach (PlayerHero _heroInformation in player.Heroes)
-					{
-						Hero h = new Hero
-						{
-							HeroCost = _heroInformation.Hero.HeroCost,
-							HeroId = _heroInformation.Hero.HeroId,
-							HeroInformation = _heroInformation.Hero.HeroInformation,
-							HeroName = _heroInformation.Hero.HeroName
-						};
+					//foreach (PlayerHero _heroInformation in player.Heroes)
+					//{
+					//	Hero h = new Hero
+					//	{
+					//		HeroCost = _heroInformation.Hero.HeroCost,
+					//		HeroId = _heroInformation.Hero.HeroId,
+					//		HeroInformation = _heroInformation.Hero.HeroInformation,
+					//		HeroName = _heroInformation.Hero.HeroName
+					//	};
 
-						PlayerHero ph = new PlayerHero
-						{
-							Hero = h,
-							HeroUpgradeLevel = _heroInformation.HeroUpgradeLevel,
-							SpecialUpgradeLevel = _heroInformation.SpecialUpgradeLevel
-						};
-						List<Upgrade> upgrades = new List<Upgrade>();
+					//	PlayerHero ph = new PlayerHero
+					//	{
+					//		Hero = h,
+					//		HeroUpgradeLevel = _heroInformation.HeroUpgradeLevel,
+					//		SpecialUpgradeLevel = _heroInformation.SpecialUpgradeLevel
+					//	};
+					//	List<Upgrade> upgrades = new List<Upgrade>();
 
-						foreach (var item in _heroInformation.Upgrades)
-						{
-							Upgrade up = new Upgrade
-							{
-								Hero = h,
-								UpgradeCost = item.UpgradeCost,
-								UpgradeId = item.UpgradeId,
-								UpgradeIsAbility = item.UpgradeIsAbility,
-								UpgradeName = item.UpgradeName
-							};
-							upgrades.Add(up);
-						}
+					//	foreach (var item in _heroInformation.Upgrades)
+					//	{
+					//		Upgrade up = new Upgrade
+					//		{
+					//			Hero = h,
+					//			UpgradeCost = item.UpgradeCost,
+					//			UpgradeId = item.UpgradeId,
+					//			UpgradeIsAbility = item.UpgradeIsAbility,
+					//			UpgradeName = item.UpgradeName
+					//		};
+					//		upgrades.Add(up);
+					//	}
 
-						ph.Upgrades = upgrades;
+					//	ph.Upgrades = upgrades;
 
-						p.Heroes.Add(ph);
-					}
+					//	p.Heroes.Add(ph);
+					//}
 
 					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
 
@@ -151,7 +151,7 @@ namespace StendenClickerApi.Hubs
 					{
 						List<PlayerObject> sessionMembers = new List<PlayerObject>();
 						sessionMembers.AddRange(FriendMultiPlayerSession.CurrentPlayerList);
-						sessionMembers.Add(p);
+						sessionMembers.Add(player);
 						SessionExtensions.UpdatePlayers(FriendMultiPlayerSession.hostPlayerId, sessionMembers);
 
 						if (SessionExtensions.ContainsKey(UserGuid))
