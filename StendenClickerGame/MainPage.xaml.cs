@@ -11,6 +11,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Media;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -42,7 +43,7 @@ namespace StendenClickerGame
 			mediaElement.MediaEnded += MediaElement_MediaEnded;
             systemControls.IsPlayEnabled = true;
             systemControls.IsPauseEnabled = true;
-			this.Loaded += MainPage_Loaded;     
+			this.Loaded += MainPage_Loaded;
         }
 
 		private void MediaElement_MediaEnded(object sender, RoutedEventArgs e)

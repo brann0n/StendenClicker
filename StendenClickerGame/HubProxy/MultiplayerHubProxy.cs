@@ -93,7 +93,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
 					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
 					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
-					MultiPlayerHub.On("requestClickBatch", requestClickBatches);
+					MultiPlayerHub.On("broadcastYourClicks", requestClickBatches);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
 					//do what next?

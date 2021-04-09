@@ -75,13 +75,6 @@ namespace StendenClickerApi.Hubs
 			return base.OnReconnected();
 		}
 
-		[HubMethodName("beginGameThread")]
-		public async Task beginGameThread()
-		{
-			//todo: enable a thread per game session and periodically retrieve and dispatch game info.
-			//Thread.
-		}
-
 		/// <summary>
 		/// Checks if friend has a session, checks if the current player is friends, adds them to their friend's session and deletes the current player session
 		/// </summary>
@@ -180,9 +173,12 @@ namespace StendenClickerApi.Hubs
 			return SessionIsValid;
 		}
 
-		public async Task processBatch<T>(IBatchProcessable<T> batchItem)
+		[HubMethodName("uploadBatchedClicks")]
+		public async Task uploadBatchedClicks(BatchedClick batchItem)
 		{
 
+
+			await Task.Yield();
 		}
 
 		[HubMethodName("sendInvite")]
@@ -193,7 +189,7 @@ namespace StendenClickerApi.Hubs
 			Player InviteFromPlayer = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 			if (TargetPlayer == null) return;
 
-			Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel { UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
+			await Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel { UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
 		}
 
 		[HubMethodName("leaveSession")]
