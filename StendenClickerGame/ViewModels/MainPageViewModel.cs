@@ -2,7 +2,6 @@
 using StendenClicker.Library;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
-using StendenClicker.Library.Models.DatabaseModels;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
@@ -86,7 +85,11 @@ namespace StendenClickerGame.ViewModels
 
 						UpdateHeroList();
 					});
-					
+
+					foreach (var u in h.Upgrades)
+					{
+
+					}
 					//heroListObject.OnHeroButtonClickSpecialUpgrade = new RelayCommand(() =>
 					//{
 					//	if (PerformTransaction(heroListObject, "EC"))
