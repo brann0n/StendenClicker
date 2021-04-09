@@ -163,15 +163,38 @@ Wanneer alle batches binnen zijn worden deze uitgevoerd en zullen de kliks worde
 
 * <h3>LINQ/PLINQ</h3>
 
-Voor het ophalenen wegschrijven van data wordt gebruik gemaakt van LINQen PLINQ. Player data zal worden weggeschreven en opgehaald met LINQ. 
-Naast het Player object worden alle click batches per seconde opgeslagen, hiervoorwordt ook LINQ toegepast. PLINQ wordt gebruikt om de 
+Voor het ophalenen wegschrijven van data wordt gebruik gemaakt van LINQ en PLINQ. Player data zal worden weggeschreven en opgehaald met LINQ. 
+Naast het Player object worden alle click batches per seconde opgeslagen, hiervoor wordt ook LINQ toegepast. PLINQ wordt gebruikt om de 
 batchclicks op te halen en daarna uit te rekenen hoeveel keer er in totaal is geklikt. Om de app compact te houden is ervoor gekozen om environment variables
-(images, welke monsters)op te slaan in database. Deze worden gedownload wanneer de app voor het eerst wordt opgestart en zal gebeuren met LINQ.
+(images, welke monsters) op te slaan in database. Deze worden gedownload wanneer de app voor het eerst wordt opgestart en zal gebeuren met LINQ.
 
 * <h3>Locking</h3>
 
+Wanneer een sessie wordt gestart is het belangrijk dat er maar een sessie runt op een thead. Om ervoor te zorgen dat dit gebeurt wordt er gebruik gemaakt van thread locking. 
+```C#
+public static MultiPlayerSession GetSessionByAnyClientId(string key)
+{
+	lock (AccessLock)
+	{
+		var session = Sessions.Values.Where(n => n.CurrentPlayerList.FirstOrDefault(m => m.UserId.ToString().Equals(key)) != null);
+		if (session.Count() == 1)
+		{
+			return session.First();
+		}
+		else return null;
+	}
+}
+```
 
 * <h3>Delegates</h3>
+
+Delegates worden gebruikt voor het handelen van de coins wanneer de coins droppen. Er is een custom UI met coin grid welke deze gebruikt. 
+```C#
+var location = coin.dropCoordinates(new StendenClicker.Library.Point {X = 15, Y = 3 });
+	Grid.SetColumn(NewCoinButton, location.X);
+	Grid.SetRow(NewCoinButton, location.Y);Add((Currency)sender);
+}
+```
 
 <h2> Database Structuur </2>
 
