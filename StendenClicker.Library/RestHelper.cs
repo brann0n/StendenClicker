@@ -11,7 +11,7 @@ namespace StendenClicker.Library
     public class RestHelper
     {
 
-#if DEBUG
+#if !DEBUG
 		private const string BaseUrl = "http://localhost:50420/";
 #else
         private const string BaseUrl = "https://stendenclicker.serverict.nl/";
