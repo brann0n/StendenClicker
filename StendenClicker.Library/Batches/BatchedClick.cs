@@ -1,19 +1,18 @@
 namespace StendenClicker.Library.Batches
 {
-	public class BatchedClick : IBatchProcessable<BatchedClick>
+	public class BatchedClick
 	{
-		private int clickCount { get; set; } = 0;
+		public int ClickCount { get; set; } = 0;
 
 		public void addClick()
 		{
-			clickCount++;
+			ClickCount++;
 		}
-		//should use processing context of the player?
-        public void processData<T>() where T : BatchedClick
-        {
-            throw new System.NotImplementedException();
-        }
-    }
 
+		public int getClicks()
+		{
+			return ClickCount;
+		}
+    }
 }
 

@@ -18,7 +18,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if !DEBUG
+#if DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -97,7 +97,7 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
 
 					//do what next?
-					//await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
+
 				}
 
 				//for now render a new level anyways.
@@ -107,6 +107,12 @@ namespace StendenClickerGame.Multiplayer
 			});
 
 			InitializeComplete?.Invoke(null, null);
+
+			Dictionary<string, string> dingetje = new Dictionary<string, string>
+			{
+				{ "sessionguid", CurrentPlayerGuid }
+			};
+			await RestHelper.GetRequestAsync("api/multiplayer/AddSession", dingetje);
 		}
 
 		#region ServerInvokableMethods
@@ -150,9 +156,12 @@ namespace StendenClickerGame.Multiplayer
 		private void requestClickBatches()
 		{
 			BatchedClick clicks = OnRequireBatches?.Invoke();
+			if (clicks.getClicks() > 0)
+			{
 
-			//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
-			MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
+				//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
+				MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
+			}
 		}
 		#endregion
 
