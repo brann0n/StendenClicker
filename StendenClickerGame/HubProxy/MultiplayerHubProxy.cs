@@ -52,6 +52,7 @@ namespace StendenClickerGame.Multiplayer
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
 		public event BatchClickRetrieveHandler OnRequireBatches;
+		public event EventHandler OnBatchesReceived;
 
 		//Required classes for player information and level generation
 		public ApiPlayerHandler PlayerContext;
@@ -94,10 +95,8 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
 					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 					MultiPlayerHub.On("broadcastYourClicks", requestClickBatches);
+					MultiPlayerHub.On<BatchedClick, string>("receiveUploadedBatchClicks", receiveUploadedBatchClicks);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
-
-					//do what next?
-
 				}
 
 				//for now render a new level anyways.
@@ -151,6 +150,11 @@ namespace StendenClickerGame.Multiplayer
 			{
 				OnSessionUpdateReceived?.Invoke(session, null);
 			});
+		}
+
+		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage, string DamageFrom)
+		{
+			OnBatchesReceived?.Invoke(CollectedDamage, null);
 		}
 
 		private void requestClickBatches()

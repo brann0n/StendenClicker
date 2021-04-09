@@ -118,7 +118,7 @@ namespace StendenClickerApi.Hubs
 								await Clients.Groups(targetClients).receiveBossMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel, targetClients.Count != 1);
 							}
 
-							
+
 							return true;
 						}
 					}
@@ -176,11 +176,19 @@ namespace StendenClickerApi.Hubs
 		[HubMethodName("uploadBatchedClicks")]
 		public async Task uploadBatchedClicks(BatchedClick batchItem)
 		{
+			//send these received clicks to the other clients.
+			MultiPlayerSession session = SessionExtensions.GetSessionByAnyClientId(UserGuid);
 
+			if (session != null)
+			{
+				List<string> playerGuids = session.CurrentPlayerList
+					.Where(m => m.UserId.ToString() != UserGuid)
+					.Select(n => n.UserId.ToString()).ToList();
 
+				await Clients.Groups(playerGuids).receiveUploadedBatchClicks(batchItem);
 
-
-			await Task.Yield();
+				await Task.Yield();
+			}
 		}
 
 		[HubMethodName("sendInvite")]
@@ -210,7 +218,7 @@ namespace StendenClickerApi.Hubs
 
 				SessionExtensions.UpdatePlayers(Session.hostPlayerId, sessionMembers);
 			}
-			
+
 			//add function to update is for all users
 		}
 	}

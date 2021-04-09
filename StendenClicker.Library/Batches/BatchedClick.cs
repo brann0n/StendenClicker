@@ -2,16 +2,16 @@ namespace StendenClicker.Library.Batches
 {
 	public class BatchedClick
 	{
-		public int ClickCount { get; set; } = 0;
+		public int DamageDone { get; set; } = 0;
 
-		public void addClick()
+		public void addClick(int damage)
 		{
-			ClickCount++;
+			DamageDone += damage;
 		}
 
 		public int getClicks()
 		{
-			return ClickCount;
+			return DamageDone;
 		}
     }
 }

@@ -59,7 +59,7 @@ namespace StendenClickerApi.Database
 		public int HeroCost { get; set; }
 		public virtual ImageAsset HeroAsset { get; set; }
 
-		protected virtual ICollection<Upgrade> Upgrades { get; set; }
+		public virtual ICollection<Upgrade> Upgrades { get; set; }
 
 		[JsonIgnore]
 		public virtual ICollection<PlayerHero> Players { get; set; }
@@ -87,6 +87,8 @@ namespace StendenClickerApi.Database
 		public string UpgradeName { get; set; }
 		public int UpgradeCost { get; set; }
 		public bool UpgradeIsAbility { get; set; }
+
+		[JsonIgnore]
 		public virtual Hero Hero { get; set; }
 
 		[JsonIgnore]
