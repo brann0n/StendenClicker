@@ -2,6 +2,7 @@
 using StendenClicker.Library;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
+using StendenClicker.Library.Models.DatabaseModels;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
@@ -60,6 +61,7 @@ namespace StendenClickerGame.ViewModels
 
 			foreach (StendenClicker.Library.Models.DatabaseModels.Hero h in Hero.Heroes)
 			{
+
 				//todo: add in player specific information from the list.
 
 				int levelNeededForUnlock = (h.HeroId * 5);
@@ -71,30 +73,38 @@ namespace StendenClickerGame.ViewModels
 
 				if (heroObject != null)
 				{
+					
 					//hero has been bought, add code that performs a hero level upgrade.
-					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePrice = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
+					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						if (PerformTransaction(heroListObject))
+						if (PerformTransaction(heroListObject, "spark"))
 							heroListObject.PlayerHeroInformation.HeroUpgradeLevel++;
 
 						UpdateHeroList();
 					});
+					
+					//heroListObject.OnHeroButtonClickSpecialUpgrade = new RelayCommand(() =>
+					//{
+					//	if (PerformTransaction(heroListObject, "EC"))
+					//		heroListObject.PlayerHeroInformation.SpecialUpgradeLevel++;
+
+					//	UpdateHeroList();
+					//});
+
 				}
 				else
 				{
 					//hero has not been bought yet, add code that allows you to buy this hero.
-					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePrice = h.HeroCost };
+					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = h.HeroCost };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
-						if (PerformTransaction(heroListObject))
+						if (PerformTransaction(heroListObject, "spark"))
 						{
 							//create a new heroes object:
 							var playerHeroNew = new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 };
 							heroListObject.PlayerHeroInformation = playerHeroNew;
 							CurrentPlayer.Heroes.Add(playerHeroNew);
-
-							
 						}
 						
 						UpdateHeroList();
@@ -106,14 +116,21 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private bool PerformTransaction(HeroListObject transactableObject)
+		private bool PerformTransaction(HeroListObject transactableObject, string coin)
 		{
-			if(CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePrice)
+			if(CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePriceSparkCoins && coin == "spark")
 			{
-				CurrentPlayer.Wallet.SparkCoin -= (ulong)transactableObject.NextUpgradePrice;
+				CurrentPlayer.Wallet.SparkCoin -= (ulong)transactableObject.NextUpgradePriceSparkCoins;
 				NotifyPropertyChanged("CurrencyTray");
 				return true;
 			}
+			//else if(CurrentPlayer.Wallet.EuropeanCredit >= (ulong)transactableObject.UpgradePriceEuropeanCredits && coin == "EC")
+			//{
+			//	CurrentPlayer.Wallet.EuropeanCredit -= (ulong)transactableObject.UpgradePriceEuropeanCredits;
+			//	NotifyPropertyChanged("CurrencyTray");
+			//	return true;
+			//}
+
 			return false;
 		}
 
@@ -148,18 +165,20 @@ namespace StendenClickerGame.ViewModels
 				//recalculate price:
 				if (item.HeroBought)
 				{
-					item.NextUpgradePrice = (int)Math.Pow(item.Hero.Price * item.PlayerHeroInformation.HeroUpgradeLevel, 2);
+					item.NextUpgradePriceSparkCoins = (int)Math.Pow(item.Hero.Price * item.PlayerHeroInformation.HeroUpgradeLevel, 2);
 				}
 				else
 				{
-					item.NextUpgradePrice = item.Hero.Price;
+					item.NextUpgradePriceSparkCoins = item.Hero.Price;
 				}
+
 
 				item.NotifyPropertyChanged("HeroUnlocked");
 				item.NotifyPropertyChanged("OpacityEnabled");
 				item.NotifyPropertyChanged("HeroBought");
-				item.NotifyPropertyChanged("NextUpgradePrice");
+				item.NotifyPropertyChanged("NextUpgradePriceSparkCoins");
 				item.NotifyPropertyChanged("PlayerHeroInformation");
+				item.NotifyPropertyChanged("UpgradePriceEuropeanCredits");
 			}
 		}
 

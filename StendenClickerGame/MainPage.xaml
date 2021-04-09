@@ -133,88 +133,88 @@
 																		<Path Fill=" #ffffff " Data="M30 77L72 46L54 36L60 18L32 47L49 47L30 77Z" />
 																	</Canvas>
 																</Viewbox>
-																<TextBlock Foreground="White" Text="{Binding NextUpgradePrice}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal"/>
+																<TextBlock Foreground="White" Text="{Binding NextUpgradePriceSparkCoins}" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Normal"/>
 															</Grid>
 														</RelativePanel>
 													</Button>
                                                     <ToolTipService.ToolTip>
-                                                        <ToolTip Content="{Binding NextUpgradePrice}" />
+                                                        <ToolTip Content="{Binding NextUpgradePriceSparkCoins}" />
                                                     </ToolTipService.ToolTip>
                                                 </Grid>
 												<!--Abilities-->
 												<Grid Grid.Column="1">
 													<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="bottom" Margin="0,0,0,5">
-														<Button Style="{StaticResource AbilityButton}" Padding="0">
-															<Button.Resources>
-																<ResourceDictionary>
-																	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-																	<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-																</ResourceDictionary>
-															</Button.Resources>
-															<Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
+														<Button Style="{StaticResource AbilityButton}" Padding="0" Command="{Binding OnHeroButtonClickSpecialUpgrade}">
+                                                            <Button.Resources>
+                                                                <ResourceDictionary>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                </ResourceDictionary>
+                                                            </Button.Resources>
+                                                            <Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
 															<ToolTipService.ToolTip>
-																<ToolTip Content="Dikke abilitie"/>
+																<ToolTip Content="{Binding UpgradePriceEuropeanCredits}"/>
 															</ToolTipService.ToolTip>
 														</Button>
-														<Button Style="{StaticResource AbilityButton}" Padding="0">
-															<Button.Resources>
-																<ResourceDictionary>
-																	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-																	<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-																</ResourceDictionary>
-															</Button.Resources>
-															<Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
-															<ToolTipService.ToolTip>
-																<ToolTip Content="Dikke abilitie"/>
-															</ToolTipService.ToolTip>
-														</Button>
-														<Button Style="{StaticResource AbilityButton}" Padding="0">
-															<Button.Resources>
-																<ResourceDictionary>
-																	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-																	<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-																</ResourceDictionary>
-															</Button.Resources>
-															<Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
-															<ToolTipService.ToolTip>
-																<ToolTip Content="Dikke abilitie" />
-															</ToolTipService.ToolTip>
-														</Button>
-														<Button Style="{StaticResource AbilityButton}" Padding="0">
-															<Button.Resources>
-																<ResourceDictionary>
-																	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-																	<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-																</ResourceDictionary>
-															</Button.Resources>
-															<Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
-															<ToolTipService.ToolTip>
-																<ToolTip Content="Dikke abilitie" />
-															</ToolTipService.ToolTip>
-														</Button>
-														<Button Style="{StaticResource AbilityButton}" Padding="0">
-															<Button.Resources>
-																<ResourceDictionary>
-																	<SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
-																	<SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
-																	<SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
-																</ResourceDictionary>
-															</Button.Resources>
-															<Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
-															<ToolTipService.ToolTip>
-																<ToolTip Content="Dikke abilitie" />
-															</ToolTipService.ToolTip>
-														</Button>
-													</StackPanel>
+                                                        <Button Style="{StaticResource AbilityButton}" Padding="0" Command="{Binding OnHeroButtonClickSpecialUpgrade}">
+                                                            <Button.Resources>
+                                                                <ResourceDictionary>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                </ResourceDictionary>
+                                                            </Button.Resources>
+                                                            <Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{Binding UpgradePriceEuropeanCredits}"/>
+                                                            </ToolTipService.ToolTip>
+                                                        </Button>
+                                                        <Button Style="{StaticResource AbilityButton}" Padding="0" Command="{Binding OnHeroButtonClickSpecialUpgrade}">
+                                                            <Button.Resources>
+                                                                <ResourceDictionary>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                </ResourceDictionary>
+                                                            </Button.Resources>
+                                                            <Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{Binding UpgradePriceEuropeanCredits}"/>
+                                                            </ToolTipService.ToolTip>
+                                                        </Button>
+                                                        <Button Style="{StaticResource AbilityButton}" Padding="0" Command="{Binding OnHeroButtonClickSpecialUpgrade}">
+                                                            <Button.Resources>
+                                                                <ResourceDictionary>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                </ResourceDictionary>
+                                                            </Button.Resources>
+                                                            <Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{Binding UpgradePriceEuropeanCredits}"/>
+                                                            </ToolTipService.ToolTip>
+                                                        </Button>
+                                                        <Button Style="{StaticResource AbilityButton}" Padding="0" Command="{Binding OnHeroButtonClickSpecialUpgrade}">
+                                                            <Button.Resources>
+                                                                <ResourceDictionary>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPointerOver" Color="Transparent" />
+                                                                    <SolidColorBrush x:Key="ButtonForegroundPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBorderBrushPointerOver" Color="Transparent"/>
+                                                                    <SolidColorBrush x:Key="ButtonBackgroundPressed" Color="Transparent"/>
+                                                                </ResourceDictionary>
+                                                            </Button.Resources>
+                                                            <Image DataContext="{Binding Hero.Base64Image, Converter={StaticResource SmallBase64ImageScaler}}" Source="{Binding Result}"/>
+                                                            <ToolTipService.ToolTip>
+                                                                <ToolTip Content="{Binding UpgradePriceEuropeanCredits}"/>
+                                                            </ToolTipService.ToolTip>
+                                                        </Button>
+                                                    </StackPanel>
 												</Grid>
 
 												<!--Naam + level hero-->
