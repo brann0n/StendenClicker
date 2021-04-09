@@ -23,8 +23,9 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
+		public delegate void OnClickAbilityProcessHandler(GamePlatform platform, BatchedClick clicks);
 		//click eventhandler
-		public static event EventHandler OnClickAbilityProcess;
+		public static event OnClickAbilityProcessHandler OnClickAbilityProcess;
 		public static int AbilityMultiplier;
 		public event EventHandler OnMonsterDefeated;
 
@@ -87,42 +88,53 @@ namespace StendenClickerGame.ViewModels
 			//check if there is a monster to click on:
 			if (CurrentMonster != null)
 			{
-				//batch collect the clicks
-				Clicks.addClick(); //todo: implement the rest of the batches system.
 
 				//execute pending abilities
 				AbilityMultiplier = 1;
-				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
+				OnClickAbilityProcess?.Invoke(CurrentLevel, Clicks);
 
-				//damage monster and set its damage multiplier
-				CurrentMonster?.DoDamage(100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier);
-				NotifyPropertyChanged("MonsterHealthPercentage");
+				int damage = 100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier;
+				Clicks.addClick(damage); //storing it for server processing.
 
-				if (CurrentMonster.IsDefeated())
-				{					
-					//get the rewards for this monster and generate a new level
-					var rewards = CurrentMonster.GetReward();
-					for (ulong i = 0; i < rewards.SparkCoin; i++)
-					{
-						CreateCoin(typeof(SparkCoin), rewards.Factor);
-					}
-					for (ulong i = 0; i < rewards.EuropeanCredit; i++)
-					{
-						CreateCoin(typeof(EuropeanCredit), 0);
-					}
-
-					//todo: update all the user accounts and the current session that a monster has been defeated.
-					UpdatePlayerStatsAfterMonsterDefeat(true, false);
-					if (CurrentScene.MonsterCount == CurrentScene.CurrentMonster + 1)
-					{
-						//UpdatePlayerStatsAfterMonsterDefeat(false, true);
-					}
-
-					//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-					RenderLevel();
-					OnMonsterDefeated?.Invoke(null, null);
-				}
+				MonsterClickProcessor(damage);
 			}
+		}
+
+		private void MonsterClickProcessor(int damage)
+		{
+			CurrentMonster?.DoDamage(damage); //actually attack the monster
+
+			NotifyPropertyChanged("MonsterHealthPercentage");
+
+			if (CurrentMonster.IsDefeated())
+			{
+				//get the rewards for this monster and generate a new level
+				var rewards = CurrentMonster.GetReward();
+				for (ulong i = 0; i < rewards.SparkCoin; i++)
+				{
+					CreateCoin(typeof(SparkCoin), rewards.Factor);
+				}
+				for (ulong i = 0; i < rewards.EuropeanCredit; i++)
+				{
+					CreateCoin(typeof(EuropeanCredit), 0);
+				}
+
+				//todo: update all the user accounts and the current session that a monster has been defeated.
+				UpdatePlayerStatsAfterMonsterDefeat(true, false);
+				if (CurrentScene.MonsterCount == CurrentScene.CurrentMonster + 1)
+				{
+					//UpdatePlayerStatsAfterMonsterDefeat(false, true);
+				}
+
+				//build a new level from the current player list, in singleplayer mode that list contains 1 player.
+				RenderLevel();
+				OnMonsterDefeated?.Invoke(null, null);
+			}
+		}
+
+		public void ProcessMultiplayerDamage(BatchedClick damage)
+		{
+			MonsterClickProcessor(damage.getClicks());
 		}
 
 		private void UpdatePlayerStatsAfterMonsterDefeat(bool MonsterDefeated, bool SceneDefeated)

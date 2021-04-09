@@ -43,6 +43,7 @@ namespace StendenClickerApi.Helpers
 
 		public static void Add(string key, MultiPlayerSession Session)
 		{
+			Session.CurrentPlayerList.Add(new Player {UserId = Guid.Empty });
 			lock (AccessLock)
 				Sessions.Add(key, Session);
 		}

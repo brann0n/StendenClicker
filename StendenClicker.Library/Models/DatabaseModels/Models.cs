@@ -34,18 +34,6 @@ namespace StendenClicker.Library.Models.DatabaseModels
 
 		public virtual ICollection<Upgrade> Upgrades { get; set; }
 
-		//public static implicit operator Hero(StendenClicker.Library.PlayerControls.Hero hero)
-		//{
-		//	new Hero()
-		//	{
-		//		HeroCost = hero.Price,
-		//		HeroId = hero.Id,
-		//		HeroInformation = hero.
-		//	}
-
-
-		//	return default;
-		//}
 	}
 
 	public class ImageAsset

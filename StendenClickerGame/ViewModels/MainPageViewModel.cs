@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
+using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
@@ -75,7 +76,6 @@ namespace StendenClickerGame.ViewModels
 
 				if (heroObject != null)
 				{
-					
 					//hero has been bought, add code that performs a hero level upgrade.
 					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
@@ -97,7 +97,6 @@ namespace StendenClickerGame.ViewModels
 
 					//	UpdateHeroList();
 					//});
-
 				}
 				else
 				{
@@ -147,6 +146,7 @@ namespace StendenClickerGame.ViewModels
 			//multiplayer connection
 			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
 			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
+			mpProxy.OnBatchesReceived += MpProxy_OnBatchesReceived;
 			mpProxy.InitializeComplete += MpProxy_InitializeComplete;
 
 			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
@@ -155,6 +155,11 @@ namespace StendenClickerGame.ViewModels
 			CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
 
 			OnRequestSave += MainPageViewModel_OnRequestSave;
+		}
+
+		private void MpProxy_OnBatchesReceived(object sender, EventArgs e)
+		{
+			CurrencyTray.ProcessMultiplayerDamage((BatchedClick)sender);
 		}
 
 		private async void MainPageViewModel_OnRequestSave(object sender, EventArgs e)

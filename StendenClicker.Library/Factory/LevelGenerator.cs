@@ -69,7 +69,7 @@ namespace StendenClicker.Library.Factory
 				double AverageBossesDefeated = players.Average(n => n.State.BossesDefeated);
 
 				//create new playerstate from above variables
-				state = new PlayerState { MonstersDefeated = LowestMonstersDefeated, BossesDefeated = LowestBossesDefeated };
+				state = new PlayerState { MonstersDefeated = (int)AverageMonstersDefeated, BossesDefeated = (int)AverageBossesDefeated };
 			}
 			return state;
 		}

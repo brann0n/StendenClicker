@@ -1,4 +1,5 @@
 using StendenClicker.Library.AbstractMonster;
+using StendenClicker.Library.Batches;
 using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
@@ -87,7 +88,7 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}
 
-        private void MartijnSportAbility(object sender, EventArgs e)
+        private void MartijnSportAbility(GamePlatform sender, BatchedClick e)
         {
 			CurrencyTrayViewModel.AbilityMultiplier += 4;
 		}
@@ -105,7 +106,7 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}
 
-		private void MiguelTheeAbility(object sender, EventArgs e)
+		private void MiguelTheeAbility(GamePlatform sender, BatchedClick e)
 		{
 			CurrencyTrayViewModel.AbilityMultiplier += 2;
 		}
@@ -121,11 +122,13 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}
 
-		private void JanWaterAbility(object sender, EventArgs e)
+		private void JanWaterAbility(GamePlatform sender, BatchedClick e)
 		{
 			GamePlatform platform = (GamePlatform)sender;
 			AbstractMonster m = (AbstractMonster)platform.Monster;
-			m.DoDamage(m.Health);
+			int d = m.GetHealth();
+			m.DoDamage(d);
+			e.addClick(d);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= JanWaterAbility;
 		}
 
@@ -142,7 +145,7 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}
 
-		private void SjiKoffieAbility(object sender, EventArgs e)
+		private void SjiKoffieAbility(GamePlatform sender, BatchedClick e)
 		{
 			CurrencyTrayViewModel.AbilityMultiplier += 1;
 		}
@@ -158,7 +161,7 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}		
 
-		private void GerjanSmoothieAbility(object sender, System.EventArgs e)
+		private void GerjanSmoothieAbility(GamePlatform sender, BatchedClick e)
 		{
 			GamePlatform platform = (GamePlatform)sender;
 

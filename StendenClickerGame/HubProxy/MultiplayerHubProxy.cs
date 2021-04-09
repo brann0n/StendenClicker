@@ -52,6 +52,7 @@ namespace StendenClickerGame.Multiplayer
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
 		public event BatchClickRetrieveHandler OnRequireBatches;
+		public event EventHandler OnBatchesReceived;
 
 		//Required classes for player information and level generation
 		public ApiPlayerHandler PlayerContext;
@@ -94,10 +95,8 @@ namespace StendenClickerGame.Multiplayer
 					MultiPlayerHub.On<List<Player>, NormalGamePlatform, bool>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
 					MultiPlayerHub.On<List<Player>, BossGamePlatform, bool>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 					MultiPlayerHub.On("broadcastYourClicks", requestClickBatches);
+					MultiPlayerHub.On<BatchedClick>("receiveUploadedBatchClicks", receiveUploadedBatchClicks);
 					MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
-
-					//do what next?
-					//await MultiPlayerHub.Invoke("beginGameThread"); //tells the server it can start a thread for this user.
 				}
 
 				//for now render a new level anyways.
@@ -107,6 +106,12 @@ namespace StendenClickerGame.Multiplayer
 			});
 
 			InitializeComplete?.Invoke(null, null);
+
+			Dictionary<string, string> dingetje = new Dictionary<string, string>
+			{
+				{ "sessionguid", CurrentPlayerGuid }
+			};
+			await RestHelper.GetRequestAsync("api/multiplayer/AddSession", dingetje);
 		}
 
 		#region ServerInvokableMethods
@@ -147,12 +152,24 @@ namespace StendenClickerGame.Multiplayer
 			});
 		}
 
+		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage)
+		{
+			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			{
+				OnBatchesReceived?.Invoke(CollectedDamage, null);
+			});		
+		}
+
 		private void requestClickBatches()
 		{
 			BatchedClick clicks = OnRequireBatches?.Invoke();
+			if (clicks.getClicks() > 0)
+			{
 
-			//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
-			MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
+				//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
+				MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
+			}
 		}
 		#endregion
 
