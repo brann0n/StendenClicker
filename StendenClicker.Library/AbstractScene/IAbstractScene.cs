@@ -1,5 +1,3 @@
-using System;
-
 namespace StendenClicker.Library.AbstractScene
 {
 	public interface IAbstractScene

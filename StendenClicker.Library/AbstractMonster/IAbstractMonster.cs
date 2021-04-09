@@ -1,7 +1,4 @@
-
-using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.PlayerControls;
-using System.Collections.Generic;
 
 namespace StendenClicker.Library.AbstractMonster
 {

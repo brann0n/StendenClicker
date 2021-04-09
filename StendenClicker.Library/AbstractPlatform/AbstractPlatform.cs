@@ -1,9 +1,6 @@
 ﻿using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Models;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace StendenClicker.Library.AbstractPlatform
 {

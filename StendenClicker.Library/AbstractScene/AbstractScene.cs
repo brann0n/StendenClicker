@@ -1,5 +1,4 @@
 using StendenClicker.Library.Models;
-using System;
 
 namespace StendenClicker.Library.AbstractScene
 {

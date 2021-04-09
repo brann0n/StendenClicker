@@ -1,4 +1,3 @@
-using StendenClicker.Library.AbstractPlatform;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.PlayerControls;
 using System;

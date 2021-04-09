@@ -1,5 +1,3 @@
-
-using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.PlayerControls;
 using System;

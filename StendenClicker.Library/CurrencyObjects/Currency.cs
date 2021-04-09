@@ -1,4 +1,3 @@
-using StendenClicker.Library.AbstractMonster;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

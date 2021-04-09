@@ -1,11 +1,9 @@
-
-using StendenClicker.Library.CurrencyObjects;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using StendenClicker.Library.PlayerControls;
-using System.Threading.Tasks;
 using StendenClicker.Library.Models;
+using StendenClicker.Library.PlayerControls;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace StendenClicker.Library.AbstractMonster
 {

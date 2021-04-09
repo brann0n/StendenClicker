@@ -1,5 +1,3 @@
-using System;
-
 namespace StendenClicker.Library.PlayerControls
 {
 	public class PlayerCurrency

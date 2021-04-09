@@ -1,11 +1,7 @@
 ﻿using Newtonsoft.Json;
 using StendenClicker.Library.PlayerControls;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.Storage;
 
 namespace StendenClicker.Library
