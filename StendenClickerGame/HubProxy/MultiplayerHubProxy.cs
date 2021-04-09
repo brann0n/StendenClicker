@@ -18,7 +18,7 @@ namespace StendenClickerGame.Multiplayer
 	public class MultiplayerHubProxy
 	{
 
-#if DEBUG
+#if !DEBUG
 		private const string ServerURL = "http://localhost:50420/signalr";
 #else
 		private const string ServerURL = "https://stendenclicker.serverict.nl/signalr";
@@ -154,7 +154,11 @@ namespace StendenClickerGame.Multiplayer
 
 		private async void receiveUploadedBatchClicks(BatchedClick CollectedDamage)
 		{
-			OnBatchesReceived?.Invoke(CollectedDamage, null);
+			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
+			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+			{
+				OnBatchesReceived?.Invoke(CollectedDamage, null);
+			});		
 		}
 
 		private void requestClickBatches()
