@@ -23,8 +23,9 @@ namespace StendenClickerGame.ViewModels
 		public static event EventHandler CurrencyAdded;
 		public static event EventHandler CurrencyRemoved;
 
+		public delegate void OnClickAbilityProcessHandler(GamePlatform platform, BatchedClick clicks);
 		//click eventhandler
-		public static event EventHandler OnClickAbilityProcess;
+		public static event OnClickAbilityProcessHandler OnClickAbilityProcess;
 		public static int AbilityMultiplier;
 		public event EventHandler OnMonsterDefeated;
 
@@ -90,7 +91,7 @@ namespace StendenClickerGame.ViewModels
 
 				//execute pending abilities
 				AbilityMultiplier = 1;
-				OnClickAbilityProcess?.Invoke(CurrentLevel, null);
+				OnClickAbilityProcess?.Invoke(CurrentLevel, Clicks);
 
 				int damage = 100 * CurrentPlayer.getDamageFactor() * AbilityMultiplier;
 				Clicks.addClick(damage); //storing it for server processing.
