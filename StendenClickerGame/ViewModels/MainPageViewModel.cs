@@ -1,8 +1,5 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
-using StendenClicker.Library;
-using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.Batches;
-using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
 using StendenClicker.Library.Multiplayer;
 using StendenClicker.Library.PlayerControls;
@@ -12,12 +9,8 @@ using StendenClickerGame.Multiplayer;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using PlayerHero = StendenClicker.Library.Models.DatabaseModels.PlayerHero;
 
 namespace StendenClickerGame.ViewModels
@@ -31,24 +24,24 @@ namespace StendenClickerGame.ViewModels
 			OnRequestSave?.Invoke(null, null);
 		}
 
-		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
-		
-		private int _width { get; set; } = 1920;
-		private int _height { get; set; } = 1080;
-		public int WindowHeight { get => _height; set { _height = value; NotifyPropertyChanged(); } }
-		public int WindowWidth { get => _width; set { _width = value; NotifyPropertyChanged(); } }
+		public MultiplayerHubProxy MpProxy { get { return MultiplayerHubProxy.Instance; } }
+
+		private int PrivateWidth { get; set; } = 1920;
+		private int PrivateHeight { get; set; } = 1080;
+		public int WindowHeight { get => PrivateHeight; set { PrivateHeight = value; NotifyPropertyChanged(); } }
+		public int WindowWidth { get => PrivateWidth; set { PrivateWidth = value; NotifyPropertyChanged(); } }
 
 		public CurrencyTrayViewModel CurrencyTray { get; set; }
 		public KoffieMachineViewModel KoffieMachine { get; set; }
 		public FriendshipPanelViewmodel Friends { get; set; }
 
-		public bool popupShow { get; set; }
-		public string popupTitle { get; set; }
-		public string popupDescription { get; set; }
+		public bool PopupShow { get; set; }
+		public string PopupTitle { get; set; }
+		public string PopupDescription { get; set; }
 
 		public ObservableCollection<HeroListObject> HeroList { get; set; }
 
-		public List<Player> CurrentPlayers { get => mpProxy?.GetContext()?.CurrentPlayerList.Where(n => n.UserId != mpProxy?.CurrentPlayer.UserId).ToList(); }
+		public List<Player> CurrentPlayers { get => MpProxy?.GetContext()?.CurrentPlayerList.Where(n => n.UserId != MpProxy?.CurrentPlayer.UserId).ToList(); }
 		private Player CurrentPlayer { get { return MultiplayerHubProxy.Instance.CurrentPlayer; } }
 
 		private DateTime LastSavedAfterDefeated { get; set; }
@@ -80,7 +73,7 @@ namespace StendenClickerGame.ViewModels
 				if (heroObject != null)
 				{
 					//hero has been bought, add code that performs a hero level upgrade.
-					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2)};
+					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2) };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						if (PerformTransaction(heroListObject, "spark"))
@@ -112,11 +105,11 @@ namespace StendenClickerGame.ViewModels
 							//create a new heroes object:
 							var playerHeroNew = new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 };
 							heroListObject.PlayerHeroInformation = playerHeroNew;
-							CurrentPlayer.Heroes.Add(playerHeroNew);						
+							CurrentPlayer.Heroes.Add(playerHeroNew);
 
-							
+
 						}
-						
+
 						UpdateHeroList();
 						LoadHeroes();
 					});
@@ -128,7 +121,7 @@ namespace StendenClickerGame.ViewModels
 
 		private bool PerformTransaction(HeroListObject transactableObject, string coin)
 		{
-			if(CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePriceSparkCoins && coin == "spark")
+			if (CurrentPlayer.Wallet.SparkCoin >= (ulong)transactableObject.NextUpgradePriceSparkCoins && coin == "spark")
 			{
 				CurrentPlayer.Wallet.SparkCoin -= (ulong)transactableObject.NextUpgradePriceSparkCoins;
 				NotifyPropertyChanged("CurrencyTray");
@@ -147,13 +140,13 @@ namespace StendenClickerGame.ViewModels
 		public void CheckContextVariables()
 		{
 			//multiplayer connection
-			mpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
-			mpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
-			mpProxy.OnBatchesReceived += MpProxy_OnBatchesReceived;
-			mpProxy.InitializeComplete += MpProxy_InitializeComplete;
+			MpProxy.OnConnectionStateChanged += MpProxy_OnConnectionStateChanged;
+			MpProxy.OnRequireBatches += MpProxy_OnRequireBatches;
+			MpProxy.OnBatchesReceived += MpProxy_OnBatchesReceived;
+			MpProxy.InitializeComplete += MpProxy_InitializeComplete;
 
-			mpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
-			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
+			MpProxy.OnInviteReceived += MpProxy_OnInviteReceived;
+			MpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
 
 			CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
 
@@ -167,21 +160,21 @@ namespace StendenClickerGame.ViewModels
 
 		private async void MainPageViewModel_OnRequestSave(object sender, EventArgs e)
 		{
-			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
+			await MpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
 		}
 
 		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
 		{
-			if((DateTime.Now - LastSavedAfterDefeated).TotalSeconds > 1)
+			if ((DateTime.Now - LastSavedAfterDefeated).TotalSeconds > 1)
 			{
 				//doSave
 				DoSave();
 				LastSavedAfterDefeated = DateTime.Now;
 			}
 
-			if(CurrencyTray.CurrentSession.HostPlayerId == CurrentPlayer.UserId.ToString())
+			if (CurrencyTray.CurrentSession.HostPlayerId == CurrentPlayer.UserId.ToString())
 			{
-				await mpProxy.BroadcastSessionToServer();
+				await MpProxy.BroadcastSessionToServer();
 			}
 
 			//unlock any new heroes perhaps.
@@ -243,7 +236,7 @@ namespace StendenClickerGame.ViewModels
 		private void MpProxy_InitializeComplete(object sender, EventArgs e)
 		{
 			NotifyPropertyChanged("CurrencyTray");
-			Friends.InitializeFriendship(mpProxy.CurrentPlayer.UserId.ToString());
+			Friends.InitializeFriendship(MpProxy.CurrentPlayer.UserId.ToString());
 
 			//render the heroes with player context.
 			LoadHeroes();
@@ -256,7 +249,7 @@ namespace StendenClickerGame.ViewModels
 
 		private async void MpProxy_OnConnectionStateChanged(StateChange state)
 		{
-			popupShow = true;
+			PopupShow = true;
 
 			var dispatcher = Windows.ApplicationModel.Core.CoreApplication.MainView.CoreWindow.Dispatcher;
 			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, async () =>
@@ -264,24 +257,24 @@ namespace StendenClickerGame.ViewModels
 				switch (state.NewState)
 				{
 					case ConnectionState.Connected:
-						popupTitle = state.NewState.ToString() + "!";
-						popupDescription = "You are connected! We will now steal your end assesments";
+						PopupTitle = state.NewState.ToString() + "!";
+						PopupDescription = "You are connected! We will now steal your end assesments";
 						break;
 					case ConnectionState.Connecting:
-						popupTitle = state.NewState.ToString() + "...";
-						popupDescription = "The game is connecting to the online services";
+						PopupTitle = state.NewState.ToString() + "...";
+						PopupDescription = "The game is connecting to the online services";
 						break;
 					case ConnectionState.Disconnected:
-						popupTitle = state.NewState.ToString();
-						popupDescription = "You are disconnected. Maybe you're better of this way...";
+						PopupTitle = state.NewState.ToString();
+						PopupDescription = "You are disconnected. Maybe you're better of this way...";
 						break;
 					case ConnectionState.Reconnecting:
-						popupTitle = state.NewState.ToString() + "...";
-						popupDescription = "Holdup... We are reconnecting you to the beautiful NHL-Stenden Servers";
+						PopupTitle = state.NewState.ToString() + "...";
+						PopupDescription = "Holdup... We are reconnecting you to the beautiful NHL-Stenden Servers";
 						break;
 					default:
-						popupTitle = "Initializing...";
-						popupDescription = "Your super fast internet is making a connection to the online services";
+						PopupTitle = "Initializing...";
+						PopupDescription = "Your super fast internet is making a connection to the online services";
 						break;
 				}
 
@@ -289,7 +282,7 @@ namespace StendenClickerGame.ViewModels
 				NotifyPropertyChanged("popupTitle");
 				NotifyPropertyChanged("popupDescription");
 				await Task.Delay(5000);
-				popupShow = false;
+				PopupShow = false;
 				NotifyPropertyChanged("popupShow");
 
 			});
@@ -297,7 +290,7 @@ namespace StendenClickerGame.ViewModels
 
 		public async Task<Player> GetPlayerContextAsync()
 		{
-			return await mpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
+			return await MpProxy.PlayerContext.GetPlayerStateAsync(DeviceInfo.Instance.GetSystemId());
 		}
 
 	}

@@ -1,11 +1,8 @@
 using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.Batches;
-using StendenClicker.Library.CurrencyObjects;
 using StendenClicker.Library.Factory;
-using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.Data;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 using Windows.UI;
@@ -15,8 +12,8 @@ namespace StendenClickerGame.ViewModels
 {
 	public class KoffieMachineViewModel : ViewModelBase
 	{
-		private static ObservableCollection<Abilities> _AbilitiesList { get; set; }
-		public ObservableCollection<Abilities> AbilitiesList { get => _AbilitiesList; set => _AbilitiesList = value; }
+		private static ObservableCollection<Abilities> StaticAbilitiesList { get; set; }
+		public ObservableCollection<Abilities> AbilitiesList { get => StaticAbilitiesList; set => StaticAbilitiesList = value; }
 		public KoffieMachineViewModel()
 		{
 			var GerjanAbility = new Abilities
@@ -46,7 +43,7 @@ namespace StendenClickerGame.ViewModels
 				Image = "Assets/koffie.png",
 			};
 			JanAbility.OnExecute = new RelayFunctionCommand<Abilities>(JanWaterAbilityClick, JanAbility);
-			
+
 			var MiguelAbility = new Abilities
 			{
 				AbilitieName = "Miguel's Bubbel Thee",
@@ -75,8 +72,8 @@ namespace StendenClickerGame.ViewModels
 			};
 		}
 
-        private async void MartijnSportAbilityClick(Abilities SelfContext)
-        {
+		private async void MartijnSportAbilityClick(Abilities SelfContext)
+		{
 			ContextSetAbilityEnabled(SelfContext);
 
 			CurrencyTrayViewModel.OnClickAbilityProcess += MartijnSportAbility;
@@ -88,12 +85,12 @@ namespace StendenClickerGame.ViewModels
 			ContextSetAbilityDisabled(SelfContext);
 		}
 
-        private void MartijnSportAbility(GamePlatform sender, BatchedClick e)
-        {
+		private void MartijnSportAbility(GamePlatform sender, BatchedClick e)
+		{
 			CurrencyTrayViewModel.AbilityMultiplier += 4;
 		}
 
-        private async void MiguelTheeAbilityClick(Abilities SelfContext)
+		private async void MiguelTheeAbilityClick(Abilities SelfContext)
 		{
 			ContextSetAbilityEnabled(SelfContext);
 
@@ -154,12 +151,12 @@ namespace StendenClickerGame.ViewModels
 		{
 			CurrencyTrayViewModel.OnClickAbilityProcess += GerjanSmoothieAbility;
 
-			ContextSetAbilityEnabled(SelfContext);	
-			
+			ContextSetAbilityEnabled(SelfContext);
+
 			await ContextDelayProgressbarFill(SelfContext, 150000);
 
 			ContextSetAbilityDisabled(SelfContext);
-		}		
+		}
 
 		private void GerjanSmoothieAbility(GamePlatform sender, BatchedClick e)
 		{

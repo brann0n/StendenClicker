@@ -2,15 +2,11 @@
 using StendenClickerGame.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Markup;
 using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
 
 namespace StendenClickerGame.CustomUI
 {
@@ -62,13 +58,14 @@ namespace StendenClickerGame.CustomUI
 
 		public void Add(Currency coin)
 		{
-			Button NewCoinButton = new Button {
+			Button NewCoinButton = new Button
+			{
 				Background = new SolidColorBrush(Colors.Transparent),
 				Margin = new Thickness(0),
 				Padding = new Thickness(0)
 			};
 
-			NewCoinButton.PointerEntered += (o,e) => 
+			NewCoinButton.PointerEntered += (o, e) =>
 			{
 				coin.Hovered();
 			};
@@ -90,7 +87,7 @@ namespace StendenClickerGame.CustomUI
 			Coins.Add(coin, NewCoinButton);
 			Children.Add(NewCoinButton);
 
-			var location = coin.DropCoordinates(new StendenClicker.Library.Point {X = 15, Y = 3 });
+			var location = coin.DropCoordinates(new StendenClicker.Library.Point { X = 15, Y = 3 });
 			Grid.SetColumn(NewCoinButton, location.X);
 			Grid.SetRow(NewCoinButton, location.Y);
 		}
@@ -101,7 +98,7 @@ namespace StendenClickerGame.CustomUI
 			Coins.Remove(currency);
 			if (Coins.Count == 0)
 			{
-				MainPageViewModel.DoSave();				
+				MainPageViewModel.DoSave();
 			}
 		}
 	}

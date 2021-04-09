@@ -1,5 +1,4 @@
 using StendenClicker.Library.AbstractMonster;
-using StendenClicker.Library.AbstractPlatform;
 using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.CurrencyObjects;
@@ -9,10 +8,7 @@ using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.CustomUI;
 using StendenClickerGame.Multiplayer;
 using System;
-using System.Collections.Generic;
 using System.Windows.Input;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Input;
 
 namespace StendenClickerGame.ViewModels
 {
@@ -143,12 +139,7 @@ namespace StendenClickerGame.ViewModels
 					CreateCoin(typeof(EuropeanCredit), 0);
 				}
 
-				//todo: update all the user accounts and the current session that a monster has been defeated.
-				UpdatePlayerStatsAfterMonsterDefeat(true, false);
-				if (CurrentScene.MonsterCount == CurrentScene.CurrentMonster + 1)
-				{
-					//UpdatePlayerStatsAfterMonsterDefeat(false, true);
-				}
+				UpdatePlayerStatsAfterMonsterDefeat(true);
 
 				//build a new level from the current player list, in singleplayer mode that list contains 1 player.			
 				RenderLevel();
@@ -180,7 +171,7 @@ namespace StendenClickerGame.ViewModels
 			}
 		}
 
-		private void UpdatePlayerStatsAfterMonsterDefeat(bool MonsterDefeated, bool SceneDefeated)
+		private void UpdatePlayerStatsAfterMonsterDefeat(bool MonsterDefeated)
 		{
 			foreach (Player player in CurrentSession.CurrentPlayerList)
 			{

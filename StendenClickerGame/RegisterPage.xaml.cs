@@ -3,20 +3,8 @@ using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.PlayerControls;
 using StendenClickerGame.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
-using System.Threading.Tasks;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Navigation;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=234238
 
@@ -64,33 +52,33 @@ namespace StendenClickerGame
 			}
 		}
 
-        private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
-        {
-            if (!string.IsNullOrEmpty(UsernameTextBox.Text))
-            {
-                if (await beforeContextPlayerHandler.IsUsernameAvailable(UsernameTextBox.Text))
-                {
-                    try
-                    {
-                        await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());
+		private async void GoToMainPage_Click(object sender, RoutedEventArgs e)
+		{
+			if (!string.IsNullOrEmpty(UsernameTextBox.Text))
+			{
+				if (await beforeContextPlayerHandler.IsUsernameAvailable(UsernameTextBox.Text))
+				{
+					try
+					{
+						await beforeContextPlayerHandler.CreateUser(UsernameTextBox.Text, DeviceInfo.Instance.GetSystemId());
 						CreateDataContext();
-                        this.Frame.Navigate(typeof(MainPage), this.DataContext);
-                    }
-                    catch (Exception)
-                    {
-                        //show this error to the user.
-                    }
-                }
-                else
-                {
-                    feedbackText.Text = "Deze gebruikers naam is al in gebruik";  //give popup that username is already taken
-                }
-            }
-            else
-            {
-                feedbackText.Text = "Er moet een gruikers naaw worden ingevuld";
-            }
-        }
+						this.Frame.Navigate(typeof(MainPage), this.DataContext);
+					}
+					catch (Exception)
+					{
+						//show this error to the user.
+					}
+				}
+				else
+				{
+					feedbackText.Text = "Deze gebruikers naam is al in gebruik";  //give popup that username is already taken
+				}
+			}
+			else
+			{
+				feedbackText.Text = "Er moet een gruikers naaw worden ingevuld";
+			}
+		}
 
 		private void CreateDataContext()
 		{

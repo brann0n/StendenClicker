@@ -1,6 +1,5 @@
 using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
-using StendenClicker.Library.AbstractPlatform;
 using StendenClicker.Library.AbstractScene;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
@@ -10,7 +9,6 @@ using StendenClicker.Library.PlayerControls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 
 namespace StendenClickerGame.Multiplayer
@@ -158,7 +156,7 @@ namespace StendenClickerGame.Multiplayer
 			await dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
 			{
 				OnBatchesReceived?.Invoke(CollectedDamage, null);
-			});		
+			});
 		}
 
 		private void RequestClickBatches()
