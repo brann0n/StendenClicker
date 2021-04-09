@@ -23,6 +23,13 @@ namespace StendenClickerGame.ViewModels
 {
 	public class MainPageViewModel : ViewModelBase
 	{
+		private static event EventHandler OnRequestSave;
+
+		public static void DoSave()
+		{
+			OnRequestSave?.Invoke(null, null);
+		}
+
 		public MultiplayerHubProxy mpProxy { get { return MultiplayerHubProxy.Instance; } }
 
 		private int _width { get; set; } = 1920;
@@ -61,12 +68,8 @@ namespace StendenClickerGame.ViewModels
 
 			foreach (StendenClicker.Library.Models.DatabaseModels.Hero h in Hero.Heroes)
 			{
-
-				//todo: add in player specific information from the list.
-
 				int levelNeededForUnlock = (h.HeroId * 5);
 				bool isLevelUnlocked = CurrentPlayer.State.MonstersDefeated >= levelNeededForUnlock && CurrentPlayer.State.BossesDefeated >= h.HeroId;
-
 
 				HeroListObject heroListObject;
 				PlayerHero heroObject = CurrentPlayer.Heroes?.FirstOrDefault(n => n.Hero.HeroName == h.HeroName);
@@ -104,7 +107,9 @@ namespace StendenClickerGame.ViewModels
 							//create a new heroes object:
 							var playerHeroNew = new PlayerHero { Hero = h, HeroUpgradeLevel = 1, SpecialUpgradeLevel = 1 };
 							heroListObject.PlayerHeroInformation = playerHeroNew;
-							CurrentPlayer.Heroes.Add(playerHeroNew);
+							CurrentPlayer.Heroes.Add(playerHeroNew);						
+
+							
 						}
 						
 						UpdateHeroList();
@@ -145,11 +150,19 @@ namespace StendenClickerGame.ViewModels
 			mpProxy.OnSessionUpdateReceived += MpProxy_OnSessionUpdateReceived;
 
 			CurrencyTray.OnMonsterDefeated += CurrencyTray_OnMonsterDefeated;
+
+			OnRequestSave += MainPageViewModel_OnRequestSave;
 		}
 
-		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
+		private async void MainPageViewModel_OnRequestSave(object sender, EventArgs e)
 		{
 			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
+		}
+
+		private void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
+		{
+			//doSave
+			DoSave();
 
 			//unlock any new heroes perhaps.
 			UpdateHeroList();

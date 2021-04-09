@@ -99,6 +99,10 @@ namespace StendenClickerGame.CustomUI
 		{
 			Children.Remove(Coins[currency]);
 			Coins.Remove(currency);
+			if (Coins.Count == 0)
+			{
+				MainPageViewModel.DoSave();				
+			}
 		}
 	}
 }

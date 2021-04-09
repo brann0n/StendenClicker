@@ -163,6 +163,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AssetsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\MultiplayerController.cs" />
     <Compile Include="Controllers\PlayerController.cs" />
     <Compile Include="Database\StendenClickerDatabase.cs" />
     <Compile Include="Global.asax.cs">
@@ -213,6 +214,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Models\" />
     <Folder Include="Views\Assets\" />
+    <Folder Include="Views\Multiplayer\" />
     <Folder Include="Views\Player\" />
   </ItemGroup>
   <ItemGroup>
