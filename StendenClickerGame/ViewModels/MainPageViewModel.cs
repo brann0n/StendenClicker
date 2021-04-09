@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR.Client;
 using StendenClicker.Library;
+using StendenClicker.Library.AbstractMonster;
 using StendenClicker.Library.Batches;
 using StendenClicker.Library.Factory;
 using StendenClicker.Library.Models;
@@ -169,7 +170,7 @@ namespace StendenClickerGame.ViewModels
 			await mpProxy.PlayerContext.SetPlayerStateAsync(CurrencyTray.CurrentPlayer);
 		}
 
-		private void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
+		private async void CurrencyTray_OnMonsterDefeated(object sender, EventArgs e)
 		{
 			if((DateTime.Now - LastSavedAfterDefeated).TotalSeconds > 1)
 			{
@@ -177,7 +178,11 @@ namespace StendenClickerGame.ViewModels
 				DoSave();
 				LastSavedAfterDefeated = DateTime.Now;
 			}
-			
+
+			if(CurrencyTray.CurrentSession.hostPlayerId == CurrentPlayer.UserId.ToString())
+			{
+				await mpProxy.BroadcastSessionToServer();
+			}
 
 			//unlock any new heroes perhaps.
 			UpdateHeroList();

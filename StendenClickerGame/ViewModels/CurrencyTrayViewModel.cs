@@ -151,8 +151,8 @@ namespace StendenClickerGame.ViewModels
 				}
 
 				//build a new level from the current player list, in singleplayer mode that list contains 1 player.
-				RenderLevel();
-				OnMonsterDefeated?.Invoke(null, null);
+				OnMonsterDefeated?.Invoke(CurrentMonster, null);
+				RenderLevel();				
 			}
 		}
 
