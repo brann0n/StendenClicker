@@ -7,70 +7,54 @@ using System.Management;
 
 namespace StendenClicker.Library.PlayerControls
 {
-    public class Player
-    {
-        /// <summary>
-        /// Generated in the database
-        /// </summary>
-        public Guid UserId { get; set; }
+	public class Player
+	{
+		/// <summary>
+		/// Generated in the database
+		/// </summary>
+		public Guid UserId { get; set; }
 
-        public string Username { get; set; }
+		public string Username { get; set; }
 
-        public PlayerCurrency Wallet { get; set; }
+		public PlayerCurrency Wallet { get; set; }
 
-        /// <summary>
-        /// This is the physical ID of your device (not MAC)
-        /// </summary>
-        public string deviceId { get; set; }
+		/// <summary>
+		/// This is the physical ID of your device (not MAC)
+		/// </summary>
+		public string deviceId { get; set; }
 
-        public PlayerState State { get; set; }
+		public PlayerState State { get; set; }
 
-        public List<PlayerHero> Heroes { get; set; }
+		public List<PlayerHero> Heroes { get; set; }
 
-        public string GetUsername()
-        {
-            return null;
-        }
-
-        
-
-        //public static string GetMachineKey()
-        //{
-            
-        //       ManagementObject os = new ManagementObject("Win32_OperatingSystem=@");
-        //    return (string)os["SerialNumber"];
-        //}
-
-        public static bool IsPlayerObjectEmpty(Player player)
+		public static bool IsPlayerObjectEmpty(Player player)
 		{
-            if (player == null) return true;
+			if (player == null) return true;
 
-            if (player.UserId == Guid.Empty) return true;
+			if (player.UserId == Guid.Empty) return true;
 
-            if (string.IsNullOrEmpty(player.Username)) return true;
+			if (string.IsNullOrEmpty(player.Username)) return true;
 
-            if (string.IsNullOrEmpty(player.deviceId)) return true;
+			if (string.IsNullOrEmpty(player.deviceId)) return true;
 
-            return false;
+			return false;
 		}
 
-
-        public static implicit operator Player(Models.DatabaseModels.Player player)
+		public static implicit operator Player(Models.DatabaseModels.Player player)
 		{
-            return new Player
-            {
-                deviceId = player.DeviceId,
-                Username = player.PlayerName,
-                UserId = Guid.Parse(player.PlayerGuid),
-                State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
-                Wallet = new PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins },
-                Heroes = player.Heroes.ToList()
-            };
+			return new Player
+			{
+				deviceId = player.DeviceId,
+				Username = player.PlayerName,
+				UserId = Guid.Parse(player.PlayerGuid),
+				State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
+				Wallet = new PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins },
+				Heroes = player.Heroes.ToList()
+			};
 		}
-
-        public int getDamageFactor()
-        {
-            return 1 + Heroes.Sum(n => n.HeroUpgradeLevel);
-        }
-    }
+		public int getDamageFactor()
+		{
+			return 1 + Heroes.Sum(n => n.HeroUpgradeLevel);
+		}
+	}
 }

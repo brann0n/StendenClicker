@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace StendenClicker.Library
 {
-    public struct Point
-    {
-        public int X { get; set; }
-        public int Y { get; set; }
-    }
+	public struct Point
+	{
+		public int X { get; set; }
+		public int Y { get; set; }
+	}
 }

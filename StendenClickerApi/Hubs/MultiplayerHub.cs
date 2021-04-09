@@ -94,57 +94,6 @@ namespace StendenClickerApi.Hubs
 				{
 					Player player = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
 
-					////create a new player object: 
-					//Player p = new Player
-					//{
-					//	BossesDefreated = player.BossesDefreated,
-					//	DeviceId = player.DeviceId,
-					//	EuropeanCredits = player.EuropeanCredits,
-					//	MonstersDefeated = player.MonstersDefeated,
-					//	PlayerGuid = player.PlayerGuid,
-					//	PlayerId = player.PlayerId,
-					//	PlayerName = player.PlayerName,
-					//	SparkCoins = player.SparkCoins,
-					//	__EuropeanCredits = player.__EuropeanCredits,
-					//	__SparkCoins = player.__SparkCoins
-					//};
-
-					//foreach (PlayerHero _heroInformation in player.Heroes)
-					//{
-					//	Hero h = new Hero
-					//	{
-					//		HeroCost = _heroInformation.Hero.HeroCost,
-					//		HeroId = _heroInformation.Hero.HeroId,
-					//		HeroInformation = _heroInformation.Hero.HeroInformation,
-					//		HeroName = _heroInformation.Hero.HeroName
-					//	};
-
-					//	PlayerHero ph = new PlayerHero
-					//	{
-					//		Hero = h,
-					//		HeroUpgradeLevel = _heroInformation.HeroUpgradeLevel,
-					//		SpecialUpgradeLevel = _heroInformation.SpecialUpgradeLevel
-					//	};
-					//	List<Upgrade> upgrades = new List<Upgrade>();
-
-					//	foreach (var item in _heroInformation.Upgrades)
-					//	{
-					//		Upgrade up = new Upgrade
-					//		{
-					//			Hero = h,
-					//			UpgradeCost = item.UpgradeCost,
-					//			UpgradeId = item.UpgradeId,
-					//			UpgradeIsAbility = item.UpgradeIsAbility,
-					//			UpgradeName = item.UpgradeName
-					//		};
-					//		upgrades.Add(up);
-					//	}
-
-					//	ph.Upgrades = upgrades;
-
-					//	p.Heroes.Add(ph);
-					//}
-
 					MultiPlayerSession FriendMultiPlayerSession = SessionExtensions.Get(FriendId);
 
 					if (FriendMultiPlayerSession.CurrentPlayerList.Count <= 4)
@@ -169,7 +118,6 @@ namespace StendenClickerApi.Hubs
 							{
 								await Clients.Groups(targetClients).receiveBossMonsterBroadcast(session.CurrentPlayerList, session.CurrentLevel, targetClients.Count != 1);
 							}
-
 
 							return true;
 						}
@@ -252,26 +200,6 @@ namespace StendenClickerApi.Hubs
 			if (TargetPlayer == null) return;
 
 			await Clients.Group(TargetPlayer.PlayerGuid).receiveInvite(new InviteModel { UserGuid = InviteFromPlayer.PlayerGuid, UserName = InviteFromPlayer.PlayerName });
-		}
-
-		[HubMethodName("leaveSession")]
-		public async Task leaveSession()
-		{
-			Player player = db.Players.FirstOrDefault(n => n.PlayerGuid == UserGuid);
-
-			var Session = SessionExtensions.GetSessionByAnyClientId(UserGuid);
-
-			if (Session != null)
-			{
-				MultiPlayerSession MultiPlayerSession = SessionExtensions.Get(UserGuid);
-				List<PlayerObject> sessionMembers = new List<PlayerObject>();
-				sessionMembers.AddRange(MultiPlayerSession.CurrentPlayerList);
-				sessionMembers.Remove(sessionMembers.FirstOrDefault(n => n.UserId.ToString() == UserGuid));
-
-				SessionExtensions.UpdatePlayers(Session.hostPlayerId, sessionMembers);
-			}
-
-			//add function to update is for all users
 		}
 	}
 }

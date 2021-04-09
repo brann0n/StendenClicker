@@ -28,4 +28,3 @@ namespace StendenClicker.Library.Multiplayer
 		}
 	}
 }
-

@@ -8,24 +8,23 @@ namespace StendenClicker.Library.AbstractScene
 {
 	public class BossScene : AbstractScene
 	{
-        public BossScene(PlayerState state) : base(state)
-        {
-            Random r = new Random();
-            int SceneNumber = r.Next(1, NormalScene.InternalSceneCount);
+		public BossScene(PlayerState state) : base(state)
+		{
+			Random r = new Random();
+			int SceneNumber = r.Next(1, NormalScene.InternalSceneCount);
 
-            var item = NormalScene.NormalScenes.FirstOrDefault(n => n.SceneId == SceneNumber);
-            if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
-            Background = item.SceneAsset.Base64Image;
-            Name = item.SceneName;
+			var item = NormalScene.NormalScenes.FirstOrDefault(n => n.SceneId == SceneNumber);
+			if (item == null) throw new Exception("No scenes were loaded, make sure you have an internet connection.");
+			Background = item.SceneAsset.Base64Image;
+			Name = item.SceneName;
 
-            MonsterCount = 1;
-            CurrentMonster = 0;
-        }
+			MonsterCount = 1;
+			CurrentMonster = 0;
+		}
 
-        public BossScene():base(null)
+		public BossScene() : base(null)
 		{
 
 		}
-    }
-
+	}
 }

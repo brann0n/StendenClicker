@@ -20,11 +20,11 @@ namespace StendenClicker.Library.Factory
 
 			if (CalculateIfBoss(state))
 			{
-				pl = new BossLevel(state); 
+				pl = new BossLevel(state);
 			}
 			else
 			{
-				pl = new NormalLevel(state);				
+				pl = new NormalLevel(state);
 			}
 
 			return new GamePlatform()
@@ -45,7 +45,7 @@ namespace StendenClicker.Library.Factory
 
 		private PlayerState CalculateState(List<Player> players)
 		{
-			if(players.Where(p => Player.IsPlayerObjectEmpty(p)).Count() != 0)
+			if (players.Where(p => Player.IsPlayerObjectEmpty(p)).Count() != 0)
 			{
 				//this means there are empty player objects
 				throw new Exception("Empty player objects passed into CalculateState function.");
@@ -73,7 +73,5 @@ namespace StendenClicker.Library.Factory
 			}
 			return state;
 		}
-    }
-
+	}
 }
-

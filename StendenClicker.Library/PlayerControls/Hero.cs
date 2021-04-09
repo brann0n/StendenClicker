@@ -23,6 +23,7 @@ namespace StendenClicker.Library.PlayerControls
 				Heroes = await LocalPlayerData.LoadLocalData<List<Models.DatabaseModels.Hero>>("heroes-asset-data.json");
 			}
 		}
+
 		public int Id { get; set; }
 		public string Name { get; set; }
 		public string Base64Image { get; set; }
@@ -31,11 +32,6 @@ namespace StendenClicker.Library.PlayerControls
 		public int Price { get; set; }
 
 		public List<Upgrade> Upgrades { get; set; }
-
-		public Image GetImageSprite()
-		{
-			return null;
-		}
 
 		public static implicit operator Hero(Models.DatabaseModels.Hero hero)
 		{
@@ -52,4 +48,3 @@ namespace StendenClicker.Library.PlayerControls
 		}
 	}
 }
-

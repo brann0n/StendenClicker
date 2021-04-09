@@ -17,7 +17,6 @@ namespace StendenClicker.Library.AbstractMonster
 
 		private static int previousId { get; set; } = 0;
 
-
 		public static async Task Initialize()
 		{
 			var response = await RestHelper.GetRequestAsync("api/Assets/monsters");
@@ -51,11 +50,12 @@ namespace StendenClicker.Library.AbstractMonster
 			Name = item.MonsterName;
 
 			MonsterLevel = state.MonstersDefeated + 1;
+
 			//health and currency calculations.
 			Health = item.BaseHealth * this.MonsterLevel;
 			CurrencyAmount = (ulong)state.LevelsDefeated;
-
 		}
+
 		public Normal()
 		{
 
@@ -63,15 +63,14 @@ namespace StendenClicker.Library.AbstractMonster
 
 		public override PlayerCurrency GetReward()
 		{
-			if(CurrencyAmount > 25)
+			if (CurrencyAmount > 25)
 			{
 				double factorNew = CurrencyAmount / 25;
 
 				return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = 25, Factor = factorNew };
 			}
 			else
-			return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = CurrencyAmount };
+				return new PlayerCurrency { EuropeanCredit = 0, SparkCoin = CurrencyAmount };
 		}
 	}
-
 }

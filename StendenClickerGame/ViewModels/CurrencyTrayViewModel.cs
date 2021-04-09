@@ -98,7 +98,7 @@ namespace StendenClickerGame.ViewModels
 
 				if (CurrentMonster.GetHealth() >= damage)
 				{
-					Clicks.addClick(damage);
+					Clicks.AddDamage(damage);
 					MonsterClickProcessor(damage);
 				}
 				else
@@ -110,12 +110,12 @@ namespace StendenClickerGame.ViewModels
 						if (damageToDo <= 0)
 						{
 							//to process the last bits of damage without the loop
-							Clicks.addClick(damage);
+							Clicks.AddDamage(damage);
 							MonsterClickProcessor(damage);
 							break;
 						}
 						damage -= damageToDo;
-						Clicks.addClick(damageToDo);
+						Clicks.AddDamage(damageToDo);
 						MonsterClickProcessor(damageToDo);
 					}
 				}
@@ -158,7 +158,7 @@ namespace StendenClickerGame.ViewModels
 
 		public void ProcessMultiplayerDamage(BatchedClick damage)
 		{
-			int totalDamageToProcess = damage.getClicks();
+			int totalDamageToProcess = damage.GetDamage();
 			if (CurrentMonster.GetHealth() >= totalDamageToProcess)
 			{
 				MonsterClickProcessor(totalDamageToProcess);
@@ -239,11 +239,11 @@ namespace StendenClickerGame.ViewModels
 			{
 				if (o is SparkCoin)
 				{
-					CurrentPlayer.Wallet.SparkCoin += (ulong)(((Currency)o).getValue(monsterDefeatedCoinValue) * factor);
+					CurrentPlayer.Wallet.SparkCoin += (ulong)(((Currency)o).GetValue(monsterDefeatedCoinValue) * factor);
 				}
 				else if (o is EuropeanCredit)
 				{
-					CurrentPlayer.Wallet.EuropeanCredit += ((Currency)o).getValue(-1);
+					CurrentPlayer.Wallet.EuropeanCredit += ((Currency)o).GetValue(-1);
 				}
 
 				//notify the UI that currency amounts have changed:

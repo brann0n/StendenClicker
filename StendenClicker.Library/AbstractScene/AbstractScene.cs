@@ -16,9 +16,6 @@ namespace StendenClicker.Library.AbstractScene
 		public string Name { get => _name; set => _name = value; }
 
 		public AbstractScene(PlayerState state)
-		{
-			
-		}
+		{ }
 	}
-
 }

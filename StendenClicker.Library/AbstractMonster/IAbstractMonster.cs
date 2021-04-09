@@ -13,11 +13,8 @@ namespace StendenClicker.Library.AbstractMonster
 
 		PlayerCurrency GetReward();
 
-		Image GetMonsterAsset();
-
 		bool IsDefeated();
 
 		int GetHealthPercentage();
 	}
-
 }

@@ -6,19 +6,17 @@ namespace StendenClicker.Library.CurrencyObjects
 	public class SparkCoin : Currency
 	{
 
-        private static readonly Lazy<string> instance = new Lazy<string>(() => GetContent());
-        public static string ImageContent { get { return instance.Value; } }
+		private static readonly Lazy<string> instance = new Lazy<string>(() => GetContent());
+		public static string ImageContent { get { return instance.Value; } }
 
-        public override ulong getValue(int multiplier)
-        {
-            return 1 * (ulong)multiplier;
-        }
-
-        private static string GetContent()
+		public override ulong GetValue(int multiplier)
 		{
-            return File.ReadAllText("Assets/Sparkcoin.xaml");
+			return 1 * (ulong)multiplier;
 		}
-    }
 
+		private static string GetContent()
+		{
+			return File.ReadAllText("Assets/Sparkcoin.xaml");
+		}
+	}
 }
-

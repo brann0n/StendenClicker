@@ -48,7 +48,6 @@ namespace StendenClickerGame.Multiplayer
 		public event EventHandler OnInviteReceived;
 		public event EventHandler OnSessionUpdateReceived;
 
-
 		//Batch click handlers
 		public delegate BatchedClick BatchClickRetrieveHandler();
 		public event BatchClickRetrieveHandler OnRequireBatches;
@@ -121,7 +120,7 @@ namespace StendenClickerGame.Multiplayer
 			OnInviteReceived?.Invoke(invite, null);
 		}
 
-		private async void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl, bool force)
+		private void receiveNormalMonsterBroadcast(List<Player> players, NormalGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
@@ -131,7 +130,8 @@ namespace StendenClickerGame.Multiplayer
 			};
 			updateSession(session);
 		}
-		private async void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl, bool force)
+
+		private void receiveBossMonsterBroadcast(List<Player> players, BossGamePlatform pl, bool force)
 		{
 			MultiPlayerSession session = new MultiPlayerSession
 			{
@@ -164,10 +164,9 @@ namespace StendenClickerGame.Multiplayer
 		private void requestClickBatches()
 		{
 			BatchedClick clicks = OnRequireBatches?.Invoke();
-			if (clicks.getClicks() > 0)
+			if (clicks.GetDamage() > 0)
 			{
-
-				//if clicks is a valid object, serialize it and broadcast it to the server along with some player information.
+				//if clicks is a valid object, serialize it and broadcast it to the server.
 				MultiPlayerHub.Invoke<BatchedClick>("uploadBatchedClicks", clicks);
 			}
 		}
@@ -177,17 +176,21 @@ namespace StendenClickerGame.Multiplayer
 		{
 			if (SessionContext.CurrentLevel.Scene is BossScene)
 			{
-				BossGamePlatform p = new BossGamePlatform();
-				p.Monster = (StendenClicker.Library.AbstractMonster.Boss)SessionContext.CurrentLevel.Monster;
-				p.Scene = (BossScene)SessionContext.CurrentLevel.Scene;
+				BossGamePlatform p = new BossGamePlatform
+				{
+					Monster = (StendenClicker.Library.AbstractMonster.Boss)SessionContext.CurrentLevel.Monster,
+					Scene = (BossScene)SessionContext.CurrentLevel.Scene
+				};
 
 				await MultiPlayerHub.Invoke("broadcastSessionBoss", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p);
 			}
 			else
 			{
-				NormalGamePlatform p = new NormalGamePlatform();
-				p.Monster = (StendenClicker.Library.AbstractMonster.Normal)SessionContext.CurrentLevel.Monster;
-				p.Scene = (NormalScene)SessionContext.CurrentLevel.Scene;
+				NormalGamePlatform p = new NormalGamePlatform
+				{
+					Monster = (StendenClicker.Library.AbstractMonster.Normal)SessionContext.CurrentLevel.Monster,
+					Scene = (NormalScene)SessionContext.CurrentLevel.Scene
+				};
 
 				await MultiPlayerHub.Invoke<bool>("broadcastSessionNormal", SessionContext.hostPlayerId, SessionContext.CurrentPlayerList, p).ContinueWith((task) =>
 				{
@@ -196,20 +199,11 @@ namespace StendenClickerGame.Multiplayer
 			}
 		}
 
-		public void ProcessBatchOnServer()
-		{
-			requestClickBatches();
-		}
-
 		public MultiPlayerSession getContext()
 		{
 			return SessionContext;
 		}
 
-		public string GetConnectionId()
-		{
-			return hubConnection.ConnectionId;
-		}
 		private void HubConnection_StateChanged(StateChange obj)
 		{
 			OnConnectionStateChanged?.Invoke(obj);
@@ -222,19 +216,7 @@ namespace StendenClickerGame.Multiplayer
 
 		public async Task JoinFriend(string friendId)
 		{
-			await MultiPlayerHub.Invoke<bool>("joinFriend", friendId).ContinueWith((task) =>
-			{
-				//check if joining the session succeded.
-				bool success = task.Result;
-				if (success)
-				{
-					//render the new session and wait for updates.
-				}
-				else
-				{
-					//show the user that joining the game failed.
-				}
-			});
+			await MultiPlayerHub.Invoke<bool>("joinFriend", friendId);
 		}
 	}
 }

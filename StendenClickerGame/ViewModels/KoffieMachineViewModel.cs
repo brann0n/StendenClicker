@@ -128,7 +128,7 @@ namespace StendenClickerGame.ViewModels
 			AbstractMonster m = (AbstractMonster)platform.Monster;
 			int d = m.GetHealth();
 			m.DoDamage(d);
-			e.addClick(d);
+			e.AddDamage(d);
 			CurrencyTrayViewModel.OnClickAbilityProcess -= JanWaterAbility;
 		}
 

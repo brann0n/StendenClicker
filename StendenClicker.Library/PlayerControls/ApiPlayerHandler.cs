@@ -40,7 +40,7 @@ namespace StendenClicker.Library.PlayerControls
 							await LocalPlayerData.RemoveLocalPlayerData();
 							return null;
 						}
-					}				
+					}
 				}
 			}
 
@@ -119,8 +119,8 @@ namespace StendenClicker.Library.PlayerControls
 			var response = await RestHelper.GetRequestAsync("api/player/isusernameavailable", parameters);
 			if (response.StatusCode == HttpStatusCode.OK)
 			{
-				if(response.StatusDescription == "true")
-                {
+				if (response.StatusDescription == "true")
+				{
 					return true;
 				}
 				return false;
@@ -143,7 +143,7 @@ namespace StendenClicker.Library.PlayerControls
 				{ guid1 },
 				{ guid2 }
 			};
-			
+
 			var response = await RestHelper.PostRequestAsync("api/player/deletefriendship", PlayerGuids);
 			if (response.StatusCode != HttpStatusCode.OK)
 			{

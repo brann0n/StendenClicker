@@ -40,19 +40,12 @@ namespace StendenClicker.Library.AbstractMonster
 			return 0 >= GetHealth();
 		}
 
-		public virtual Image GetMonsterAsset()
-		{
-			return new Image(Sprite);
-		}
-
 		public abstract PlayerCurrency GetReward();
 
 		public virtual int GetHealthPercentage()
 		{
 			return (int)(((double)GetHealth() / (double)Health) * (double)100);
 		}
-
 	}
-
 }
 

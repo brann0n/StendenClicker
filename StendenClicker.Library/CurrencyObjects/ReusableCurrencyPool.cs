@@ -12,7 +12,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		private readonly List<Currency> Reusables;
 		private int PoolSizeSC { get { return Reusables.Where(owo => owo is SparkCoin).Count(); } }
 		private int PoolSizeEC { get { return Reusables.Where(uwu => uwu is EuropeanCredit).Count(); } }
-		
+
 		public const int PoolSizeSC_MAX = 50;
 		public const int PoolSizeEC_MAX = 3;
 
@@ -31,7 +31,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		/// </summary>
 		/// <param name="isSparkCoin">boolean to indicate the type of currency to acquire</param>
 		/// <returns>Currency object</returns>
-		
+
 		public Currency AcquireReusable(bool isSparkCoin)
 		{
 			Currency currencyToReturn;
@@ -40,7 +40,7 @@ namespace StendenClicker.Library.CurrencyObjects
 				currencyToReturn = Reusables.FirstOrDefault(n => n is SparkCoin);
 				if (currencyToReturn == null)
 				{
-					return createCurrency(true);
+					return CreateCurrency(true);
 				}
 			}
 			else
@@ -48,7 +48,7 @@ namespace StendenClicker.Library.CurrencyObjects
 				currencyToReturn = Reusables.FirstOrDefault(n => n is EuropeanCredit);
 				if (currencyToReturn == null)
 				{
-					return createCurrency(false);
+					return CreateCurrency(false);
 				}
 			}
 			Reusables.Remove(currencyToReturn);
@@ -60,7 +60,7 @@ namespace StendenClicker.Library.CurrencyObjects
 		/// </summary>
 		/// <param name="isSparkCoin"></param>
 		/// <returns></returns>
-		private Currency createCurrency(bool isSparkCoin)
+		private Currency CreateCurrency(bool isSparkCoin)
 		{
 			if (isSparkCoin)
 			{
@@ -78,9 +78,9 @@ namespace StendenClicker.Library.CurrencyObjects
 		/// <param name="currency">Currency object to release</param>
 		public void ReleaseCurrency(Currency currency)
 		{
-			if(currency is SparkCoin)
+			if (currency is SparkCoin)
 			{
-				if(PoolSizeSC < PoolSizeSC_MAX)
+				if (PoolSizeSC < PoolSizeSC_MAX)
 				{
 					Reusables.Add(currency);
 					return;
@@ -89,7 +89,7 @@ namespace StendenClicker.Library.CurrencyObjects
 				currency.Dispose();
 				return;
 			}
-			else if(currency is EuropeanCredit)
+			else if (currency is EuropeanCredit)
 			{
 				if (PoolSizeEC < PoolSizeEC_MAX)
 				{
@@ -106,6 +106,6 @@ namespace StendenClicker.Library.CurrencyObjects
 
 		public int GetPoolSizeEC() => PoolSizeEC;
 
-		public int GetPoolSizeSC() => PoolSizeSC;	
+		public int GetPoolSizeSC() => PoolSizeSC;
 	}
 }

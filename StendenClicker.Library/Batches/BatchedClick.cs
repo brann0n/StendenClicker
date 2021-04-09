@@ -4,15 +4,14 @@ namespace StendenClicker.Library.Batches
 	{
 		public int DamageDone { get; set; } = 0;
 
-		public void addClick(int damage)
+		public void AddDamage(int damage)
 		{
 			DamageDone += damage;
 		}
 
-		public int getClicks()
+		public int GetDamage()
 		{
 			return DamageDone;
 		}
-    }
+	}
 }
-

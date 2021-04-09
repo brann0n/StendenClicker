@@ -26,6 +26,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		{
 
 		}
+
 		public int HeroId { get; set; }
 		public string HeroName { get; set; }
 		public string HeroInformation { get; set; }
@@ -70,6 +71,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		{
 			Heroes = new HashSet<PlayerHero>();
 		}
+
 		public int PlayerId { get; set; }
 		public string PlayerGuid { get; set; }
 		public string PlayerName { get; set; }
@@ -105,7 +107,7 @@ namespace StendenClicker.Library.Models.DatabaseModels
 			if (string.IsNullOrEmpty(player.PlayerGuid)) return true;
 
 			if (string.IsNullOrEmpty(player.PlayerName)) return true;
-			
+
 			if (string.IsNullOrEmpty(player.DeviceId)) return true;
 
 			return false;
@@ -126,8 +128,6 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public virtual Hero Hero { get; set; }
 
 		public virtual ICollection<Upgrade> Upgrades { get; set; }
-
-
 	}
 
 	public class Friendship
@@ -135,16 +135,6 @@ namespace StendenClicker.Library.Models.DatabaseModels
 		public int FriendshipId { get; set; }
 		public Player Player1 { get; set; }
 		public Player Player2 { get; set; }
-	}
-
-	public class MultiPlayerSession
-	{
-		//many-to-many-to-many-to-many?
-		public int MultiPlayerSessionId { get; set; }
-		public Player Player1 { get; set; }
-		public Player Player2 { get; set; }
-		public Player Player3 { get; set; }
-		public Player Player4 { get; set; }
 	}
 
 	public class Scene
