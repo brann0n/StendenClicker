@@ -63,6 +63,26 @@ namespace StendenClickerApi.Database
 
 		[JsonIgnore]
 		public virtual ICollection<PlayerHero> Players { get; set; }
+
+		public static implicit operator StendenClicker.Library.Models.DatabaseModels.Hero(Hero hero)
+		{
+			List<StendenClicker.Library.Models.DatabaseModels.Upgrade> upgrades = new List<StendenClicker.Library.Models.DatabaseModels.Upgrade>();
+
+			foreach (var item in hero.Upgrades)
+			{
+				upgrades.Add(item);
+			}
+
+			return new StendenClicker.Library.Models.DatabaseModels.Hero
+			{
+				HeroAsset = null,
+				HeroCost = hero.HeroCost,
+				HeroId = hero.HeroId,
+				HeroInformation = hero.HeroInformation,
+				HeroName = hero.HeroName,
+				Upgrades = upgrades
+			};
+		}
 	}
 
 	public class ImageAsset
@@ -93,6 +113,19 @@ namespace StendenClickerApi.Database
 
 		[JsonIgnore]
 		public virtual ICollection<PlayerHero> PlayerHeroes { get; set; }
+
+		public static implicit operator StendenClicker.Library.Models.DatabaseModels.Upgrade(Upgrade upgrade)
+		{
+			return new StendenClicker.Library.Models.DatabaseModels.Upgrade
+			{
+				Hero = null,
+				PlayerHeroes = null,
+				UpgradeCost = upgrade.UpgradeCost,
+				UpgradeId = upgrade.UpgradeId,
+				UpgradeIsAbility = upgrade.UpgradeIsAbility,
+				UpgradeName = upgrade.UpgradeName
+			};
+		}
 	}
 
 	public class Player
@@ -175,13 +208,21 @@ namespace StendenClickerApi.Database
 
 		public static implicit operator StendenClicker.Library.PlayerControls.Player(Player player)
 		{
+			List<StendenClicker.Library.Models.DatabaseModels.PlayerHero> heroes = new List<StendenClicker.Library.Models.DatabaseModels.PlayerHero>();
+
+			foreach(var item in player.Heroes)
+			{
+				heroes.Add(item);
+			}
+
 			return new StendenClicker.Library.PlayerControls.Player
 			{
 				deviceId = player.DeviceId,
 				Username = player.PlayerName,
 				UserId = Guid.Parse(player.PlayerGuid),
 				State = new PlayerState { BossesDefeated = player.BossesDefreated, MonstersDefeated = player.MonstersDefeated },
-				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins }
+				Wallet = new StendenClicker.Library.PlayerControls.PlayerCurrency { EuropeanCredit = player.EuropeanCredits, SparkCoin = player.SparkCoins },
+				Heroes = heroes
 			};
 		}
 	}
@@ -201,6 +242,15 @@ namespace StendenClickerApi.Database
 		public virtual Hero Hero { get; set; }
 
 		public virtual ICollection<Upgrade> Upgrades { get; set; }
+
+		public static implicit operator StendenClicker.Library.Models.DatabaseModels.PlayerHero(PlayerHero p)
+		{
+			return new StendenClicker.Library.Models.DatabaseModels.PlayerHero 
+			{
+				Hero = p.Hero,
+				
+			};
+		}
 	}
 
 	public class Friendship
