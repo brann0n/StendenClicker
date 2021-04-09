@@ -385,7 +385,7 @@
 											<Grid Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" >
 												<Border CornerRadius="5">
                                                     <Grid Visibility="{Binding IsCooldownProgressEnabled, Mode=OneWay}">
-                                                        <ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="Red"/>
+                                                        <ProgressBar Name="cooldownbar" Value="{Binding CooldownPercentage}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Foreground="{Binding foreground}"/>
                                                         <TextBlock Text="{Binding CooldownTime}" Visibility="{Binding IsCooldownTimerEnabled}" HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="White"/>
                                                     </Grid>
                                                 </Border>
