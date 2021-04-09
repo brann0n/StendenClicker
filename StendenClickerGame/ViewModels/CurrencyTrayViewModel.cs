@@ -103,7 +103,7 @@ namespace StendenClickerGame.ViewModels
 				}
 				else
 				{
-					while(damage > 0)
+					while (damage > 0)
 					{
 						int CurrentMonsterHealth = CurrentMonster.GetHealth();
 						int damageToDo = damage - CurrentMonsterHealth;
@@ -163,6 +163,12 @@ namespace StendenClickerGame.ViewModels
 			while (totalDamageToProcess > 0)
 			{
 				int damageForCurrentMonster = CurrentMonster.GetHealth();
+				int damageToDo = totalDamageToProcess - damageForCurrentMonster;
+				if (damageToDo <= 0)
+				{
+					MonsterClickProcessor(damageToDo);
+					break;
+				}
 				totalDamageToProcess -= damageForCurrentMonster;
 				MonsterClickProcessor(damageForCurrentMonster);
 			}
