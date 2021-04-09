@@ -590,8 +590,8 @@
 							<!--Uitnodigingen die zijn onstvangen-->
 							<Grid Grid.Row="1" Margin="0,40,0,0">
 								<Grid.RowDefinitions>
-									<RowDefinition Height="25*"/>
-									<RowDefinition Height="75*"/>
+									<RowDefinition Height="20*"/>
+									<RowDefinition Height="80*"/>
 								</Grid.RowDefinitions>
 								<TextBlock Grid.Row="0" Margin="0,0,0,10" HorizontalAlignment="Left" FontFamily="Tahoma" FontSize="20" Foreground="White">Uitnodigingen</TextBlock>
 								<ListView Grid.Row="1" ScrollViewer.VerticalScrollBarVisibility="Hidden"  ScrollViewer.HorizontalScrollBarVisibility="Hidden"
@@ -611,8 +611,8 @@
 													</Grid>
 													<Grid Grid.Column="1" HorizontalAlignment="right">
 														<StackPanel>
-															<Button Margin="0,0,20,0" VerticalAlignment="Center" CornerRadius="5" Background="red" Foreground="White" Command="{Binding OnAccept}">Accepteren</Button>
-															<Button Margin="0,0,20,0"  VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" Command="{Binding OnDecline}">Weigeren</Button>
+															<Button Margin="0,0,10,0" VerticalAlignment="Center" CornerRadius="5" Background="Orange" Foreground="White" Command="{Binding OnAccept}">Accepteren</Button>
+															<Button Margin="0,0,10,0"  VerticalAlignment="Center" CornerRadius="5" Background="Red" Foreground="White" Command="{Binding OnDecline}">Weigeren</Button>
 														</StackPanel>
 													</Grid>
 												</Grid>
