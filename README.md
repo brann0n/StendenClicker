@@ -59,9 +59,10 @@ In de onderstaande code wordt de huidige player state opgeslagen na elke monster
 [ApiPlayerHandler.cs](https://github.com/brann0n/StendenClicker/blob/master/StendenClicker.Library/PlayerControls/ApiPlayerHandler.cs)
 ```C#
 public async Task SetPlayerStateAsync(Player player)
-state = player;
-Models.DatabaseModels.Player dbPlayer = player;
-var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
+{
+	state = player;
+	Models.DatabaseModels.Player dbPlayer = player;
+	var response = await RestHelper.PostRequestAsync("api/player/set", dbPlayer);
 	if (response.StatusCode == HttpStatusCode.OK)
 	{
 		await LocalPlayerData.SaveLocalPlayerData(state);
@@ -105,7 +106,7 @@ Hierna kan de observer in StendenClickerGame onder HubProxy in bestand [Multipla
 
 ```C#
 MultiPlayerHub.On<MultiPlayerSession>("updateSession", sessionObject => updateSession(sessionObject));
-	MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
+MultiPlayerHub.On<List<Player>, NormalGamePlatform>("receiveNormalMonsterBroadcast", receiveNormalMonsterBroadcast);
 MultiPlayerHub.On<List<Player>, BossGamePlatform>("receiveBossMonsterBroadcast", receiveBossMonsterBroadcast);
 MultiPlayerHub.On("requestClickBatch", requestClickBatches);
 MultiPlayerHub.On<InviteModel>("receiveInvite", receiveInvite);
@@ -117,11 +118,11 @@ Voor de connectie met de server wordt een singleton gebruik. Dit is gedaan zodat
 
 ```C#
 private static readonly Lazy<MultiplayerHubProxy> instance = new Lazy<MultiplayerHubProxy>(() =>
-		{
-			MultiplayerHubProxy proxy = new MultiplayerHubProxy();
-			proxy.InitProxyAsync(ServerURL);
-			return proxy;
-		});
+{
+	MultiplayerHubProxy proxy = new MultiplayerHubProxy();
+	proxy.InitProxyAsync(ServerURL);
+	return proxy;
+});
 ```
 
 <h2>C# Threading</h2>
