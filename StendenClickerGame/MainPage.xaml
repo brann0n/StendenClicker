@@ -49,8 +49,8 @@
 					<!-- Spark coin-->
 					<Grid  Grid.Column="0" HorizontalAlignment="Center">
 						<Grid.ColumnDefinitions>
-							<ColumnDefinition Width="50*" />
-							<ColumnDefinition Width="50*" />
+							<ColumnDefinition Width="70*" />
+							<ColumnDefinition Width="30*" />
 						</Grid.ColumnDefinitions>
 						<Viewbox Stretch="Uniform" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Height="auto" Width="auto" Margin="10,30,10,30">
 							<Canvas Height="100" Width="100" Margin="10" HorizontalAlignment="Right">
@@ -59,7 +59,10 @@
 							</Canvas>
 						</Viewbox>
 						<TextBlock Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Left" FontFamily="Tahoma"  FontWeight="Bold" FontSize="30" Text="{Binding CurrencyTray.Wallet.SparkCoin}" Foreground="White"/>
-					</Grid>
+                        <ToolTipService.ToolTip>
+                            <ToolTip Content="{Binding CurrencyTray.Wallet.SparkCoin}" />
+                        </ToolTipService.ToolTip>
+                    </Grid>
 
 					<!-- European Credits-->
 					<Grid  Grid.Column="1" HorizontalAlignment="Center">
@@ -113,7 +116,7 @@
 												</Grid.ColumnDefinitions>
 												<!-- Koop dan Button-->
 												<Grid Grid.Column="0" >
-													<Button Padding="25,10,25,10" BorderThickness="0" Margin="0,0,0,5" VerticalAlignment="Bottom" Command="{Binding OnHeroButtonClicked}">
+													<Button Padding="10,10,10,10" BorderThickness="0" Margin="0,0,0,5" VerticalAlignment="Bottom" Width="120" Command="{Binding OnHeroButtonClicked}">
 														<Button.Background>
 															<ImageBrush ImageSource="Assets/NHLStenden_startscherm.png"/>
 														</Button.Background>
@@ -134,7 +137,10 @@
 															</Grid>
 														</RelativePanel>
 													</Button>
-												</Grid>
+                                                    <ToolTipService.ToolTip>
+                                                        <ToolTip Content="{Binding NextUpgradePrice}" />
+                                                    </ToolTipService.ToolTip>
+                                                </Grid>
 												<!--Abilities-->
 												<Grid Grid.Column="1">
 													<StackPanel Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="bottom" Margin="0,0,0,5">
