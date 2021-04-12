@@ -51,7 +51,7 @@ public const int PoolSizeSC_MAX = 50;
 public const int PoolSizeEC_MAX = 3;
 ```
 
-* <h3>Momento</h3>
+* <h3>Memento</h3>
 
 Het “Player” object wordt omgezet in JSON-data. Deze data worden vervolgens als String opgeslagen in de database door de ApiPlayerHandler. De ViewModel weet wanneer de data  moet worden opgeslagen. Wanneer er op een fysieke knop wordt geklikt of wanneer de game wordt afgesloten zal de data worden opgeslagen. Via de getPlayerState van de ApiPlayerHandler kan de actie worden teruggedraaid. Dit is waar de design pattern memento van toepassing is. Memento zorgt ervoor dat een object weer terug kan veranderen naar  zijn eerdere staat. Wanneer de speler het spel weer opstart kunnende opgeslagen gegevens gemakkelijk weer worden teruggezet. 
 
