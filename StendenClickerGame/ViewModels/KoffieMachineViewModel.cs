@@ -162,7 +162,9 @@ namespace StendenClickerGame.ViewModels
 			if (platform.Monster is Boss)
 			{
 				//is boss
-				m.DoDamage(m.Health / 2);
+				int Damage = m.GetHealth() / 2;
+				m.DoDamage(Damage);
+				e.AddDamage(Damage);
 				CurrencyTrayViewModel.OnClickAbilityProcess -= GerjanSmoothieAbility;
 			}
 		}
