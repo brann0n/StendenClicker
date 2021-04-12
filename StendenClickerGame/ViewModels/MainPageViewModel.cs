@@ -264,12 +264,12 @@ namespace StendenClickerGame.ViewModels
 						break;
 				}
 
-				NotifyPropertyChanged("popupShow");
-				NotifyPropertyChanged("popupTitle");
-				NotifyPropertyChanged("popupDescription");
+				NotifyPropertyChanged("PopupShow");
+				NotifyPropertyChanged("PopupTitle");
+				NotifyPropertyChanged("PopupDescription");
 				await Task.Delay(5000);
 				PopupShow = false;
-				NotifyPropertyChanged("popupShow");
+				NotifyPropertyChanged("PopupShow");
 			});
 		}
 	}

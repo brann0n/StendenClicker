@@ -58,7 +58,7 @@ namespace StendenClickerGame.Data
 			//devide delaytime by ticks to update the bar
 			double amountOfTicks = delayTime / ProgressbarTicks;
 			SelfContext.Foreground = new SolidColorBrush(Colors.Silver);
-			SelfContext.NotifyPropertyChanged("foreground");
+			SelfContext.NotifyPropertyChanged("Foreground");
 			for (int i = 0; i < amountOfTicks; i++)
 			{
 				int percentage = (int)(i / amountOfTicks * ProgressbarTicks);
@@ -78,7 +78,7 @@ namespace StendenClickerGame.Data
 			SelfContext.IsCooldownTimerEnabled = false;
 			SelfContext.NotifyPropertyChanged("IsCooldownTimerEnabled");
 			SelfContext.Foreground = new SolidColorBrush(Colors.Red);
-			SelfContext.NotifyPropertyChanged("foreground");
+			SelfContext.NotifyPropertyChanged("Foreground");
 			for (int i = (int)amountOfTicks; i >= 0; i--)
 			{
 				int percentage = (int)(i / amountOfTicks * ProgressbarTicks);
