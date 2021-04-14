@@ -16,7 +16,7 @@ namespace StendenClickerGame.Data
 
 		public double OpacityEnabled { get => HeroUnlocked ? 1 : 0.3; }
 
-		public int NextUpgradePriceSparkCoins { get; set; } = 1000;
+		public ulong NextUpgradePriceSparkCoins { get; set; } = 1000;
 		public int UpgradePriceEuropeanCredits { get; set; } = 15;
 
 		public ICommand OnHeroButtonClicked { get; set; }

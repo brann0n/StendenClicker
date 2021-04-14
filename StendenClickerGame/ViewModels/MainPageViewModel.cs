@@ -78,7 +78,7 @@ namespace StendenClickerGame.ViewModels
 				if (heroObject != null)
 				{
 					//hero has been bought, add code that performs a hero level upgrade.
-					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (int)Math.Pow(h.HeroCost * heroObject.HeroUpgradeLevel, 2) };
+					heroListObject = new HeroListObject { Hero = h, PlayerHeroInformation = heroObject, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (ulong)Math.Pow((ulong)h.HeroCost * (ulong)heroObject.HeroUpgradeLevel, 2) };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						if (PerformTransaction(heroListObject))
@@ -90,7 +90,7 @@ namespace StendenClickerGame.ViewModels
 				else
 				{
 					//hero has not been bought yet, add code that allows you to buy this hero.
-					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = h.HeroCost };
+					heroListObject = new HeroListObject { Hero = h, HeroUnlocked = isLevelUnlocked, NextUpgradePriceSparkCoins = (ulong)h.HeroCost };
 					heroListObject.OnHeroButtonClicked = new RelayCommand(() =>
 					{
 						if (PerformTransaction(heroListObject))
@@ -165,11 +165,11 @@ namespace StendenClickerGame.ViewModels
 				//recalculate price:
 				if (item.HeroBought)
 				{
-					item.NextUpgradePriceSparkCoins = (int)Math.Pow(item.Hero.Price * item.PlayerHeroInformation.HeroUpgradeLevel, 2);
+					item.NextUpgradePriceSparkCoins = (ulong)Math.Pow(item.Hero.Price * item.PlayerHeroInformation.HeroUpgradeLevel, 2);
 				}
 				else
 				{
-					item.NextUpgradePriceSparkCoins = item.Hero.Price;
+					item.NextUpgradePriceSparkCoins = (ulong)item.Hero.Price;
 				}
 
 				item.NotifyPropertyChanged("HeroUnlocked");
